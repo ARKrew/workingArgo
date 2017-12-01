@@ -14,7 +14,8 @@ class List extends Component {
   }
 
   pressedAR = () => {
-    this.props.navigation.navigate('ARPortal');
+    // this.props.navigation.navigate('ARPortal');
+    this.props.navigation.navigate('MainSceneAR');
   };
 
   pressedDemo = () => {
