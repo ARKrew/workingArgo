@@ -1,0 +1,15 @@
+platform :ios, '9.3'
+target 'workingArgo' do
+  pod 'ViroReact', :path => '../node_modules/react-viro/ios/'
+end
+
+target 'FacebookPods' do
+  pod 'Bolts'
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKShareKit'
+  pod 'FBSDKLoginKit'
+
+  target 'FacebookPodsTests' do
+    inherit! :search_paths
+  end
+end

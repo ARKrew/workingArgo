@@ -1,0 +1,21 @@
+{
+  "name": "ViroReact",
+  "version": "1.0",
+  "summary": "Test description",
+  "source": {
+    "http": "https://s3-us-west-2.amazonaws.com/viro-docs/ViroReact.tar.gz"
+  },
+  "source_files": "dist/include",
+  "public_header_files": "dist/include/*.h",
+  "vendored_frameworks": "dist/ViroKit.framework",
+  "vendored_libraries": "dist/lib/libViroReact.a",
+  "homepage": "http://viromedia.com",
+  "license": {
+    "type": "BSD"
+  },
+  "authors": "Viro Media",
+  "requires_arc": true,
+  "platforms": {
+    "ios": "9.3"
+  }
+}
