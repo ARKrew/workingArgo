@@ -1,6 +1,5 @@
 import { StackNavigator } from 'react-navigation';
 import List from '../List';
-import ARPortal from './ARPortal';
 import DemoARPortal from './DemoARPortal';
 import MainSceneAR from './MainSceneAR';
 
@@ -9,7 +8,7 @@ const ListNav = StackNavigator(
     List: {
       screen: List
     },
-    ARPortal: {
+    MainSceneAR: {
       // screen: ARPortal
       screen: MainSceneAR
     },
@@ -20,7 +19,7 @@ const ListNav = StackNavigator(
   {
     mode: 'modal',
     headerMode: 'none'
-  
+
   }
 );
 
