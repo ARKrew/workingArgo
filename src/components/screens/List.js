@@ -8,29 +8,20 @@ class List extends Component {
     if (this.props.currentRoute === 2) {
       return true;
     }
-    else {
       return false;
     }
-  }
-
-  pressedAR = () => {
-    this.props.navigation.navigate('ARPortal');
-  };
 
   pressedDemo = () => {
-    this.props.navigation.navigate('DemoARPortal');
+    this.props.navigation.navigate('MainSceneAR');
   };
 
   render() {
-    console.log('list')
+    console.log('list');
     return (
       <View>
         <Header headerText={'List'} />
         <CardSection>
           <Button onPress={this.pressedDemo}>Demo AR Portal</Button>
-        </CardSection>
-        <CardSection>
-          <Button onPress={this.pressedAR}>AR Portal</Button>
         </CardSection>
       </View>
     );
