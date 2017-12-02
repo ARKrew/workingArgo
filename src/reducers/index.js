@@ -6,5 +6,5 @@ import MapReducer from './MapReducer';
 export default combineReducers({
     auth: AuthReducer,
     nav: Navigation,
-    map: MapReducer 
+    map: MapReducer,
 });

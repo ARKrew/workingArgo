@@ -17,7 +17,7 @@ const sharedProps = {
   }
 
   // Sets the default scene you want for AR and VR
-  const HelloWorldSceneAR = require('./DemoARPortal');
+  const demosceneAR = require('./DemoARPortal');
   // var DemoSceneAR = require('./js/DemoSceneAR');
 
   export default class MainSceneAR extends Component {
@@ -35,9 +35,9 @@ const sharedProps = {
     render() {
       console.log('hi');
       return (
-      <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{ scene: HelloWorldSceneAR }} />
+      <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{ scene: demosceneAR }} />
     );
     }
-  }
+}
 
   module.export = MainSceneAR;
