@@ -5,13 +5,8 @@ import { Header } from '../common';
 import MapViews from '../map/MapView';
 
 class Map extends Component {
-  shouldComponentUpdate() {
-    if (this.props.currentRoute === 1) {
-      return true;
-    }
-    else {
-      return false;
-    }
+  shouldComponentUpdate(nextProps) {
+    return nextProps.currentRoute === 1 ? true : false;
   }
 
   render() {
