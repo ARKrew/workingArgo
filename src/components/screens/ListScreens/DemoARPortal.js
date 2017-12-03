@@ -1,8 +1,9 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
-
+import { StyleSheet, View, Text } from 'react-native';
+import { connect } from 'react-redux';
+import { enterAR } from '../../../actions';
 import {
   ViroARSceneNavigator,
   ViroScene,
@@ -29,13 +30,12 @@ const itemAnimation = {
     loop: true
 };
 
-export default class DemoARPortal extends Component {
+class DemoARPortal extends Component {
   constructor() {
     super();
 
     // Set initial state here
     this.state = {
-      inViro: true,
       text: 'Initializing AR...',
       visible: true,
       itemAnimation: {
@@ -61,12 +61,8 @@ export default class DemoARPortal extends Component {
   // ===== Animation when user collects item =====
   _onClickState(state, source) {
     if (state === 1) {
-      this.setState({
-        itemAnimation: itemAnimation
-      });
-    } else if (state === 3) {
-      this.setState({
-        inViro: false
+      this.props.ARstate({
+        enterAR: false,
       });
     }
   }
@@ -80,9 +76,11 @@ export default class DemoARPortal extends Component {
   // }
 
   render() {
-    if (this.state.inViro) {
+    if (this.props.ARstate) {
       return (
-        <ViroARScene onTrackingInitialized={this._onInitialized} >
+        <ViroARScene
+          onTrackingInitialized={this._onInitialized}
+        >
           {/* ===== Ambient Light hitting all 3D Models (required to view textures) ===== */}
           <ViroAmbientLight color="#ffffff" intensity={200} />
 
@@ -216,4 +214,11 @@ ViroAnimations.registerAnimations({
   ],
 });
 
-module.exports = DemoARPortal;
+// module.exports = DemoARPortal;
+
+const mapStateToProps = state => ({ ARstate: state.demoAR });
+//
+export default connect(mapStateToProps,
+  {
+    enterAR,
+  })(DemoARPortal);
