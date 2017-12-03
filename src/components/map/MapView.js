@@ -29,6 +29,7 @@ class MapViews extends Component {
     this.interpolations = null;
     this.animate.bind(this);
     this.watchId = null;
+    this.index = null;
     this.geolocationOptions = { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 };
   }
 
@@ -48,36 +49,6 @@ class MapViews extends Component {
   // If user moves map around track where they're looking
   onRegionChange(mapRegion) {
     this.props.updateMapRegion({ mapRegion });
-  }
-
-  alertError() {
-    Alert.alert(
-      'Error Occurred',
-      this.props.error,
-      [
-        { text: 'OK', onPress: () => console.log('OK Pressed') },
-      ],
-      { cancelable: false }
-    );
-  }
-
-  // Watch user's location
-  watchLocation() {
-    this.watchID = navigator.geolocation.watchPosition(position => {
-      const myLastPosition = this.props.userPosition;
-      const myPosition = 
-      { 
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude, 
-        latitudeDelta: LATITUDE_DELTA, 
-        longitudeDelta: LONGITUDE_DELTA 
-      };
-      if (!isEqual(myPosition, myLastPosition)) {
-        this.props.updateUserPosition({ userPosition: myPosition });
-      }
-    }, 
-    err => this.errorMessage({ error: err }), 
-    this.geolocationOptions);
   }
 
   setInterpolation() {
@@ -102,8 +73,41 @@ class MapViews extends Component {
     });
   }
 
+  // Watch user's location
+  watchLocation() {
+    this.watchID = navigator.geolocation.watchPosition(position => {
+      const myLastPosition = this.props.userPosition;
+      const myPosition = 
+      { 
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude, 
+        latitudeDelta: LATITUDE_DELTA, 
+        longitudeDelta: LONGITUDE_DELTA 
+      };
+      if (!isEqual(myPosition, myLastPosition)) {
+        this.props.updateUserPosition({ userPosition: myPosition });
+      }
+    }, 
+    err => this.errorMessage({ error: err }), 
+    this.geolocationOptions);
+  }
+
+  alertError() {
+    Alert.alert(
+      'Error Occurred',
+      this.props.error,
+      [
+        { text: 'OK', onPress: () => console.log('OK Pressed') },
+      ],
+      { cancelable: false }
+    );
+  }
+
   animate(index) {
-    this.animation.setValue(index - 0.7);
+    this.index = index;
+    this.animateToRegion();
+    const initialValue = (index - 0.7);
+    this.animation.setValue(initialValue);
     Animated.timing(
       this.animation,
       {
@@ -114,8 +118,21 @@ class MapViews extends Component {
     ).start();
   }
 
+  animateToRegion() {
+    const { coordinates } = markerLocations[this.index];
+    // Begin animation to region based on selected marker
+    this.map.animateToRegion(
+      {
+        ...coordinates,
+        latitudeDelta: LATITUDE_DELTA, 
+        longitudeDelta: LONGITUDE_DELTA
+      }
+    );
+  }
+
   renderMarkers() {
     const marker = require('../../img/icons/flag2.png');
+
     this.setInterpolation();
     
     return markerLocations.map((location, index) => {
@@ -126,6 +143,7 @@ class MapViews extends Component {
           },
         ],
       };
+
       const opacityStyle = {
         opacity: this.interpolations[index].opacity,
       };
@@ -156,6 +174,7 @@ class MapViews extends Component {
         <MapView
           showsUserLocation
           style={styles.map}
+          ref={map => this.map = map}
           initialRegion={this.props.userPosition}
           showsPointsOfInterest={false}
           showsBuildings={false}
@@ -187,10 +206,10 @@ const styles = {
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: 'rgba(127, 205, 205, 0.3)',
+    backgroundColor: 'rgba(127, 205, 205, 0.5)',
     position: 'absolute',
     borderWidth: 1,
-    borderColor: 'rgba(127, 205, 205, 0.5)',
+    borderColor: 'rgba(127, 205, 205, 0.9)',
     opacity: 0
   },
   marker: {
