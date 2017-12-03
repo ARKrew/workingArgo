@@ -23,12 +23,20 @@ import {
   ViroText,
 } from 'react-viro';
 
+// ==============================================================================
+// GLOBAL DECLARATIONS
+// ==============================================================================
+
 // For animations
 const itemAnimation = {
     name: "bounceUpAndDown",
     run: true,
     loop: true
 };
+
+// ==============================================================================
+// AR COMPONENT -> MAIN SCENE
+// ==============================================================================
 
 class DemoARPortal extends Component {
   constructor() {
@@ -50,6 +58,10 @@ class DemoARPortal extends Component {
     // this._onTappedItem = this._onTappedItem.bind(this);
     this._onClickState = this._onClickState.bind(this);
   }
+
+// ==============================================================================
+// HELPER FUNCTIONS
+// ==============================================================================
 
   // ===== Text update when AR initialized =====
   _onInitialized() {
@@ -100,7 +112,11 @@ class DemoARPortal extends Component {
             position={[0, 0.5, -1]}
             style={styles.helloWorldTextStyle}
           />
-
+{/* 
+==============================================================================
+(TODO: REFACTOR) SUB-COMPONENT -> PORTAL SCENE
+============================================================================== 
+*/}
           <ViroPortalScene
             passable={true}
             dragType="FixedDistance"
@@ -126,7 +142,13 @@ class DemoARPortal extends Component {
 
             </ViroPortal>
 
+          {/* ===== Background Scene inside Portal ====== */}
+          {/* TODO: Dynamic update/Customize user portals */}
+
             <Viro360Video source={require('./portal_res/360_surf.mp4')} loop={true} />
+
+          {/* ===== Collectible Badge inside Portal ===== */}
+          {/* TODO: Dynamic update of badges */}
 
             <ViroNode
               position={[0, 0, -2]}
@@ -134,6 +156,7 @@ class DemoARPortal extends Component {
               onClickState={this._onClickState}
             >
 
+              {/* ===== Badge inside Portal ===== */}
               <Viro3DObject
                 source={require('./portal_res/res/dagger.obj')}
                 materials={['defaultBadge']}
@@ -148,6 +171,9 @@ class DemoARPortal extends Component {
                 // onClick
                 type="OBJ"
               />
+
+              {/* ===== Particle Effects on Badge ===== */}
+
             </ViroNode>
 
           </ViroPortalScene>
@@ -159,6 +185,10 @@ class DemoARPortal extends Component {
   }
 }
 
+// ==============================================================================
+// STYLING && ANIMATIONS
+// ==============================================================================
+
 const styles = StyleSheet.create({
   helloWorldTextStyle: {
     fontFamily: 'Arial',
@@ -169,6 +199,7 @@ const styles = StyleSheet.create({
   },
 });
 
+// ===== 3d model materials =====
 ViroMaterials.createMaterials({
   defaultBadge: {
     diffuseTexture: require('./portal_res/Textures/daggerTexture.png'),
