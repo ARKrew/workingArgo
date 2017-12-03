@@ -1,7 +1,7 @@
 import { 
-  USER_POSITION_CHANGE, 
-  MAP_REGION_CHANGE, 
-  ERROR 
+  USER_POSITION_CHANGE,
+  MAP_REGION_CHANGE,
+  ERROR
 } from './types';
 
 export const updateUserPosition = data => (
