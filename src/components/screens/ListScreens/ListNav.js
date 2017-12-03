@@ -3,16 +3,22 @@ import List from '../List';
 import DemoARPortal from './DemoARPortal';
 import MainSceneAR from './MainSceneAR';
 
+export const ROUTES = {
+  List: 'List',
+  MainSceneAR: 'MainSceneAR',
+  DemoARPortal: 'DemoARPortal'
+};
+
 const ListNav = StackNavigator(
   {
-    List: {
+    [ROUTES.List]: {
       screen: List
     },
-    MainSceneAR: {
+    [ROUTES.MainSceneAR]: {
       // screen: ARPortal
       screen: MainSceneAR
     },
-    DemoARPortal: {
+    [ROUTES.DemoARPortal]: {
       screen: DemoARPortal
     }
   },

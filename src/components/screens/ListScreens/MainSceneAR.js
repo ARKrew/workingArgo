@@ -11,6 +11,8 @@ import { connect } from 'react-redux';
 import {
   ViroARSceneNavigator
 } from 'react-viro';
+import { NavigationActions } from 'react-navigation';
+import { List, ROUTES } from './ListNAV';
 
 const sharedProps = {
     apiKey:"D5FCCB74-1B13-4E50-BCE8-3DAE6B9ED443"
@@ -19,7 +21,11 @@ const sharedProps = {
   // Sets the default scene you want for AR and VR
   // const demosceneAR = require('./DemoARPortal');
   // var DemoSceneAR = require('./js/DemoSceneAR');
-  import DemoARPortal from './DemoARPortal'
+  import DemoARPortal from './DemoARPortal';
+
+const navigateAction = NavigationActions.navigate({
+  routeName: ROUTES.List,
+});
 
   class MainSceneAR extends Component {
     constructor() {
@@ -39,7 +45,7 @@ const sharedProps = {
           <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{ scene: DemoARPortal }} />
         );
     }
-    return null;
+    return this.props.navigation.dispatch(navigateAction);
   }
 }
 
