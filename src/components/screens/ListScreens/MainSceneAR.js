@@ -12,7 +12,7 @@ import {
   ViroARSceneNavigator
 } from 'react-viro';
 import { NavigationActions } from 'react-navigation';
-import { List, ROUTES } from './ListNAV';
+import { listNavigate } from '../../../actions/ListNavActions';
 
 const sharedProps = {
     apiKey:"D5FCCB74-1B13-4E50-BCE8-3DAE6B9ED443"
@@ -22,10 +22,6 @@ const sharedProps = {
   // const demosceneAR = require('./DemoARPortal');
   // var DemoSceneAR = require('./js/DemoSceneAR');
   import DemoARPortal from './DemoARPortal';
-
-const navigateAction = NavigationActions.navigate({
-  routeName: ROUTES.List,
-});
 
   class MainSceneAR extends Component {
     constructor() {
@@ -44,12 +40,16 @@ const navigateAction = NavigationActions.navigate({
         return (
           <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{ scene: DemoARPortal }} />
         );
+      } else {
+        // console.log(this.props);
+        this.props.listNavigate;
+        return null;
+      }
     }
-    return this.props.navigation.dispatch(navigateAction);
-  }
 }
 
-const mapStateToProps = state => ({ ARstate: state.demoAR });
+//
+const mapStateToProps = state => ({ ARstate: state.demoAR, listNav: state.nav });
 export default connect(mapStateToProps)(MainSceneAR);
 
   // module.export = MainSceneAR;
