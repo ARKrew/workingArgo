@@ -61,7 +61,7 @@ class DemoARPortal extends Component {
   // ===== Animation when user collects item =====
   _onClickState(state, source) {
     if (state === 1) {
-      this.props.ARstate({
+      this.props.enterAR({
         enterAR: false,
       });
     }
@@ -76,7 +76,7 @@ class DemoARPortal extends Component {
   // }
 
   render() {
-    if (this.props.ARstate) {
+    if (this.props.ARstate.enterAR) {
       return (
         <ViroARScene
           onTrackingInitialized={this._onInitialized}
