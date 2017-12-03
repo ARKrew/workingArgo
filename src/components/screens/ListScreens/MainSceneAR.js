@@ -7,7 +7,7 @@ import {
   PixelRatio,
   TouchableHighlight,
 } from 'react-native';
-
+import { connect } from 'react-redux';
 import {
   ViroARSceneNavigator
 } from 'react-viro';
@@ -17,27 +17,33 @@ const sharedProps = {
   }
 
   // Sets the default scene you want for AR and VR
-  const demosceneAR = require('./DemoARPortal');
+  // const demosceneAR = require('./DemoARPortal');
   // var DemoSceneAR = require('./js/DemoSceneAR');
+  import DemoARPortal from './DemoARPortal'
 
-  export default class MainSceneAR extends Component {
+  class MainSceneAR extends Component {
     constructor() {
       super();
-
       this.state = {
-        sharedProps: sharedProps
-      }
-
+        sharedProps: sharedProps,
+      };
     }
 
     // Replace this function with the contents of _getDemoSceneARNavigator() or _getMainSceneARNavigator()
     // if you are building a specific type of experience.
     render() {
-      console.log('hi');
-      return (
-      <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{ scene: demosceneAR }} />
-    );
+      console.log('+++++++ar+++++' + this.props.ARstate.enterAR);
+      console.log(this.state.sharedProps);
+    if (this.props.ARstate.enterAR === true) {
+        return (
+          <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{ scene: DemoARPortal }} />
+        );
     }
+    return null;
+  }
 }
 
-  module.export = MainSceneAR;
+const mapStateToProps = state => ({ ARstate: state.demoAR });
+export default connect(mapStateToProps)(MainSceneAR);
+
+  // module.export = MainSceneAR;

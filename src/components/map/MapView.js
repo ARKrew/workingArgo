@@ -8,16 +8,16 @@ import {
 import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
 import isEqual from 'lodash/isEqual';
-import { 
-  updateUserPosition, 
-  updateMapRegion, 
-  errorMessage 
+import {
+  updateUserPosition,
+  updateMapRegion,
+  errorMessage
 } from '../../actions';
 import markerLocations from './markers.json';
 
 // Grab screen dimensions
 const screen = Dimensions.get('window');
-// Set zoom 
+// Set zoom
 const ASPECT_RATIO = screen.width / screen.height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
@@ -77,18 +77,18 @@ class MapViews extends Component {
   watchLocation() {
     this.watchID = navigator.geolocation.watchPosition(position => {
       const myLastPosition = this.props.userPosition;
-      const myPosition = 
-      { 
+      const myPosition =
+      {
         latitude: position.coords.latitude,
-        longitude: position.coords.longitude, 
-        latitudeDelta: LATITUDE_DELTA, 
-        longitudeDelta: LONGITUDE_DELTA 
+        longitude: position.coords.longitude,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA
       };
       if (!isEqual(myPosition, myLastPosition)) {
         this.props.updateUserPosition({ userPosition: myPosition });
       }
-    }, 
-    err => this.errorMessage({ error: err }), 
+    },
+    err => this.errorMessage({ error: err }),
     this.geolocationOptions);
   }
 
@@ -231,9 +231,9 @@ const mapStateToProps = state => {
   return state.map;
 };
 
-export default connect(mapStateToProps, 
-  { 
-    updateUserPosition, 
-    updateMapRegion, 
-    errorMessage 
+export default connect(mapStateToProps,
+  {
+    updateUserPosition,
+    updateMapRegion,
+    errorMessage
   })(MapViews);
