@@ -29,13 +29,8 @@ componentDidMount() {
     });
 }
 
-shouldComponentUpdate() {
-  if (this.props.currentRoute === 0) {
-    return true;
-  }
-  else {
-    return false;
-  }
+shouldComponentUpdate(nextProps) {
+  return nextProps.currentRoute === 0 ? true : false;
 }
 
   render() {

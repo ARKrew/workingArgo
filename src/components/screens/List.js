@@ -4,12 +4,9 @@ import { connect } from 'react-redux';
 import { Header, Button, CardSection } from '../common';
 
 class List extends Component {
-  shouldComponentUpdate() {
-    if (this.props.currentRoute === 2) {
-      return true;
-    }
-      return false;
-    }
+  shouldComponentUpdate(nextProps) {
+    return nextProps.currentRoute === 2 ? true : false;
+  }
 
   pressedDemo = () => {
     this.props.navigation.navigate('MainSceneAR');
