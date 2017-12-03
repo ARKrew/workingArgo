@@ -4,13 +4,8 @@ import { connect } from 'react-redux';
 import { CardSection, Button, Header } from '../common';
 
 class More extends Component {
-  shouldComponentUpdate() {
-    if (this.props.currentRoute === 3) {
-      return true;
-    }
-    else {
-      return false;
-    }
+  shouldComponentUpdate(nextProps) {
+    return nextProps.currentRoute === 3 ? true : false;
   }
 
   pressedTerms = () => {
