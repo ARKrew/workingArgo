@@ -31,7 +31,8 @@ const sharedProps = {
     // Replace this function with the contents of _getDemoSceneARNavigator() or _getMainSceneARNavigator()
     // if you are building a specific type of experience.
     render() {
-      if (this.props.ARstate === true) {
+      console.log('+++++++ar+++++' + this.props.ARstate.enterAR);
+      if (this.props.ARstate.enterAR === true) {
         return (
           <View>
             <Text>Hi</Text>
@@ -41,6 +42,7 @@ const sharedProps = {
         //   <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{ scene: demosceneAR }} />
         // );
     }
+    return null;
   }
 }
 
