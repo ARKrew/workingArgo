@@ -50,7 +50,11 @@ class DemoARPortal extends Component {
     // this._onTappedItem = this._onTappedItem.bind(this);
     this._onClickState = this._onClickState.bind(this);
   }
-
+  componentWillMount() {
+    this.props.enterAR({
+      enterAR: true,
+    });
+  }
   // ===== Text update when AR initialized =====
   _onInitialized() {
     this.setState({

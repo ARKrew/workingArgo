@@ -7,7 +7,6 @@ export const loginSuccess = ({ user }) => {
             type: LOGIN,
             payload: user
         });
-        console.log(dispatch);
     };
 };
 
