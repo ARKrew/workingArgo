@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { NavigationActions } from 'react-navigation';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { Header, Button, CardSection } from '../common';
 
 class List extends Component {
+
   shouldComponentUpdate(nextProps) {
     return nextProps.currentRoute === 2 ? true : false;
   }
@@ -13,7 +15,6 @@ class List extends Component {
   };
 
   render() {
-    console.log('list');
     return (
       <View>
         <Header headerText={'List'} />

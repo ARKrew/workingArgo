@@ -129,19 +129,19 @@ class DemoARPortal extends Component {
           />
 
         {/* ===== Pirate Flag ====== */}
-        <Viro3DObject 
+        <Viro3DObject
           source={require('./portal_res/models/flag/pirate_flag.obj')}
-          materials={["flag"]} 
-          position={[0.75, 0, -1.25]} 
-          scale={[0.025, 0.025, 0.025]} 
+          materials={["flag"]}
+          position={[0.75, 0, -1.25]}
+          scale={[0.025, 0.025, 0.025]}
           rotation={[30, 0, -25]}
           type="OBJ"
         />
 
-{/* 
+{/*
 ==============================================================================
 (TODO: REFACTOR) SUB-COMPONENT -> PORTAL SCENE
-============================================================================== 
+==============================================================================
 */}
           <ViroPortalScene
             passable={true}
@@ -169,30 +169,30 @@ class DemoARPortal extends Component {
 
             {/* ===== Background Scene inside Portal ====== */}
             {/* TODO: Dynamic update/Customize user portals */}
-            <Viro360Video 
-              source={require('./portal_res/360_surf.mp4')} 
-              loop={true} 
+            <Viro360Video
+              source={require('./portal_res/360_surf.mp4')}
+              loop={true}
             />
 
             {/* ===== Collectible Badge inside Portal ===== */}
             {/* TODO: Dynamic update of badges */}
-            <ViroNode 
-              position={[0, 0, -2]} 
-              animation={this.state.itemAnimation} 
+            <ViroNode
+              position={[0, 0, -2]}
+              animation={this.state.itemAnimation}
               onClickState={this._onClickState}
             >
 
               {/* ===== Badge inside Portal ===== */}
-              <Viro3DObject 
+              <Viro3DObject
               source={require('./portal_res/models/badge/coin.obj')}
-              // materials={["badge"]} 
+              // materials={["badge"]}
               materials={["defaultBadge"]}
-              scale={[.1, .1, .1]} 
+              scale={[.1, .1, .1]}
               animation={{
-                name: "rotate", 
-                run: true, 
+                name: "rotate",
+                run: true,
                 loop: true
-              }} 
+              }}
               type="OBJ"
               />
 
@@ -311,7 +311,7 @@ ViroAnimations.registerAnimations({
     properties: {
       positionY:"+=0.5",
     },
-    easing:"Bounce", 
+    easing:"Bounce",
     duration: 500
   },
   // Descend
@@ -319,7 +319,7 @@ ViroAnimations.registerAnimations({
     properties: {
       positionY:"-=0.5",
     },
-    easing:"Bounce", 
+    easing:"Bounce",
     duration: 500
   },
   // Runs bounce animation sequentially

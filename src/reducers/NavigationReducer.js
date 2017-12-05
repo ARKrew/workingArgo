@@ -1,5 +1,5 @@
 import { NavigationActions } from 'react-navigation';
-import { LOGIN, LIST_NAV } from '../actions/types';
+import { LOGIN, LOGOUT, LIST_NAV } from '../actions/types';
 import { routerInitialState, router, ROUTES } from '../AppNavigator';
 
 export default (state = routerInitialState, action) => {
@@ -8,6 +8,12 @@ export default (state = routerInitialState, action) => {
         case LOGIN:
             nextState = router.getStateForAction(
                 NavigationActions.navigate({ routeName: ROUTES.rootstab }),
+                state
+            );
+            break;
+        case LOGOUT:
+            nextState = router.getStateForAction(
+                NavigationActions.navigate({ routeName: ROUTES.login }),
                 state
             );
             break;
