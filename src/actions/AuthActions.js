@@ -1,5 +1,4 @@
-import { NavigationActions } from 'react-navigation';
-import { LOGIN } from './types';
+import { LOGIN, LOGOUT } from './types';
 
 export const loginSuccess = ({ user }) => {
     return (dispatch) => {
@@ -10,19 +9,10 @@ export const loginSuccess = ({ user }) => {
     };
 };
 
-// export const logout = () => {
-//     return (dispatch) => {
-//         dispatch({
-//             type: LOGOUT,
-//         });
-//         const resetNavigator = NavigationActions.reset({
-//             index: 0,
-//             actions: [
-//                 NavigationActions.navigate({
-//                     routeName: 'Unauthorized',
-//                 })
-//             ],
-//         });
-//         dispatch(resetNavigator);
-//     };
-// };
+export const logOut = () => {
+  return (dispatch) => {
+    dispatch({
+      type: LOGOUT
+        });
+  };
+};

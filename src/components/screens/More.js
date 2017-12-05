@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import firebase from 'firebase';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { CardSection, Button, Header } from '../common';
+import { logOut } from '../../actions/AuthActions';
 
 class More extends Component {
+
   shouldComponentUpdate(nextProps) {
     return nextProps.currentRoute === 3 ? true : false;
   }
@@ -16,8 +19,13 @@ class More extends Component {
     this.props.navigation.navigate('HelpAndAbout');
   }
 
-  pressedLogOut = () => {
-    this.props.navigation.navigate('LogOut');
+  pressedLogOut = async () => {
+      try {
+          await firebase.auth().signOut();
+          this.props.logOut();
+      } catch (e) {
+          console.log(e);
+      }
   }
 
   render() {
@@ -36,7 +44,7 @@ class More extends Component {
           </Button>
         </CardSection>
         <CardSection>
-          <Button onPress={this.pressedLogOut}>
+          <Button onPress={this.pressedLogOut.bind(this)}>
             Log Out
           </Button>
         </CardSection>
@@ -45,6 +53,6 @@ class More extends Component {
   }
 }
 
-const mapStateToProps = state => ({ currentRoute: state.nav.routes[1].index });
+const mapStateToProps = state => ({ currentRoute: state.nav.routes[1].index, logged: state.auth.loggedIn });
 
-export default connect(mapStateToProps)(More);
+export default connect(mapStateToProps, { logOut })(More);

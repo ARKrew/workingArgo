@@ -2,10 +2,9 @@ import { StackNavigator } from 'react-navigation';
 import More from '../More';
 import TermsOfService from './TermsOfService';
 import HelpAndAbout from './HelpAndAbout';
-import LogOut from './LogOut';
 
 const MoreNav = StackNavigator({
-  More: { 
+  More: {
     screen: More,
   },
   TermsOfService: {
@@ -13,9 +12,6 @@ const MoreNav = StackNavigator({
   },
   HelpAndAbout: {
     screen: HelpAndAbout,
-  },
-  LogOut: {
-    screen: LogOut,
   }
   }, 
   {
