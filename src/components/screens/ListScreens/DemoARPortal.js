@@ -45,7 +45,8 @@ class DemoARPortal extends Component {
     // Set initial state here
     this.state = {
       text: 'Initializing AR...',
-      visible: true,
+      isLoading: true,
+      isPortalRendered: false,
       itemAnimation: {
         name: 'bounceUpAndDown',
         run: false,
@@ -80,7 +81,7 @@ class DemoARPortal extends Component {
     //   this.setTimeout(
     //     () => { console.log('I do not leak!'); },
     //     500
-      setTimeout( () => {
+      setTimeout(() => {
         this.props.enterAR({
           enterAR: false,
         });
@@ -115,7 +116,7 @@ class DemoARPortal extends Component {
           <ViroSpinner
             type='light'
             position={[0, 0, -2]}
-            visible={this.state.visible}
+            visible={this.state.isLoading}
           />
 
           {/* ===== Initializing Text Component ====== */}
@@ -135,6 +136,7 @@ class DemoARPortal extends Component {
           position={[0.75, 0, -1.25]}
           scale={[0.025, 0.025, 0.025]}
           rotation={[30, 0, -25]}
+          visible={this.state.isPortalRendered}
           type="OBJ"
         />
 
@@ -160,7 +162,8 @@ class DemoARPortal extends Component {
                 // Removes spinner when loaded
                 onLoadEnd={() => {
                   this.setState({
-                    visible: false
+                    isLoading: false,
+                    isPortalRendered: true
                   });
                 }}
               />
