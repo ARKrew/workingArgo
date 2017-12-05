@@ -51,7 +51,7 @@ const sharedProps = {
           <TouchableOpacity
             onPress={this.exitAR}
           >
-            <Text style={{ color: "black", fontSize: 22, marginTop: 35 }}>Congrats you picked up your first badge! Now head to the Map Page to find more badges! Click me and I will take you there!</Text>
+            <Text style={{ color: "black", fontSize: 22, marginTop: 35 }}>Congrats you picked up your first badge! Now head to your Profile Page to see your new badge! Click me and I will take you there!</Text>
         </TouchableOpacity>
 
         );
