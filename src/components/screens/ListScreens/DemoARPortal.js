@@ -65,7 +65,7 @@ class DemoARPortal extends Component {
 // HELPER FUNCTIONS
 // ==============================================================================
 
-  // ===== Text update when AR initialized =====
+// ===== Text update when AR initialized =====
   _onInitialized() {
     this.setState({
       text : "Walk In and Tap to Collect!"
