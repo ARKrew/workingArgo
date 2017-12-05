@@ -19,7 +19,7 @@ export default (state = routerInitialState, action) => {
             break;
         case LIST_NAV:
             nextState = router.getStateForAction(
-                NavigationActions.navigate({ routeName: ROUTES.map }),
+                NavigationActions.navigate({ routeName: ROUTES.profile }),
                 state
             );
             break;
