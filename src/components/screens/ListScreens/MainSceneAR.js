@@ -28,35 +28,43 @@ const sharedProps = {
 
     constructor() {
       super();
+      // this.pressed = true;
       this.state = {
         sharedProps: sharedProps,
+        pressed: false
       };
     }
 
+    setTrue = () => {
+      this.setState({
+        pressed: true
+      });
+    }
     //
     exitAR = () => {
+      this.props.navigation.navigate('List');
+      // navigation.goBack('List');
       this.props.listNavigate();
+
     }
     // Replace this function with the contents of _getDemoSceneARNavigator() or _getMainSceneARNavigator()
     // if you are building a specific type of experience.
     render() {
-      console.log('+++++++ar+++++' + this.props.ARstate.enterAR);
     if (this.props.ARstate.enterAR === true) {
         return (
           <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{ scene: DemoARPortal }} />
         );
-      }
-
-        return (
+      } return (
           <TouchableOpacity
             onPress={this.exitAR}
-          >
-            <Text style={{ color: "black", fontSize: 22, marginTop: 35 }}>Congrats you picked up your first badge! Now head to your Profile Page to see your new badge! Click me and I will take you there!</Text>
-        </TouchableOpacity>
-
-        );
-    }
-}
+            >
+            <Text style={{ color: "black", fontSize: 22, marginTop: 35 }}>
+              Congrats you picked up your first badge! Now head to your Profile Page to see your new badge! Click me and I will take you there!
+            </Text>
+          </TouchableOpacity>
+          )
+      }
+  }
 
 //
 const mapStateToProps = state => {

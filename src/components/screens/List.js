@@ -4,6 +4,9 @@ import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { Header, Button, CardSection } from '../common';
 
+// actions
+import { enterAR } from '../../actions';
+
 class List extends Component {
 
   shouldComponentUpdate(nextProps) {
@@ -11,6 +14,9 @@ class List extends Component {
   }
 
   pressedDemo = () => {
+    this.props.enterAR({
+      enterAR: true,
+    });
     this.props.navigation.navigate('MainSceneAR');
   };
 
@@ -26,6 +32,8 @@ class List extends Component {
   }
 }
 
-const mapStateToProps = state => ({ currentRoute: state.nav.routes[1].index });
+const mapStateToProps = state => ({ currentRoute: state.nav.routes[1].index, ARstate: state.demoAR, });
 
-export default connect(mapStateToProps)(List);
+export default connect(mapStateToProps, {
+  enterAR,
+})(List);
