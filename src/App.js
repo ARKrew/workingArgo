@@ -15,7 +15,11 @@ const App = ({ dispatch, nav }) => (
 );
 
 const AppWithNavigationState = connect(() => ({ nav }) => ({ nav }))(App);
+
+// 1. Create store
 const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+// - Pass reducers within store
+// 2. Create reducers
 
 class NavigationalApp extends Component {
   componentWillMount() {
