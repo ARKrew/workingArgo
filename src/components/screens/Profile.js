@@ -17,26 +17,21 @@ constructor(props) {
 }
 
 componentDidMount() {
-    console.log(firebase.auth().currentUser);
-    this.fireBaseListener = firebase.auth().onAuthStateChanged(auth => {
-      if (auth) {
-        this.firebaseRef = firebase.database().ref('users');
-        this.firebaseRef.child(auth.uid).on('value', snap => {
-          const user = snap.val();
-          this.setState({ uri: user.dp });
-        });
-      }
-    });
+    console.log('this is the profile')
+    console.log(this.props);
+    this.setState({ uri: this.props.dp });
 }
 
-shouldComponentUpdate(nextProps) {
-  return nextProps.currentRoute === 0 ? true : false;
-}
+// shouldComponentUpdate(nextProps) {
+//   console.log('this is the current route');
+//   console.log(nextProps.currentRoute);
+//   return nextProps.currentRoute === 0 ? true : false;
+// }
 
   render() {
-    console.log('profile')
-    const headerName = firebase.auth().currentUser.displayName;
-    const joinDate = firebase.auth().currentUser.metadata.creationTime.split(' ').slice(1, -2).join(' ');
+    const headerName = this.props.displayName;
+    const joinDate = this.props.joinDate;
+
       return (
         <View>
             <Header headerText={headerName} />
@@ -78,6 +73,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = state => ({ currentRoute: state.nav.routes[1].index });
+const mapStateToProps = state => ({ ...state.auth.user, currentRoute: state.nav.routes[1].index });
 
 export default connect(mapStateToProps)(Profile);

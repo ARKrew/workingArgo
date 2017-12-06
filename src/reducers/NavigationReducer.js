@@ -3,6 +3,9 @@ import { LOGIN, LOGOUT, LIST_NAV } from '../actions/types';
 import { routerInitialState, router, ROUTES } from '../AppNavigator';
 
 export default (state = routerInitialState, action) => {
+    console.log('action reducer called')
+    console.log(state);
+    console.debug(action.type);
     let nextState = null;
     switch (action.type) {
         case LOGIN:
