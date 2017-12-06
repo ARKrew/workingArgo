@@ -35,6 +35,8 @@ const sharedProps = {
 
     //
     exitAR = () => {
+      // Reset to list screen from MainSceneAR
+      this.props.navigation.navigate('List');
       this.props.listNavigate();
     }
     // Replace this function with the contents of _getDemoSceneARNavigator() or _getMainSceneARNavigator()
@@ -46,19 +48,18 @@ const sharedProps = {
           <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{ scene: DemoARPortal }} />
         );
       }
-
         return (
-          <TouchableOpacity
-            onPress={this.exitAR}
-          >
-            <Text style={{ color: "black", fontSize: 22, marginTop: 35 }}>Congrats you picked up your first badge! Now head to your Profile Page to see your new badge! Click me and I will take you there!</Text>
+          <TouchableOpacity onPress={this.exitAR} >
+            <Text style={{ color: "black", fontSize: 22, marginTop: 35 }}>
+              Congrats you picked up your first badge! 
+              Now head to your Profile Page to see your new badge! 
+              Click me and I will take you there!
+            </Text>
         </TouchableOpacity>
-
         );
     }
 }
 
-//
 const mapStateToProps = state => {
   return {
     ARstate: state.demoAR,
