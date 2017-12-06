@@ -3,7 +3,9 @@ import {
   StyleSheet,
   View,
   ActivityIndicator,
-  Button
+  Button, 
+  Text,
+  Image
 } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
@@ -19,17 +21,22 @@ class Login extends Component {
    this.state = {
      showSpinner: true,
     };
+    this.authenticatedUser = false;
   }
 
   componentDidMount() {
     this.fireBaseListener = firebase.auth().onAuthStateChanged(auth => {
-      if (auth) {
+      if (auth && !this.authenticatedUser) {
         this.firebaseRef = firebase.database().ref('users');
         this.firebaseRef.child(auth.uid).on('value', snap => {
           const user = snap.val();
           if (user != null) {
+            const joinDate = firebase.auth().currentUser.metadata.creationTime.split(' ').slice(1, -2).join(' ');
+            const displayName = firebase.auth().currentUser.displayName;
+            this.authenticatedUser = true;
             this.firebaseRef.child(auth.uid).off('value');
-            this.props.loginSuccess(user);
+            this.props.loginSuccess({ ...user, joinDate, displayName });
+            this.getCurrentLocation(user);
           }
         });
       } else {
@@ -70,7 +77,7 @@ class Login extends Component {
              this.authenticate(data.accessToken)
               .then(function(result) {
                 const { uid } = result;
-                that.createUser(uid, json, token, fbImage)
+                that.createUser(uid, json, token, fbImage);
               });
             })
             .catch(function(err) {
@@ -78,6 +85,24 @@ class Login extends Component {
             });
           }
         );
+    }
+  }
+
+  getCurrentLocation({ uid }) {
+    if (uid) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const currentLocation = 
+            [
+              position.coords.latitude,
+              position.coords.longitude
+            ];
+          firebase.database().ref('location_config').child(uid)
+            .update({ currentLocation });
+        },
+        error => console.log(error.message),
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+      );
     }
   }
 
@@ -93,17 +118,30 @@ class Login extends Component {
       token,
       dp
     };
-    firebase.database().ref('users').child(uid).update({ ...userData, ...defaults });
+    firebase.database().ref('users').child(uid)
+      .update({ ...userData, ...defaults })
+      .then(() => this.getCurrentLocation(defaults));
   }
   render() {
     return (
       this.state.showSpinner ? <View style={styles.container}><ActivityIndicator animating={this.state.showSpinner} /></View> :
-      <View style={styles.container}>
-          <Button
-            onPress={this.onPressLogin.bind(this)}
-            title="Login with Facebook"
-            color="#841584"
-          />
+      <View style={{ flex: 1 }}>
+          <View style={{flex: 1, backgroundColor: '#1E5AFF'}} />
+          <View style={styles.container}>
+            <Image 
+              style={{ width: 110, height: 110 }}
+              source={require('../assets/images/pirate.png')} alt='pirate ship'
+            />
+            <Text style={styles.titleFont}>
+              ARgo
+            </Text>
+            <Button
+              style={styles.buttonStyle}
+              onPress={this.onPressLogin.bind(this)}
+              title="Login with Facebook"
+            />
+          </View>
+          <View style={{flex: 1, backgroundColor: '#1E5AFF'}} />
       </View>
     );
   }
@@ -111,15 +149,30 @@ class Login extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    flex: 2,
+    justifyContent: "center",
+    alignItems: "center"
+    // backgroundColor: '#F5FCFF',
+  },
+  titleFont: {
+    fontSize: 36,
+    color: '#1E5AFF'
+  },
+  buttonStyle: {
+    backgroundColor: "#841584",
+    justifyContent: "center",
+    alignItems: "center",
+    height: 60,
+    paddingTop: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    elevation: 2,
+    position: "relative",
   }
 });
 
 const mapStateToProps = (state) => {
-  console.log('mapStateToProps', state);
   return {
     logged: state.auth.loggedIn,
     user: state.auth.user

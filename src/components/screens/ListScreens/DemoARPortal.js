@@ -131,7 +131,8 @@ class DemoARPortal extends Component {
 
         {/* ===== Pirate Flag ====== */}
         <Viro3DObject
-          source={require('./portal_res/models/flag/pirate_flag.obj')}
+          // source={require('./portal_res/models/flag/pirate_flag.obj')}
+          source={require('././../../../assets/models/flag/pirate_flag.obj')}
           materials={["flag"]}
           position={[0.75, 0, -1.25]}
           scale={[0.025, 0.025, 0.025]}
@@ -154,10 +155,14 @@ class DemoARPortal extends Component {
             <ViroPortal position={[0, 0, -1.3]} scale={[.15, .15, .15]}>
 
               {/* ===== Portal Door ===== */}
-              <Viro3DObject source={require('./portal_res/portal_ship/portal_ship.vrx')}
+              {/* <Viro3DObject source={require('./portal_res/portal_ship/portal_ship.vrx')}
                 resources={[require('./portal_res/portal_ship/portal_ship_diffuse.png'),
                             require('./portal_res/portal_ship/portal_ship_normal.png'),
-                            require('./portal_res/portal_ship/portal_ship_specular.png')]}
+                            require('./portal_res/portal_ship/portal_ship_specular.png')]} */}
+              <Viro3DObject source={require('./../../../assets/models/portal_ship/portal_ship.vrx')}
+                resources={[require('./../../../assets/models/portal_ship/portal_ship_diffuse.png'),
+                            require('./../../../assets/models/portal_ship/portal_ship_normal.png'),
+                            require('./../../../assets/models/portal_ship/portal_ship_specular.png')]}
                 type="VRX"
                 // Removes spinner when loaded
                 onLoadEnd={() => {
@@ -173,7 +178,8 @@ class DemoARPortal extends Component {
             {/* ===== Background Scene inside Portal ====== */}
             {/* TODO: Dynamic update/Customize user portals */}
             <Viro360Video
-              source={require('./portal_res/360_surf.mp4')}
+              // source={require('./portal_res/360_surf.mp4')}
+              source={require('./../../../assets/portal_backgrounds/360_surf.mp4')}
               loop={true}
             />
 
@@ -187,7 +193,8 @@ class DemoARPortal extends Component {
 
               {/* ===== Badge inside Portal ===== */}
               <Viro3DObject
-              source={require('./portal_res/models/badge/coin.obj')}
+              // source={require('./portal_res/models/badge/coin.obj')}
+              source={require('./../../../assets//models/coin/coin.obj')}
               // materials={["badge"]}
               materials={["defaultBadge"]}
               scale={[.1, .1, .1]}
@@ -229,7 +236,8 @@ class DemoARPortal extends Component {
               fixedToEmitter={true}
               // ------ Image source of particle ------
               image={{
-                source:require("./portal_res/models/particles/yellow_glow.png"),
+                // source:require("./portal_res/models/particles/yellow_glow.png"),
+                source:require('./../../../assets/models/particles/yellow_glow.png'),
                 height:1,
                 width:1,
               }}
@@ -293,10 +301,10 @@ const styles = StyleSheet.create({
 // ===== 3d Model aterials =====
 ViroMaterials.createMaterials({
   defaultBadge: {
-    diffuseTexture: require('./portal_res/models/badge/icons/gold_coin.png'),
+    diffuseTexture: require('./../../../assets/icons/027-coin.png'),
   },
   flag: {
-    diffuseTexture: require('./portal_res/models/flag/flag_texture.png'),
+    diffuseTexture: require('./../../../assets/models/flag/flag_texture.png'),
   },
 });
 
@@ -329,14 +337,6 @@ ViroAnimations.registerAnimations({
   bounceUpAndDown: [
       ["bounceUp", "bounceDown"],
   ],
-    // // Swirl
-    // swirl: {
-    //   properties: {
-    //     rotateX:"+45",
-    //   },
-    //   easing:"EaseIn",
-    //   duration: 10
-    // },
 });
 
 // module.exports = DemoARPortal;
