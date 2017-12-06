@@ -5,3 +5,4 @@ export const MAP_REGION_CHANGE = 'MAP_REGION_CHANGE';
 export const ERROR = 'ERROR';
 export const ENTER_AR = 'ENTER_AR';
 export const LIST_NAV = 'LIST_NAV';
+export const UPDATE_MARKERS = 'UPDATE_MARKERS';
