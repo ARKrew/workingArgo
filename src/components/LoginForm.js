@@ -21,17 +21,22 @@ class Login extends Component {
    this.state = {
      showSpinner: true,
     };
+    this.authenticatedUser = false;
   }
 
   componentDidMount() {
     this.fireBaseListener = firebase.auth().onAuthStateChanged(auth => {
-      if (auth) {
+      if (auth && !this.authenticatedUser) {
         this.firebaseRef = firebase.database().ref('users');
         this.firebaseRef.child(auth.uid).on('value', snap => {
           const user = snap.val();
           if (user != null) {
+            const joinDate = firebase.auth().currentUser.metadata.creationTime.split(' ').slice(1, -2).join(' ');
+            const displayName = firebase.auth().currentUser.displayName;
+            this.authenticatedUser = true;
             this.firebaseRef.child(auth.uid).off('value');
-            this.props.loginSuccess(user);
+            this.props.loginSuccess({ ...user, joinDate, displayName });
+            this.getCurrentLocation(user);
           }
         });
       } else {
@@ -72,7 +77,7 @@ class Login extends Component {
              this.authenticate(data.accessToken)
               .then(function(result) {
                 const { uid } = result;
-                that.createUser(uid, json, token, fbImage)
+                that.createUser(uid, json, token, fbImage);
               });
             })
             .catch(function(err) {
@@ -80,6 +85,24 @@ class Login extends Component {
             });
           }
         );
+    }
+  }
+
+  getCurrentLocation({ uid }) {
+    if (uid) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const currentLocation = 
+            [
+              position.coords.latitude,
+              position.coords.longitude
+            ];
+          firebase.database().ref('location_config').child(uid)
+            .update({ currentLocation });
+        },
+        error => console.log(error.message),
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+      );
     }
   }
 
@@ -95,7 +118,9 @@ class Login extends Component {
       token,
       dp
     };
-    firebase.database().ref('users').child(uid).update({ ...userData, ...defaults });
+    firebase.database().ref('users').child(uid)
+      .update({ ...userData, ...defaults })
+      .then(() => this.getCurrentLocation(defaults));
   }
   render() {
     return (
@@ -148,7 +173,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  console.log('mapStateToProps', state);
   return {
     logged: state.auth.loggedIn,
     user: state.auth.user

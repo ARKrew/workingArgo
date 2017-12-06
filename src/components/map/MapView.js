@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { 
   View, 
@@ -8,12 +9,13 @@ import {
 import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
 import isEqual from 'lodash/isEqual';
+import firebase from 'firebase';
 import {
   updateUserPosition,
   updateMapRegion,
+  updateMarkers,
   errorMessage
 } from '../../actions';
-import markerLocations from './markers.json';
 
 // Grab screen dimensions
 const screen = Dimensions.get('window');
@@ -37,6 +39,28 @@ class MapViews extends Component {
   componentDidMount() {
     // Begin tracking location
     this.watchLocation();
+    const userId = firebase.auth().currentUser.uid;
+    const queryPath = 'location_config/' + userId + '/nearby_portal';
+
+    firebase.database().ref(queryPath).once('value')
+    .then( 
+      snapshot => {
+        const markerPositions = snapshot.val().reduce((acc, curr, index) => {
+          acc[index] = 
+          { 
+            coordinates:
+              { 
+                latitude: curr[0], 
+                longitude: curr[1] 
+              } 
+          }; 
+          return acc;
+        }, []);
+        
+        this.props.updateMarkers({ markerPositions });
+      }
+    )
+    .catch(error => console.log(error));
   }
 
   // Clear watch when component unmounts
@@ -52,7 +76,7 @@ class MapViews extends Component {
   }
 
   setInterpolation() {
-    this.interpolations = markerLocations.map((marker, index) => {
+    this.interpolations = this.props.markerPositions.map((marker, index) => {
       const inputRange = [
         (index - 0.7),
         (index - 0.2),
@@ -119,9 +143,9 @@ class MapViews extends Component {
   }
 
   animateToRegion() {
-    const { coordinates } = markerLocations[this.index];
+    const { coordinates } = this.props.markerPositions[this.index];
     // Begin animation to region based on selected marker
-    this.map.animateToRegion(
+    this.refs.map.animateToRegion(
       {
         ...coordinates,
         latitudeDelta: LATITUDE_DELTA, 
@@ -135,7 +159,7 @@ class MapViews extends Component {
 
     this.setInterpolation();
     
-    return markerLocations.map((location, index) => {
+    return this.props.markerPositions.map((location, index) => {
       const scaleStyle = {
         transform: [
           {
@@ -150,7 +174,7 @@ class MapViews extends Component {
 
       return (
         <MapView.Marker 
-          key={location.id} 
+          key={index} 
           coordinate={location.coordinates}
           style={styles.markerWrap}
           onPress={() => this.animate(index)}
@@ -174,15 +198,12 @@ class MapViews extends Component {
         <MapView
           showsUserLocation
           style={styles.map}
-          ref={map => this.map = map}
+          ref='map'
           initialRegion={this.props.userPosition}
-          showsPointsOfInterest={false}
-          showsBuildings={false}
-          showsIndoor={false}
           onRegionChange={this.onRegionChange.bind(this)}
           onRegionChangeComplete={this.onRegionChange.bind(this)}
         >
-          {this.renderMarkers()}
+          {this.props.markerPositions && this.renderMarkers()}
         </MapView>
       </View>
     );
@@ -227,13 +248,12 @@ const styles = {
   }
 };
 
-const mapStateToProps = state => {
-  return state.map;
-};
+const mapStateToProps = state => state.map;
 
 export default connect(mapStateToProps,
   {
     updateUserPosition,
     updateMapRegion,
+    updateMarkers,
     errorMessage
   })(MapViews);
