@@ -113,14 +113,11 @@ class Login extends Component {
   }
 
   createUser = (uid, userData, token, dp) => {
-    console.log('authenticate 2');
     const defaults = {
       uid,
       token,
       dp
     };
-    console.log('this is the dp');
-    console.log(dp);
     firebase.database().ref('users').child(uid)
       .update({ ...userData, ...defaults })
       .then(() => this.getCurrentLocation(defaults));
