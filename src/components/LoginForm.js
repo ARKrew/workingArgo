@@ -105,7 +105,7 @@ class Login extends Component {
           <View style={styles.container}>
             <Image 
               style={{ width: 110, height: 110 }}
-              source={require('../img/pirate.png')} alt='pirate ship'
+              source={require('../assets/images/pirate.png')} alt='pirate ship'
             />
             <Text style={styles.titleFont}>
               ARgo

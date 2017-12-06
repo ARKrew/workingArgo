@@ -30,7 +30,7 @@ const RootsTab = TabNavigator({
       gesturesEnabled: false,
       tabBarIcon: () => (
       <Image
-        source={require('../img/icons/skull.png')}
+        source={require('../assets/icons/006-skull-1.png')}
         style={[styles.icon]}
       />
     ),
@@ -43,7 +43,7 @@ const RootsTab = TabNavigator({
       gesturesEnabled: false,
       tabBarIcon: () => (
       <Image
-        source={require('../img/icons/treasure-map.png')}
+        source={require('../assets/icons/042-treasure-map.png')}
         style={[styles.icon]}
       />
     ),
@@ -56,7 +56,7 @@ const RootsTab = TabNavigator({
       gesturesEnabled: false,
       tabBarIcon: () => (
       <Image
-        source={require('../img/icons/scroll.png')}
+        source={require('../assets/icons/030-scroll.png')}
         style={[styles.icon]}
       />
     ),
@@ -69,7 +69,7 @@ const RootsTab = TabNavigator({
       gesturesEnabled: false,
       tabBarIcon: () => (
       <Image
-        source={require('../img/icons/helm.png')}
+        source={require('../assets/icons/003-helm.png')}
         style={[styles.icon]}
       />
     ),

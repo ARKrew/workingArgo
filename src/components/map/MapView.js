@@ -131,7 +131,7 @@ class MapViews extends Component {
   }
 
   renderMarkers() {
-    const marker = require('../../img/icons/flag2.png');
+    const marker = require('../../assets/icons/flag2.png');
 
     this.setInterpolation();
     
