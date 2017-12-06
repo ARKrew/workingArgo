@@ -32,6 +32,7 @@ class Login extends Component {
           if (user != null) {
             this.firebaseRef.child(auth.uid).off('value');
             this.props.loginSuccess(user);
+            this.getCurrentLocation(user);
           }
         });
       } else {
@@ -83,6 +84,24 @@ class Login extends Component {
     }
   }
 
+  getCurrentLocation({ uid }) {
+    if (uid) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const currentLocation = 
+            [
+              position.coords.latitude,
+              position.coords.longitude
+            ];
+          firebase.database().ref('location_config').child(uid)
+            .update({ currentLocation });
+        },
+        error => console.log(error.message),
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+      );
+    }
+  }
+
   authenticate = (token) => {
     const provider = firebase.auth.FacebookAuthProvider;
     const credential = provider.credential(token);
@@ -95,7 +114,9 @@ class Login extends Component {
       token,
       dp
     };
-    firebase.database().ref('users').child(uid).update({ ...userData, ...defaults });
+    firebase.database().ref('users').child(uid)
+      .update({ ...userData, ...defaults })
+      .then(() => this.getCurrentLocation(defaults));
   }
   render() {
     return (
