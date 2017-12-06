@@ -5,7 +5,8 @@ import {
   ActivityIndicator,
   Button, 
   Text,
-  Image
+  Image,
+  TouchableOpacity
 } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
@@ -41,7 +42,7 @@ class Login extends Component {
   }
 
   onPressLogin() {
-    this.setState({ showSpinner: true })
+    this.setState({ showSpinner: true });
         LoginManager.logInWithReadPermissions([
           'public_profile',
           'user_birthday',
@@ -100,23 +101,21 @@ class Login extends Component {
   render() {
     return (
       this.state.showSpinner ? <View style={styles.container}><ActivityIndicator animating={this.state.showSpinner} /></View> :
-      <View style={{ flex: 1 }}>
-          <View style={{flex: 1, backgroundColor: '#1E5AFF'}} />
-          <View style={styles.container}>
+      <View style={styles.container}>
+          <View style={styles.imageContainer}>
             <Image 
-              style={{ width: 110, height: 110 }}
+              style={{ width: 140, height: 140 }}
               source={require('../img/pirate.png')} alt='pirate ship'
             />
-            <Text style={styles.titleFont}>
+            <Text style={styles.appTitleFont}>
               ARgo
             </Text>
-            <Button
-              style={styles.buttonStyle}
-              onPress={this.onPressLogin.bind(this)}
-              title="Login with Facebook"
-            />
+            <TouchableOpacity onPress={this.onPressLogin.bind(this)} style={styles.buttonStyle}>
+              <Text style={styles.titleFont}>
+                Login with Facebook
+              </Text>
+            </TouchableOpacity>
           </View>
-          <View style={{flex: 1, backgroundColor: '#1E5AFF'}} />
       </View>
     );
   }
@@ -125,25 +124,38 @@ class Login extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 2,
+    backgroundColor: "#00aced",
     justifyContent: "center",
     alignItems: "center"
-    // backgroundColor: '#F5FCFF',
   },
-  titleFont: {
-    fontSize: 36,
-    color: '#1E5AFF'
+  appTitleFont: {
+    fontSize: 54,
+    color: "#0084b4"
   },
-  buttonStyle: {
-    backgroundColor: "#841584",
+  imageContainer: {
+    height: 370,
+    width: 280,
     justifyContent: "center",
     alignItems: "center",
-    height: 60,
-    paddingTop: 15,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    elevation: 2,
-    position: "relative",
+    backgroundColor: "#ffffff",
+    borderRadius: 10,
+    borderWidth: 1
+  },
+  buttonStyle: {
+    backgroundColor: "#68a0cf",
+    justifyContent: "center",
+    alignItems: "center",
+    height: 40,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 25,
+    paddingRight: 25,
+    marginTop: 20,
+    borderRadius: 10,
+    borderWidth: 1
+  },
+  titleFont: {
+    fontSize: 22
   }
 });
 
