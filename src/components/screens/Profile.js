@@ -12,7 +12,7 @@ class Profile extends Component {
 constructor(props) {
     super(props);
     this.state = {
-      uri: ''
+      uri: '../assets/images/pirate.png'
     };
 }
 
@@ -57,6 +57,7 @@ componentDidMount() {
 
 const styles = StyleSheet.create({
   text: {
+    fontFamily: 'Lato-Regular',
     marginTop: 5,
     fontSize: 14,
     textAlign: 'center',
@@ -65,8 +66,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: 120,
     height: 120,
+    borderRadius: 60
   },
   badgesText: {
+    borderWidth: 0,
+    color: '#979268',
+    fontFamily: 'Lato-Regular',
     fontSize: 18,
     fontWeight: 'bold',
     textShadowRadius: 2

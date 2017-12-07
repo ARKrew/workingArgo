@@ -3,7 +3,7 @@ import {
   StyleSheet,
   View,
   ActivityIndicator,
-  Button, 
+  TouchableHighlight,
   Text,
   Image
 } from 'react-native';
@@ -13,7 +13,7 @@ import { loginSuccess } from '../actions/AuthActions';
 
 const FBSDK = require('react-native-fbsdk');
 
-const { LoginManager, AccessToken } = FBSDK;
+const { LoginButton, LoginManager, AccessToken } = FBSDK;
 
 class Login extends Component {
   constructor(props) {
@@ -92,7 +92,7 @@ class Login extends Component {
     if (uid) {
       navigator.geolocation.getCurrentPosition(
         position => {
-          const currentLocation = 
+          const currentLocation =
             [
               position.coords.latitude,
               position.coords.longitude
@@ -125,23 +125,26 @@ class Login extends Component {
   render() {
     return (
       this.state.showSpinner ? <View style={styles.container}><ActivityIndicator animating={this.state.showSpinner} /></View> :
-      <View style={{ flex: 1 }}>
-          <View style={{flex: 1, backgroundColor: '#1E5AFF'}} />
+      <View style={{ flex: 1, backgroundColor: '#72CDCE' }}>
           <View style={styles.container}>
-            <Image 
+            <Image
               style={{ width: 110, height: 110 }}
               source={require('../assets/images/pirate.png')} alt='pirate ship'
             />
             <Text style={styles.titleFont}>
               ARgo
             </Text>
-            <Button
-              style={styles.buttonStyle}
-              onPress={this.onPressLogin.bind(this)}
-              title="Login with Facebook"
-            />
+              <TouchableHighlight
+                style={styles.container2}
+                onPress={this.onPressLogin.bind(this)}
+              >
+                <View style={styles.FBLoginButton}>
+                  <Image style={styles.FBLogo} source={require('../assets/images/FB-f-Logo__white_144.png')} />
+                  <Text style={styles.FBLoginButtonText}
+                    numberOfLines={1}>Continue with Facebook</Text>
+                </View>
+              </TouchableHighlight>
           </View>
-          <View style={{flex: 1, backgroundColor: '#1E5AFF'}} />
       </View>
     );
   }
@@ -150,25 +153,53 @@ class Login extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 2,
-    justifyContent: "center",
-    alignItems: "center"
-    // backgroundColor: '#F5FCFF',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   titleFont: {
-    fontSize: 36,
-    color: '#1E5AFF'
+    fontFamily: 'IM Fell English',
+    fontStyle: 'italic',
+    fontSize: 45,
+    color: '#FCFCFA'
   },
-  buttonStyle: {
-    backgroundColor: "#841584",
-    justifyContent: "center",
-    alignItems: "center",
-    height: 60,
-    paddingTop: 15,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    elevation: 2,
-    position: "relative",
+  container2: {
+    marginTop: 350,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  FBLoginButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 30,
+    width: 200,
+    paddingLeft: 2,
+    backgroundColor: 'rgb(66,93,174)',
+    borderRadius: 3,
+    borderWidth: 1.5,
+    borderColor: 'rgb(66,93,174)',
+    shadowColor: '#000000',
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 1,
+      width: 0
+    },
+  },
+  FBLoginButtonText: {
+    color: 'white',
+    fontWeight: '600',
+    fontFamily: 'Helvetica neue',
+    fontSize: 14.2,
+    marginLeft: 18,
+  },
+  FBLogo: {
+    position: 'absolute',
+    height: 14,
+    width: 14,
+    left: 7,
+    top: 7,
   }
 });
 
