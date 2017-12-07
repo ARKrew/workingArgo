@@ -2,12 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 import { Card, CardSection, Header } from '../common';
+import { updateProfileBadges } from '../../actions';
 
 class Profile extends Component {
 
 constructor(props) {
     super(props);
 }
+
+// TODO: Pass in user info from firebase to update badges
+// componentWillMount() {
+//   const selectedBadge = '016-bomb.png';
+//   this.props.updateProfileBadges({ displayBadge: selectedBadge });
+// }
 
 // shouldComponentUpdate(nextProps) {
 //   console.log('this is the current route');
@@ -86,7 +93,7 @@ const styles = StyleSheet.create({
   badgeContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     alignItems: 'stretch'
   },
   badge: {
@@ -102,4 +109,6 @@ const mapStateToProps = state => ({
   userBadges: state.badge
 });
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps, {
+  updateProfileBadges
+})(Profile);
