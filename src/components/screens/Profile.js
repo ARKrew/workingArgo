@@ -1,25 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, Image, Button, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 import { Card, CardSection, Header } from '../common';
-import firebase from 'firebase';
-
-// const { width, height } = Dimensions.get("window");
-// const auth = firebaseApp.auth();
 
 class Profile extends Component {
 
 constructor(props) {
     super(props);
-    this.state = {
-      uri: ''
-    };
-}
-
-componentDidMount() {
-    console.log('this is the profile')
-    console.log(this.props);
-    this.setState({ uri: this.props.dp });
 }
 
 // shouldComponentUpdate(nextProps) {
@@ -31,6 +18,7 @@ componentDidMount() {
   render() {
     const headerName = this.props.displayName;
     const joinDate = this.props.joinDate;
+    const uri = this.props.dp;
 
       return (
         <View>
@@ -38,7 +26,7 @@ componentDidMount() {
             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
               <Image
                 style={styles.image}
-                source={{ uri: this.state.uri }}
+                source={{ uri }}
               />
             <Text style={styles.text}>Member since: {joinDate}</Text>
             </View>
