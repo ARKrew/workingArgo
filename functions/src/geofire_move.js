@@ -9,12 +9,14 @@ const GeoFire = require('geofire')
 
 let currentLocation;
 let uid;
+let geoQuery;
+let fbLocation;
 
 module.exports = (event) => {
   
   // triggers when there is an update to current_location in the database, such
   // as when a person moves the map. 
-  event.geoFireMove = functions.database.ref('current_location/').onUpdate(event => {
+  event.geoFireMove = functions.database.ref('current_location').onUpdate(event => {
   
     // this grabs the user's uid
     uid = event.auth.variable ? event.auth.variable.uid : null;
@@ -28,24 +30,52 @@ module.exports = (event) => {
 
     }).catch(err => console.log(err))
     .then(() => {
-      
-      let geoQuery; 
 
-      geoQuery.updateCriteria({
-        center: currentLocation,   // coordinates each time we move
-        radius: 2                  // stays as is
-      });
-                  
-      let locations = [];
+      // grab all portal locations within the database
+      admin.database().ref('/portal_coordinates_all').once('value', snapshot => { 
+        fbLocation = snapshot.val(); 
+        // console.log ("snapshot of location", fbLocation);
+      })
+      .then(() => {
       
+      // Create a Firebase reference where GeoFire will store its information
+      let firebaseRef = admin.database().ref('geofire');
+      
+      // Create a GeoFire index
+      let geoFire = new GeoFire(firebaseRef);
+
+      // create a geofire specific key for all portals in the database 
+      geoFire.set(fbLocation)
+      .then(() => {
+        console.log("Provided key has been added to GeoFire");
+      }).catch(err => console.log(err))
+      .then(() => {
+        // define what the center location is
+        let geoQuery = geoFire.query({
+          // swap lat/long coordinates w/ 'currentLocation'
+          center: currentLocation, // zankou
+          // center: [33.668648, -117.866387], // south coast benihana
+          radius: 2
+          // note: radius scale is km
+        });
+        
+        geoQuery.updateCriteria({
+          center: currentLocation,   // coordinates each time we move
+          radius: 2                  // stays as is
+        });
+        
+        // gathers fbLocations that are x distance from the center
+        let locations = [];
+
+// ********************************* 
+
       // fires when a key (name) moves from a location outside of this query to one inside of it or
       // when a key is written to GeoFire for the first time and it falls within this
       // query.
       let onKeyEnteredRegistration = geoQuery.on("key_entered", function(key, location, distance) {
-        // if geofire key = portals completed then ignore, otherwise push. repeat for others.
-        if (location !== functions.database.ref(`portals_completed_by_id/${uid}/{id}`)) {
+        // if (location !== functions.database.ref(`portals_completed_by_id/${uid}/{id}`)) {
           locations.push(location);
-        };
+        // };
         console.log(locations);
       });
       
@@ -77,9 +107,10 @@ module.exports = (event) => {
         // Cancel the "key_moved" callback
         onKeyMovedRegistration.cancel();
       });
-    }).catch(err => console.log(err))
+    })
+    .catch(err => console.log(err))
   })
+})
+})
 }
-  
-  
-  
+

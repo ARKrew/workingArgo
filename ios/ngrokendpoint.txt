@@ -1,6 +1,1 @@
-<<<<<<< HEAD
 http://ed35cf2a.ngrok.io/
-=======
-
-http://95fd69ba.ngrok.io/
->>>>>>> 2437b72f79f8a388a95bdd8203d6ebe1896647d9

@@ -75,10 +75,6 @@ class Login extends Component {
               position.coords.latitude,
               position.coords.longitude
             ];
-<<<<<<< HEAD
-          firebase.database().ref('current_location').child(uid)
-            .update({ currentLocation });
-=======
 
             if (currentLocation.length > 0) {
               firebase.database().ref('current_location').child(uid)
@@ -88,7 +84,6 @@ class Login extends Component {
               
               this.alertError(errorMessage);
             }
->>>>>>> 2437b72f79f8a388a95bdd8203d6ebe1896647d9
         },
         error => this.alertError(error.message),
         { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
