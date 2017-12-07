@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { loginSuccess } from '../actions/AuthActions';
 
 const FBSDK = require('react-native-fbsdk');
-const pirateImg = require('../img/pirate.png');
+const pirateImg = require('../assets/images/pirate.png');
 
 const { LoginManager, AccessToken } = FBSDK;
 

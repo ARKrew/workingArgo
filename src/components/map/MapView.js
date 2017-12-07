@@ -23,6 +23,7 @@ const screen = Dimensions.get('window');
 const ASPECT_RATIO = screen.width / screen.height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+const markerImg = require('../../assets/icons/flag2.png');
 
 class MapViews extends Component {
   constructor(props) {
@@ -155,8 +156,6 @@ class MapViews extends Component {
   }
 
   renderMarkers() {
-    const marker = require('../../img/icons/flag2.png');
-
     this.setInterpolation();
     
     return this.props.markerPositions.map((location, index) => {
@@ -182,7 +181,7 @@ class MapViews extends Component {
           <Animated.View style={[styles.ring, opacityStyle, scaleStyle]} />
           <Animated.Image 
               style={[styles.markerImage, scaleStyle]}
-              source={marker} 
+              source={markerImg} 
               resizeMode='contain'
           />
         </MapView.Marker>
