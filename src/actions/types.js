@@ -6,3 +6,5 @@ export const ERROR = 'ERROR';
 export const ENTER_AR = 'ENTER_AR';
 export const LIST_NAV = 'LIST_NAV';
 export const UPDATE_MARKERS = 'UPDATE_MARKERS';
+export const CURRENT_DISPLAY_BADGE = 'CURRENT_DISPLAY_BADGE';
+export const ARRAY_OF_COLLECTED_BADGES = 'ARRAY_OF_COLLECTED_BADGES';

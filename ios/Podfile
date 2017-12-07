@@ -23,6 +23,8 @@ target 'workingArgo' do
     ]
   
     pod 'react-native-maps', path: '../node_modules/react-native-maps'
+    pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   end
   
   post_install do |installer|

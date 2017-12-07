@@ -17,6 +17,7 @@
 		"react-native-fbsdk": "^0.6.3",
 		"react-native-loading-spinner-overlay": "^0.5.2",
 		"react-native-maps": "^0.17.1",
+		"react-native-vector-icons": "^4.4.2",
 		"react-navigation": "^1.0.0-beta.20",
 		"react-redux": "^5.0.6",
 		"react-viro": "2.1.0",
@@ -34,5 +35,10 @@
 	},
 	"jest": {
 		"preset": "react-native"
+	},
+	"rnpm": {
+		"assets": [
+			".src/assets/fonts"
+		]
 	}
 }
