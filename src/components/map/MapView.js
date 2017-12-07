@@ -40,8 +40,8 @@ class MapViews extends Component {
   componentDidMount() {
     // Begin tracking location
     this.watchLocation();
-    const userId = firebase.auth().currentUser.uid;
-    const queryPath = `location_config/${userId}/nearby_portal`;
+    const queryPath = `location_config/${this.props.uid}/nearby_portal`;
+    // const userId = firebase.auth().currentUser.uid;
 
     firebase.database().ref(queryPath).once('value')
     .then( 
@@ -111,9 +111,11 @@ class MapViews extends Component {
       };
       if (!isEqual(myPosition, myLastPosition)) {
         this.props.updateUserPosition({ userPosition: myPosition });
+        firebase.database().ref('current_location').child(this.props.uid)
+          .update({ currentLocation: [myPosition.latitude, myPosition.longitude] });
       }
     },
-    err => this.errorMessage({ error: err }),
+    err => this.props.errorMessage({ error: err }),
     this.geolocationOptions);
   }
 
@@ -247,7 +249,7 @@ const styles = {
   }
 };
 
-const mapStateToProps = state => state.map;
+const mapStateToProps = state => ({ ...state.map, ...state.auth.user });
 
 export default connect(mapStateToProps,
   {

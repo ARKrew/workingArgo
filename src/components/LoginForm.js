@@ -77,7 +77,7 @@ class Login extends Component {
             ];
 
             if (currentLocation.length > 0) {
-              firebase.database().ref('location_config').child(uid)
+              firebase.database().ref('current_location').child(uid)
               .update({ currentLocation });
             } else {
               const errorMessage = 'Could not get Current Location';
