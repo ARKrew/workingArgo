@@ -97,12 +97,12 @@ class Login extends Component {
               position.coords.latitude,
               position.coords.longitude
             ];
-          firebase.database().ref('location_config').child(uid)
+          firebase.database().ref('current_location').child(uid)
             .update({ currentLocation });
         },
         error => console.log(error.message),
         { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
-      );
+      ).catch(err => console.log(err)); // needed?
     }
   }
 

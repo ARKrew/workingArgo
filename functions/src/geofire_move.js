@@ -14,13 +14,14 @@ module.exports = (event) => {
   
   // triggers when there is an update to current_location in the database, such
   // as when a person moves the map. 
-  event.geoFireMove = functions.database.ref('location_config/{uid}/current_location').onUpdate(event => {
+  event.geoFireMove = functions.database.ref('current_location/').onUpdate(event => {
   
     // this grabs the user's uid
     uid = event.auth.variable ? event.auth.variable.uid : null;
+    console.log('uid', uid);
 
     // grab current location from database
-    admin.database().ref(`location_config/${uid}/current_location`).once('value', snapshot => {
+    admin.database().ref(`current_location/${uid}/currentLocation`).once('value', snapshot => {
       currentLocation = snapshot.val();
       console.log ('snapshot of current location', currentLocation);
       // there shouldn't be a null since this function triggers when there's a chnage to the current location
