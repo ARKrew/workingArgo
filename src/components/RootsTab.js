@@ -75,9 +75,14 @@ const RootsTab = TabNavigator({
     ),
     }
   }
+}, {
+  tabBarOptions: {
+    activeTintColor: '#f37a81',
+    fontFamily: 'Lato-Regular',
+  }
 },
 {
-  lazy: true
+  lazy: true,
 });
 
 const styles = StyleSheet.create({

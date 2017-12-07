@@ -21,7 +21,7 @@ const styles = {
     paddingTop: 10,
     paddingBottom: 10,
     fontFamily: 'Lato-Regular',
-    color: '#429FCA'
+    color: '#C8243B'
   },
   buttonStyle: {
     flex: 1,
