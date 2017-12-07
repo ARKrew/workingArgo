@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     fontSize: 45,
     textAlign: 'center',
-    paddingTop: 625,
+    paddingTop: 375,
     margin: 20,
     color: '#FFFFFF'
   },
