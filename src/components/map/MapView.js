@@ -40,7 +40,7 @@ class MapViews extends Component {
     // Begin tracking location
     this.watchLocation();
     const userId = firebase.auth().currentUser.uid;
-    const queryPath = 'location_config/' + userId + '/nearby_portal';
+    const queryPath = `location_config/${userId}/nearby_portal`;
 
     firebase.database().ref(queryPath).once('value')
     .then( 
@@ -60,7 +60,7 @@ class MapViews extends Component {
         this.props.updateMarkers({ markerPositions });
       }
     )
-    .catch(error => console.log(error));
+    .catch(error => this.alertError(error));
   }
 
   // Clear watch when component unmounts
@@ -116,10 +116,10 @@ class MapViews extends Component {
     this.geolocationOptions);
   }
 
-  alertError() {
+  alertError(err) {
     Alert.alert(
       'Error Occurred',
-      this.props.error,
+      err,
       [
         { text: 'OK', onPress: () => console.log('OK Pressed') },
       ],
@@ -194,7 +194,7 @@ class MapViews extends Component {
     return (
       <View style={styles.container}>
       {/* Alert the user if there was an issue */}
-        {this.props.error && this.alertError()}
+        {this.props.error && this.alertError(this.props.error)}
         <MapView
           showsUserLocation
           style={styles.map}
