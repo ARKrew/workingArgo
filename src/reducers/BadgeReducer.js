@@ -6,14 +6,18 @@ import {
 import profileBadges from './profileBadges.js';
 
 const INITIAL_STATE = {
-  displayBadge: '',
+  displayBadge: {},
   collectedBadges: profileBadges
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case CURRENT_DISPLAY_BADGE: 
-      return { ...state, ...action.payload };
+    case CURRENT_DISPLAY_BADGE: {
+      const selectedBadge = profileBadges.filter((badge) => {
+        return (badge.fileName === action.payload.displayBadge);
+      });
+      return { ...state, displayBadge: selectedBadge[0] };
+    }
     case ARRAY_OF_COLLECTED_BADGES:
       return { ...state, ...action.payload };
     default: 
