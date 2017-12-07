@@ -6,7 +6,8 @@ import {
   ActivityIndicator,
   TouchableHighlight,
   Text,
-  Image
+  Image,
+  ImageBackground,
 } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
@@ -156,14 +157,14 @@ class Login extends Component {
 
   render() {
     return (
-      this.state.showSpinner ? <View style={styles.container}>
+      this.state.showSpinner ? <View style={styles.spinner}>
       <ActivityIndicator animating={this.state.showSpinner} /></View> :
-      <View style={{ flex: 1, backgroundColor: '#72CDCE' }}>
+      <View style={{ flex: 1, backgroundColor: '#f37a81' }}>
           <View style={styles.container}>
-            <Image
-              style={{ width: 110, height: 110 }}
-              source={pirateImg} alt='pirate ship'
-            />
+            <ImageBackground
+              style={{ flex: 1, justifyContent: 'center' }}
+              source={require('../assets/images/pirate_ship.gif')}
+            >
             <Text style={styles.titleFont}>
               ARgo
             </Text>
@@ -177,6 +178,7 @@ class Login extends Component {
                     numberOfLines={1}>Continue with Facebook</Text>
                 </View>
               </TouchableHighlight>
+              </ImageBackground>
           </View>
       </View>
     );
@@ -184,19 +186,30 @@ class Login extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  spinner: {
     flex: 2,
     justifyContent: 'center',
     alignItems: 'center'
   },
+  container: {
+    top: 0,
+    left: 0,
+    position: 'absolute',
+    width: '100%',
+    height: '80%'
+  },
   titleFont: {
+    backgroundColor: 'transparent',
     fontFamily: 'IM Fell English',
     fontStyle: 'italic',
     fontSize: 45,
-    color: '#FCFCFA'
+    textAlign: 'center',
+    paddingTop: 625,
+    margin: 20,
+    color: '#FFFFFF'
   },
   container2: {
-    marginTop: 350,
+    backgroundColor: 'transparent',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
