@@ -3,6 +3,7 @@ import AuthReducer from './AuthReducer';
 import Navigation from './NavigationReducer';
 import MapReducer from './MapReducer';
 import DemoReducer from './DemoReducer';
+import BadgeReducer from './BadgeReducer';
 
 // Combines reducers for use
 export default combineReducers({
@@ -10,4 +11,5 @@ export default combineReducers({
     nav: Navigation,
     map: MapReducer,
     demoAR: DemoReducer,
+    badge: BadgeReducer
 });
