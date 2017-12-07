@@ -62,17 +62,19 @@ renderUserBadges() {
 
 const styles = StyleSheet.create({
   userContainer: {
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center'
   },
   userImage: {
     marginTop: 20,
     width: 120,
     height: 120,
+    borderRadius: 60
   },
   userText: {
     marginTop: 5,
     fontSize: 14,
+    fontFamily: 'Lato-Regular',
     textAlign: 'center',
   },
   badgesHeader: {
@@ -94,8 +96,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = state => ({ 
-  ...state.auth.user, 
+const mapStateToProps = state => ({
+  ...state.auth.user,
   currentRoute: state.nav.routes[1].index,
   userBadges: state.badge
 });
