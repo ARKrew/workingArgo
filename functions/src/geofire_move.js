@@ -7,10 +7,9 @@ const GeoFire = require('geofire')
 
 // the following should update geofire coordinates when the user moves and returns a set of coordinates based on the center
 
-let currentLocation;
-let uid;
-let geoQuery;
 let fbLocation;
+let uid;
+let currentLocation;
 
 module.exports = (event) => {
   
