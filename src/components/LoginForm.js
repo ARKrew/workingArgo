@@ -119,7 +119,7 @@ class Login extends Component {
                 that.createUser(uid, json, token, fbImage);
               });
             })
-            .catch(err => this.alertError(err)
+            .catch(err => this.alertError(err.message)
             );
           }
         );
