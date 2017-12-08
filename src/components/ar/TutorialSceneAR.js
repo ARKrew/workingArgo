@@ -184,7 +184,7 @@ class TutorialSceneAR extends Component {
 
               {/* ===== Badge inside Portal ===== */}
               <Viro3DObject
-              source={require('./../../../assets//models/coin/coin.obj')}
+              source={require('../../assets/models/coin/coin.obj')}
               materials={["defaultBadge"]}
               scale={[.1, .1, .1]}
               animation={{
