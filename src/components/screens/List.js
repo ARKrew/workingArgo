@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Header, Button, CardSection } from '../common';
 
 // Actions
-import { enterAR } from '../../actions';
+import { enterAR, enterARTutorial } from '../../actions';
 
 class List extends Component {
 
@@ -21,6 +21,9 @@ class List extends Component {
   };
 
   pressedTutorial = () => {
+    this.props.enterARTutorial({
+      enterARTutorial: true,
+    });
     this.props.navigation.navigate('TutorialAR');
   }
 
@@ -45,5 +48,6 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  enterAR
+  enterAR,
+  enterARTutorial
 })(List);
