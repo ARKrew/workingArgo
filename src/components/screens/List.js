@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Header, Button, CardSection } from '../common';
 
 // Actions
-import { enterAR } from '../../actions';
+import { enterAR, enterARTutorial } from '../../actions';
 
 class List extends Component {
 
@@ -20,12 +20,22 @@ class List extends Component {
     this.props.navigation.navigate('MainSceneAR');
   };
 
+  pressedTutorial = () => {
+    this.props.enterARTutorial({
+      enterARTutorial: true,
+    });
+    this.props.navigation.navigate('TutorialAR');
+  }
+
   render() {
     return (
       <View>
         <Header headerText={'List'} />
         <CardSection>
           <Button onPress={this.pressedDemo}>Demo AR Portal</Button>
+        </CardSection>
+        <CardSection>
+          <Button onPress={this.pressedTutorial}>Tutorial AR</Button>
         </CardSection>
       </View>
     );
@@ -38,5 +48,6 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  enterAR
+  enterAR,
+  enterARTutorial
 })(List);

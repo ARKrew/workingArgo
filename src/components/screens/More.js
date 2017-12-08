@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { CardSection, Button, Header } from '../common';
 import { logOut } from '../../actions/AuthActions';
@@ -15,8 +15,12 @@ class More extends Component {
     this.props.navigation.navigate('TermsOfService');
   };
 
-  pressedHelp = () => {
-    this.props.navigation.navigate('HelpAndAbout');
+  pressedAbout = () => {
+    this.props.navigation.navigate('About');
+  }
+
+  pressedContact = () => {
+    this.props.navigation.navigate('Contact');
   }
 
   pressedLogOut = async () => {
@@ -29,18 +33,22 @@ class More extends Component {
   }
 
   render() {
-    console.log('more')
     return (
       <View>
         <Header headerText={'More'} />
         <CardSection>
-          <Button onPress={this.pressedHelp}>
-            Help And About
+          <Button onPress={this.pressedAbout}>
+            About
           </Button>
         </CardSection>
         <CardSection>
           <Button onPress={this.pressedTerms}>
             Terms of Service
+          </Button>
+        </CardSection>
+        <CardSection>
+          <Button onPress={this.pressedContact}>
+            Contact
           </Button>
         </CardSection>
         <CardSection>

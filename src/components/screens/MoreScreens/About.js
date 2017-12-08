@@ -2,13 +2,13 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { Header } from '../../common';
 
-const HelpAndAbout = () => {
+const About = () => {
   return (
     <View>
-      <Header headerText='Help And About' />
+      <Header headerText='About' />
       <Text>Here is some text for this page.</Text>
     </View>
   );
 };
 
-export default HelpAndAbout;
+export default About;

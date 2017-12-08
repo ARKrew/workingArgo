@@ -19,6 +19,7 @@ import { listNavigate } from '../../../actions/ListNavActions';
 // import { AppNavigator } from '../../../AppNavigator';
 import ListNav from './ListNav';
 import { routerInitialState, router, ROUTES } from '../../../AppNavigator';
+import { Button } from '../../../components/common';
 
 const sharedProps = {
     apiKey:"D5FCCB74-1B13-4E50-BCE8-3DAE6B9ED443"
@@ -49,12 +50,12 @@ const sharedProps = {
         );
       }
         return (
-          <TouchableOpacity onPress={this.exitAR} >
-            <Text style={{ color: "black", fontSize: 22, marginTop: 35 }}>
-              Congrats you picked up your first badge! 
-              Now head to your Profile Page to see your new badge! 
-              Click me and I will take you there!
+          <TouchableOpacity >
+            <Text style={{ color: "black", fontSize: 22, marginTop: 35, fontFamily: 'Lato-Regular' }}>
+              Congrats you picked up your first badge!
+              Now head to your Profile Page to see your new badge!
             </Text>
+            <Button onPress={this.exitAR}>Profile Page</Button>
         </TouchableOpacity>
         );
     }
