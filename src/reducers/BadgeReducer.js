@@ -6,7 +6,10 @@ import {
 import profileBadges from './profileBadges.js';
 
 const INITIAL_STATE = {
-  displayBadge: {},
+  displayBadge: {
+    fileName: '043-compass-1.png',
+    image: require('./../assets/icons/043-compass-1.png')
+  },
   collectedBadges: profileBadges
 };
 

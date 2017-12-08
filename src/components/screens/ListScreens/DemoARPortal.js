@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { StyleSheet, View, TouchableHighlight, Image } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { enterAR } from '../../../actions';
 import {
@@ -29,7 +29,7 @@ import {
 
 // For animations
 const itemAnimation = {
-    name: "bounceUpAndDown",
+    name: 'bounceUpAndDown',
     run: true,
     loop: true
 };
@@ -116,32 +116,7 @@ class DemoARPortal extends Component {
       return (
         <ViroARScene onTrackingInitialized={this._onInitialized} >
           {/* ===== Ambient Light hitting all 3D Models (required to view textures) ===== */}
-          <ViroAmbientLight color="#ffffff" intensity={200} />
-
-          {/* <View style={{ position: 'absolute', left: 0, right: 0, bottom: 77, alignItems: 'center' }}>
-          <TouchableHighlight onPress={this._onExit}>
-            <Image source={require('../../../assets/models/button/btn_black.png')} />
-          </TouchableHighlight>
-          </View> */}
-
-          {/* <View style={{ position: 'absolute', left: 0, right: 0, bottom: 77, alignItems: 'center' }}>
-            <TouchableHighlight
-              onPress={this._onExit}
-              // underlayColor={'#00000000'} 
-            >
-              <Image source={require('../../../assets/models/button/btn_black.png')} />
-            </TouchableHighlight>
-          </View> */}
-
-          {/* <ViroButton
-            source={require('./../../../assets/models/button/btn_close.obj/')}
-            // gazeSource={require("./res/button_on_gazing.jpg")}
-            // tapSource={require("./res/button_on_tap_pressed.jpg")}
-            position={[1, 3, -5]}
-            height={2}
-            width={3}
-            onTap={this._onExit} 
-          /> */}
+          <ViroAmbientLight color='#ffffff' intensity={200} />
 
           {/* ===== Loading Spinner for Portal ===== */}
           <ViroSpinner
@@ -164,12 +139,12 @@ class DemoARPortal extends Component {
         <Viro3DObject
           // source={require('./portal_res/models/flag/pirate_flag.obj')}
           source={require('./../../../assets/models/flag/pirate_flag.obj')}
-          materials={["flag"]}
+          materials={['flag']}
           position={[0.75, 0, -1.25]}
           scale={[0.025, 0.025, 0.025]}
           rotation={[30, 0, -25]}
           visible={this.state.isPortalRendered}
-          type="OBJ"
+          type='OBJ'
         />
 
 {/*
@@ -179,22 +154,18 @@ class DemoARPortal extends Component {
 */}
           <ViroPortalScene
             passable={true}
-            dragType="FixedDistance"
+            dragType='FixedDistance'
             onDrag={() => {}} >
 
             {/* ===== Positioning of Portal ===== */}
             <ViroPortal position={[0, 0, -1.3]} scale={[.15, .15, .15]}>
 
               {/* ===== Portal Door ===== */}
-              {/* <Viro3DObject source={require('./portal_res/portal_ship/portal_ship.vrx')}
-                resources={[require('./portal_res/portal_ship/portal_ship_diffuse.png'),
-                            require('./portal_res/portal_ship/portal_ship_normal.png'),
-                            require('./portal_res/portal_ship/portal_ship_specular.png')]} */}
               <Viro3DObject source={require('./../../../assets/models/portal_ship/portal_ship.vrx')}
                 resources={[require('./../../../assets/models/portal_ship/portal_ship_diffuse.png'),
                             require('./../../../assets/models/portal_ship/portal_ship_normal.png'),
                             require('./../../../assets/models/portal_ship/portal_ship_specular.png')]}
-                type="VRX"
+                type='VRX'
                 // Removes spinner when loaded
                 onLoadEnd={() => {
                   this.setState({
@@ -226,15 +197,15 @@ class DemoARPortal extends Component {
               <Viro3DObject
               // source={require('./portal_res/models/badge/coin.obj')}
               source={require('./../../../assets//models/coin/coin.obj')}
-              // materials={["badge"]}
-              materials={["defaultBadge"]}
+              // materials={['badge']}
+              materials={['defaultBadge']}
               scale={[.1, .1, .1]}
               animation={{
-                name: "rotate",
+                name: 'rotate',
                 run: true,
                 loop: true
               }}
-              type="OBJ"
+              type='OBJ'
               />
 
               {/* ===== DAGGER ===== */}
@@ -245,12 +216,12 @@ class DemoARPortal extends Component {
                 rotation={[90, 0, 0]}
                 scale={[.01, .01, .01]}
                 animation={{
-                  name: "rotate",
+                  name: 'rotate',
                   run: true,
                   loop: true
                 }}
                 // onClick
-                type="OBJ"
+                type='OBJ'
               /> */}
 
               {/* ===== Particle Effects on Badge ===== */}
@@ -267,7 +238,7 @@ class DemoARPortal extends Component {
               fixedToEmitter={true}
               // ------ Image source of particle ------
               image={{
-                // source:require("./portal_res/models/particles/yellow_glow.png"),
+                // source:require('./portal_res/models/particles/yellow_glow.png'),
                 source:require('./../../../assets/models/particles/yellow_glow.png'),
                 height:1,
                 width:1,
@@ -281,7 +252,7 @@ class DemoARPortal extends Component {
                 // total number of particles that can be emitted at one time
                 maxParticles:200,
                 spawnVolume:{
-                  shape:"box",
+                  shape:'box',
                   params:[.7, 1, .1],
                   spawnOnSurface:false
                 },
@@ -290,7 +261,7 @@ class DemoARPortal extends Component {
               particleAppearance={{
                 opacity:{
                   initialRange:[0.2, 0.2],
-                  factor:"time",
+                  factor:'time',
                   interpolation:[
                     {endValue:0.4, interval:[0,100]},
                     {endValue:0.0, interval:[200,500]},
@@ -344,29 +315,29 @@ ViroAnimations.registerAnimations({
   // Spinning
   rotate: {
     properties: {
-      rotateY: "+=90"
+      rotateY: '+=90'
     },
     duration: 1000, // 250 .25 seconds
   },
   // Ascend
   bounceUp: {
     properties: {
-      positionY:"+=0.5",
+      positionY:'+=0.5',
     },
-    easing:"Bounce",
+    easing:'Bounce',
     duration: 500
   },
   // Descend
   bounceDown: {
     properties: {
-      positionY:"-=0.5",
+      positionY:'-=0.5',
     },
-    easing:"Bounce",
+    easing:'Bounce',
     duration: 500
   },
   // Runs bounce animation sequentially
   bounceUpAndDown: [
-      ["bounceUp", "bounceDown"],
+      ['bounceUp', 'bounceDown'],
   ],
 });
 
