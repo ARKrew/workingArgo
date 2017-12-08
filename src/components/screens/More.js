@@ -15,8 +15,12 @@ class More extends Component {
     this.props.navigation.navigate('TermsOfService');
   };
 
-  pressedHelp = () => {
-    this.props.navigation.navigate('HelpAndAbout');
+  pressedAbout = () => {
+    this.props.navigation.navigate('About');
+  }
+
+  pressedContact = () => {
+    this.props.navigation.navigate('Contact');
   }
 
   pressedLogOut = async () => {
@@ -33,13 +37,18 @@ class More extends Component {
       <View>
         <Header headerText={'More'} />
         <CardSection>
-          <Button onPress={this.pressedHelp}>
-            Help and About
+          <Button onPress={this.pressedAbout}>
+            About
           </Button>
         </CardSection>
         <CardSection>
           <Button onPress={this.pressedTerms}>
             Terms of Service
+          </Button>
+        </CardSection>
+        <CardSection>
+          <Button onPress={this.pressedContact}>
+            Contact
           </Button>
         </CardSection>
         <CardSection>

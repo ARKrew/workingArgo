@@ -44,6 +44,8 @@ const styles = {
   titleStyle: {
     fontSize: 16,
     fontWeight: 'bold',
+    paddingTop: 8,
+    paddingBottom: 4
   }
 };
 
