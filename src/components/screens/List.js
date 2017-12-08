@@ -20,12 +20,19 @@ class List extends Component {
     this.props.navigation.navigate('MainSceneAR');
   };
 
+  pressedTutorial = () => {
+    this.props.navigation.navigate('TutorialAR');
+  }
+
   render() {
     return (
       <View>
         <Header headerText={'List'} />
         <CardSection>
           <Button onPress={this.pressedDemo}>Demo AR Portal</Button>
+        </CardSection>
+        <CardSection>
+          <Button onPress={this.pressedTutorial}>Tutorial AR</Button>
         </CardSection>
       </View>
     );
