@@ -2,7 +2,7 @@ import {
   USER_POSITION_CHANGE,
   MAP_REGION_CHANGE,
   UPDATE_MARKERS,
-  ERROR
+  UPDATE_MARKER_INDEX
 } from './types';
 
 export const updateUserPosition = data => (
@@ -26,9 +26,10 @@ export const updateMarkers = data => (
   }
 );
 
-export const errorMessage = error => (
+export const updateMarkerIndex = data => (
   {
-    type: ERROR,
-    payload: error
+    type: UPDATE_MARKER_INDEX,
+    payload: data
   }
 );
+
