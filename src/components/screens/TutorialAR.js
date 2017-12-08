@@ -13,18 +13,25 @@ import { connect } from 'react-redux';
 import {
   ViroARSceneNavigator
 } from 'react-viro';
-import { NavigationActions, addNavigationHelpers } from 'react-navigation';
-import DemoARPortal from './TutorialSceneAR';
+import { 
+  NavigationActions, 
+  addNavigationHelpers 
+} from 'react-navigation';
+import TutorialSceneAR from '../ar/TutorialSceneAR';
 import { listNavigate } from '../../actions/ListNavActions';
 // import ListNav from './ListNav';
-import { routerInitialState, router, ROUTES } from '../../AppNavigator';
+import { 
+  routerInitialState, 
+  router, 
+  ROUTES 
+} from '../../AppNavigator';
 import { Button } from '../../components/common';
 
 const sharedProps = {
     apiKey:"D5FCCB74-1B13-4E50-BCE8-3DAE6B9ED443"
   };
 
-  class TutorialSceneAR extends Component {
+  class TutorialAR extends Component {
 
     constructor() {
       super();
@@ -35,17 +42,17 @@ const sharedProps = {
 
     //
     exitAR = () => {
-      // Reset to list screen from TutorialSceneAR
+      // Reset to list screen from TutorialAR
       this.props.navigation.navigate('List');
       this.props.listNavigate();
     }
-    // Replace this function with the contents of _getDemoSceneARNavigator() or _getTutorialSceneARNavigator()
+    // Replace this function with the contents of _getDemoSceneARNavigator() or _getTutorialARNavigator()
     // if you are building a specific type of experience.
     render() {
       console.log('+++++++ar+++++' + this.props.ARstate.enterARTutorial);
     if (this.props.ARstate.enterARTutorial === true) {
         return (
-          <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{ scene: DemoARPortal }} />
+          <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{ scene: TutorialSceneAR }} />
         );
       }
         return (
@@ -60,14 +67,14 @@ const sharedProps = {
     }
 }
 
-// const mapStateToProps = state => {
-//   return {
-//     ARstate: state.demoAR,
-//     navState: state.nav,
-//     currentRoute: state.nav.routes[1].index
-//   };
-// };
+const mapStateToProps = state => {
+  return {
+    ARstate: state.demoAR,
+    navState: state.nav,
+    currentRoute: state.nav.routes[1].index
+  };
+};
 
-// export default connect(mapStateToProps, { listNavigate })(TutorialSceneAR);
+export default connect(mapStateToProps, { listNavigate })(TutorialAR);
 
-  module.export = TutorialSceneAR;
+  // module.export = TutorialAR;

@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { enterAR } from '../../actions';
+import { enterARTutorial } from '../../actions';
 import {
   ViroText,
   ViroARScene,
@@ -78,8 +78,8 @@ class TutorialSceneAR extends Component {
     //     () => { console.log('I do not leak!'); },
     //     500
       setTimeout(() => {
-        this.props.enterAR({
-          enterAR: false,
+        this.props.enterARTutorial({
+          enterARTutorial: false,
         });
     }, 2000);
       // _routeToMap();
@@ -88,8 +88,8 @@ class TutorialSceneAR extends Component {
 
   // ===== Route to map =====
   // _routeToMap() {
-  //   this.props.enterAR({
-  //     enterAR: false,
+  //   this.props.enterARTutorial({
+  //     enterARTutorial: false,
   //   });
   // }
 
@@ -102,7 +102,7 @@ class TutorialSceneAR extends Component {
   // }
 
   render() {
-    if (this.props.ARstate.enterAR) {
+    if (this.props.ARstate.enterARTutorial) {
       return (
         <ViroARScene onTrackingInitialized={this._onInitialized} >
           {/* ===== Ambient Light hitting all 3D Models (required to view textures) ===== */}
@@ -317,5 +317,5 @@ const mapStateToProps = state => ({ ARstate: state.demoAR });
 //
 export default connect(mapStateToProps,
   {
-    enterAR,
+    enterARTutorial,
   })(TutorialSceneAR);
