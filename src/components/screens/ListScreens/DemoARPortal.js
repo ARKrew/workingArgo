@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, TouchableHighlight, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { enterAR } from '../../../actions';
 import {
@@ -59,6 +59,7 @@ class DemoARPortal extends Component {
     // this._onTappedItem = this._onTappedItem.bind(this);
     this._onClickState = this._onClickState.bind(this);
     // this._routeToMap = this._routeToMap.bind(this);
+    this._onExit = this._onExit.bind(this);
   }
 
 // ==============================================================================
@@ -68,7 +69,7 @@ class DemoARPortal extends Component {
 // ===== Text update when AR initialized =====
   _onInitialized() {
     this.setState({
-      text : "Walk In and Tap to Collect!"
+      text : 'Walk In and Tap to Collect!'
     });
   }
 
@@ -90,6 +91,11 @@ class DemoARPortal extends Component {
     }
   }
 
+  _onExit() {
+    this.props.enterAR({
+          enterAR: false,
+        });
+  }
   // ===== Route to map =====
   // _routeToMap() {
   //   this.props.enterAR({
@@ -112,6 +118,31 @@ class DemoARPortal extends Component {
           {/* ===== Ambient Light hitting all 3D Models (required to view textures) ===== */}
           <ViroAmbientLight color="#ffffff" intensity={200} />
 
+          {/* <View style={{ position: 'absolute', left: 0, right: 0, bottom: 77, alignItems: 'center' }}>
+          <TouchableHighlight onPress={this._onExit}>
+            <Image source={require('../../../assets/models/button/btn_black.png')} />
+          </TouchableHighlight>
+          </View> */}
+
+          {/* <View style={{ position: 'absolute', left: 0, right: 0, bottom: 77, alignItems: 'center' }}>
+            <TouchableHighlight
+              onPress={this._onExit}
+              // underlayColor={'#00000000'} 
+            >
+              <Image source={require('../../../assets/models/button/btn_black.png')} />
+            </TouchableHighlight>
+          </View> */}
+
+          {/* <ViroButton
+            source={require('./../../../assets/models/button/btn_close.obj/')}
+            // gazeSource={require("./res/button_on_gazing.jpg")}
+            // tapSource={require("./res/button_on_tap_pressed.jpg")}
+            position={[1, 3, -5]}
+            height={2}
+            width={3}
+            onTap={this._onExit} 
+          /> */}
+
           {/* ===== Loading Spinner for Portal ===== */}
           <ViroSpinner
             type='light'
@@ -132,7 +163,7 @@ class DemoARPortal extends Component {
         {/* ===== Pirate Flag ====== */}
         <Viro3DObject
           // source={require('./portal_res/models/flag/pirate_flag.obj')}
-          source={require('././../../../assets/models/flag/pirate_flag.obj')}
+          source={require('./../../../assets/models/flag/pirate_flag.obj')}
           materials={["flag"]}
           position={[0.75, 0, -1.25]}
           scale={[0.025, 0.025, 0.025]}
