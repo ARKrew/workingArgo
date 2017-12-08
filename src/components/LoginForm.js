@@ -119,7 +119,7 @@ class Login extends Component {
                 that.createUser(uid, json, token, fbImage);
               });
             })
-            .catch(err => this.alertError(err)
+            .catch(err => this.alertError(err.message)
             );
           }
         );
@@ -171,6 +171,7 @@ class Login extends Component {
               <TouchableHighlight
                 style={styles.container2}
                 onPress={this.onPressLogin.bind(this)}
+                underlayColor='transparent'
               >
                 <View style={styles.FBLoginButton}>
                   <Image style={styles.FBLogo} source={require('../assets/images/FB-f-Logo__white_144.png')} />
@@ -209,7 +210,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF'
   },
   container2: {
-    backgroundColor: 'transparent',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

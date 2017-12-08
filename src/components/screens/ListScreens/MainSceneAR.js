@@ -7,7 +7,8 @@ import {
   PixelRatio,
   TouchableHighlight,
   TouchableOpacity,
-  Actions
+  Actions,
+  Image
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
@@ -15,7 +16,8 @@ import {
 } from 'react-viro';
 import { NavigationActions, addNavigationHelpers } from 'react-navigation';
 import DemoARPortal from './DemoARPortal';
-import { listNavigate } from '../../../actions/ListNavActions';
+// import { listNavigate } from '../../../actions/ListNavActions';
+import { listNavigate, enterAR } from '../../../actions';
 // import { AppNavigator } from '../../../AppNavigator';
 import ListNav from './ListNav';
 import { routerInitialState, router, ROUTES } from '../../../AppNavigator';
@@ -32,9 +34,13 @@ const sharedProps = {
       this.state = {
         sharedProps: sharedProps,
       };
+      this.onExit.bind(this);
     }
 
-    //
+    onExit = () => {
+      this.props.enterAR({ enterAR: false }); 
+    }
+
     exitAR = () => {
       // Reset to list screen from MainSceneAR
       this.props.navigation.navigate('List');
@@ -46,7 +52,18 @@ const sharedProps = {
       console.log('+++++++ar+++++' + this.props.ARstate.enterAR);
     if (this.props.ARstate.enterAR === true) {
         return (
-          <ViroARSceneNavigator {...this.state.sharedProps} initialScene={{ scene: DemoARPortal }} />
+          <View style={styles.outer} >
+            <ViroARSceneNavigator style={styles.arView} {...this.state.sharedProps} initialScene={{ scene: DemoARPortal }} />
+              <View style={{ position: 'absolute', left: 0, right: 0, bottom: 77, alignItems: 'center' }}>
+                <TouchableHighlight 
+                  style={styles.buttons} 
+                  onPress={this.onExit}
+                  underlayColor={'#00000000'} 
+                >
+                  <Image source={require('../../../assets/models/button/icon_close.png')} />
+                </TouchableHighlight>
+              </View>
+          </View>
         );
       }
         return (
@@ -61,6 +78,27 @@ const sharedProps = {
     }
 }
 
+const styles = StyleSheet.create({
+  outer: {
+    flex: 1,
+  },
+  arView: {
+    flex: 1,
+  },
+  buttons: {
+    height: 80,
+    width: 80,
+    paddingTop: 20,
+    paddingBottom: 20,
+    marginTop: 10,
+    marginBottom: 10,
+    backgroundColor: '#00000000',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#ffffff00',
+  }
+});
+
 const mapStateToProps = state => {
   return {
     ARstate: state.demoAR,
@@ -69,6 +107,6 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { listNavigate })(MainSceneAR);
+export default connect(mapStateToProps, { listNavigate, enterAR })(MainSceneAR);
 
   // module.export = MainSceneAR;

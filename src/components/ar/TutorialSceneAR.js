@@ -1,22 +1,18 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { StyleSheet, View, TouchableHighlight, Image } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { enterAR } from '../../../actions';
+import { enterARTutorial } from '../../actions';
 import {
-  // ViroARSceneNavigator,
   ViroText,
   ViroARScene,
   ViroAmbientLight,
   Viro360Video,
-  // Viro360Image,
-  // ViroUtils,
   ViroPortal,
   ViroPortalScene,
   Viro3DObject,
   ViroSpinner,
-  // ViroBox,
   ViroMaterials,
   ViroAnimations,
   ViroNode,
@@ -38,7 +34,7 @@ const itemAnimation = {
 // AR COMPONENT -> MAIN SCENE
 // ==============================================================================
 
-class DemoARPortal extends Component {
+class TutorialSceneAR extends Component {
   constructor() {
     super();
 
@@ -59,7 +55,6 @@ class DemoARPortal extends Component {
     // this._onTappedItem = this._onTappedItem.bind(this);
     this._onClickState = this._onClickState.bind(this);
     // this._routeToMap = this._routeToMap.bind(this);
-    this._onExit = this._onExit.bind(this);
   }
 
 // ==============================================================================
@@ -69,7 +64,7 @@ class DemoARPortal extends Component {
 // ===== Text update when AR initialized =====
   _onInitialized() {
     this.setState({
-      text : 'Walk In and Tap to Collect!'
+      text : "Walk In and Tap to Collect!"
     });
   }
 
@@ -83,23 +78,18 @@ class DemoARPortal extends Component {
     //     () => { console.log('I do not leak!'); },
     //     500
       setTimeout(() => {
-        this.props.enterAR({
-          enterAR: false,
+        this.props.enterARTutorial({
+          enterARTutorial: false,
         });
     }, 2000);
       // _routeToMap();
     }
   }
 
-  _onExit() {
-    this.props.enterAR({
-          enterAR: false,
-        });
-  }
   // ===== Route to map =====
   // _routeToMap() {
-  //   this.props.enterAR({
-  //     enterAR: false,
+  //   this.props.enterARTutorial({
+  //     enterARTutorial: false,
   //   });
   // }
 
@@ -112,36 +102,11 @@ class DemoARPortal extends Component {
   // }
 
   render() {
-    if (this.props.ARstate.enterAR) {
+    if (this.props.ARstate.enterARTutorial) {
       return (
         <ViroARScene onTrackingInitialized={this._onInitialized} >
           {/* ===== Ambient Light hitting all 3D Models (required to view textures) ===== */}
           <ViroAmbientLight color="#ffffff" intensity={200} />
-
-          {/* <View style={{ position: 'absolute', left: 0, right: 0, bottom: 77, alignItems: 'center' }}>
-          <TouchableHighlight onPress={this._onExit}>
-            <Image source={require('../../../assets/models/button/btn_black.png')} />
-          </TouchableHighlight>
-          </View> */}
-
-          {/* <View style={{ position: 'absolute', left: 0, right: 0, bottom: 77, alignItems: 'center' }}>
-            <TouchableHighlight
-              onPress={this._onExit}
-              // underlayColor={'#00000000'} 
-            >
-              <Image source={require('../../../assets/models/button/btn_black.png')} />
-            </TouchableHighlight>
-          </View> */}
-
-          {/* <ViroButton
-            source={require('./../../../assets/models/button/btn_close.obj/')}
-            // gazeSource={require("./res/button_on_gazing.jpg")}
-            // tapSource={require("./res/button_on_tap_pressed.jpg")}
-            position={[1, 3, -5]}
-            height={2}
-            width={3}
-            onTap={this._onExit} 
-          /> */}
 
           {/* ===== Loading Spinner for Portal ===== */}
           <ViroSpinner
@@ -163,7 +128,7 @@ class DemoARPortal extends Component {
         {/* ===== Pirate Flag ====== */}
         <Viro3DObject
           // source={require('./portal_res/models/flag/pirate_flag.obj')}
-          source={require('./../../../assets/models/flag/pirate_flag.obj')}
+          source={require('../../assets/models/flag/pirate_flag.obj')}
           materials={["flag"]}
           position={[0.75, 0, -1.25]}
           scale={[0.025, 0.025, 0.025]}
@@ -186,14 +151,10 @@ class DemoARPortal extends Component {
             <ViroPortal position={[0, 0, -1.3]} scale={[.15, .15, .15]}>
 
               {/* ===== Portal Door ===== */}
-              {/* <Viro3DObject source={require('./portal_res/portal_ship/portal_ship.vrx')}
-                resources={[require('./portal_res/portal_ship/portal_ship_diffuse.png'),
-                            require('./portal_res/portal_ship/portal_ship_normal.png'),
-                            require('./portal_res/portal_ship/portal_ship_specular.png')]} */}
-              <Viro3DObject source={require('./../../../assets/models/portal_ship/portal_ship.vrx')}
-                resources={[require('./../../../assets/models/portal_ship/portal_ship_diffuse.png'),
-                            require('./../../../assets/models/portal_ship/portal_ship_normal.png'),
-                            require('./../../../assets/models/portal_ship/portal_ship_specular.png')]}
+              <Viro3DObject source={require('../../assets/models/portal_ship/portal_ship.vrx')}
+                resources={[require('../../assets/models/portal_ship/portal_ship_diffuse.png'),
+                            require('../../assets/models/portal_ship/portal_ship_normal.png'),
+                            require('../../assets/models/portal_ship/portal_ship_specular.png')]}
                 type="VRX"
                 // Removes spinner when loaded
                 onLoadEnd={() => {
@@ -209,8 +170,7 @@ class DemoARPortal extends Component {
             {/* ===== Background Scene inside Portal ====== */}
             {/* TODO: Dynamic update/Customize user portals */}
             <Viro360Video
-              // source={require('./portal_res/360_surf.mp4')}
-              source={require('./../../../assets/portal_backgrounds/360_surf.mp4')}
+              source={require('../../assets/portal_backgrounds/360_surf.mp4')}
               loop={true}
             />
 
@@ -224,9 +184,7 @@ class DemoARPortal extends Component {
 
               {/* ===== Badge inside Portal ===== */}
               <Viro3DObject
-              // source={require('./portal_res/models/badge/coin.obj')}
-              source={require('./../../../assets//models/coin/coin.obj')}
-              // materials={["badge"]}
+              source={require('../../assets/models/coin/coin.obj')}
               materials={["defaultBadge"]}
               scale={[.1, .1, .1]}
               animation={{
@@ -236,22 +194,6 @@ class DemoARPortal extends Component {
               }}
               type="OBJ"
               />
-
-              {/* ===== DAGGER ===== */}
-              {/* <Viro3DObject
-                source={require('./portal_res/res/dagger.obj')}
-                materials={['defaultBadge']}
-                position={[10, 2.5, -4]}
-                rotation={[90, 0, 0]}
-                scale={[.01, .01, .01]}
-                animation={{
-                  name: "rotate",
-                  run: true,
-                  loop: true
-                }}
-                // onClick
-                type="OBJ"
-              /> */}
 
               {/* ===== Particle Effects on Badge ===== */}
               <ViroParticleEmitter
@@ -267,8 +209,7 @@ class DemoARPortal extends Component {
               fixedToEmitter={true}
               // ------ Image source of particle ------
               image={{
-                // source:require("./portal_res/models/particles/yellow_glow.png"),
-                source:require('./../../../assets/models/particles/yellow_glow.png'),
+                source:require('../../assets/models/particles/yellow_glow.png'),
                 height:1,
                 width:1,
               }}
@@ -332,10 +273,10 @@ const styles = StyleSheet.create({
 // ===== 3d Model aterials =====
 ViroMaterials.createMaterials({
   defaultBadge: {
-    diffuseTexture: require('./../../../assets/icons/027-coin.png'),
+    diffuseTexture: require('../../assets/icons/027-coin.png'),
   },
   flag: {
-    diffuseTexture: require('./../../../assets/models/flag/flag_texture.png'),
+    diffuseTexture: require('../../assets/models/flag/flag_texture.png'),
   },
 });
 
@@ -376,5 +317,5 @@ const mapStateToProps = state => ({ ARstate: state.demoAR });
 //
 export default connect(mapStateToProps,
   {
-    enterAR,
-  })(DemoARPortal);
+    enterARTutorial,
+  })(TutorialSceneAR);

@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { 
   View, 
@@ -10,11 +9,12 @@ import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
 import isEqual from 'lodash/isEqual';
 import firebase from 'firebase';
+import MarkerDetails from './MarkerDetails';
 import {
   updateUserPosition,
   updateMapRegion,
   updateMarkers,
-  errorMessage
+  updateMarkerIndex
 } from '../../actions';
 
 // Grab screen dimensions
@@ -28,12 +28,12 @@ const markerImg = require('../../assets/icons/flag2.png');
 class MapViews extends Component {
   constructor(props) {
     super(props);
+    
     this.animation = new Animated.Value(-1);
     this.interpolations = null;
     this.animate.bind(this);
     this.watchId = null;
-    this.index = null;
-    this.geolocationOptions = { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 };
+    this.geolocationOptions = { enableHighAccuracy: true, distanceFilter: 1, timeout: 20000, maximumAge: 1000 };
   }
 
   // Best place to fetch data, will fetch after initial render
@@ -41,27 +41,32 @@ class MapViews extends Component {
     // Begin tracking location
     this.watchLocation();
     const queryPath = `location_config/${this.props.uid}/nearby_portal`;
-    // const userId = firebase.auth().currentUser.uid;
 
     firebase.database().ref(queryPath).once('value')
     .then( 
       snapshot => {
         const markerPositions = snapshot.val().reduce((acc, curr, index) => {
           acc[index] = 
-          { 
-            coordinates:
-              { 
-                latitude: curr[0], 
-                longitude: curr[1] 
-              } 
-          }; 
+            { 
+              coordinates:
+                { 
+                  latitude: curr[0], 
+                  longitude: curr[1] 
+                } 
+            }; 
           return acc;
         }, []);
         
         this.props.updateMarkers({ markerPositions });
       }
     )
-    .catch(error => this.alertError(error));
+    .catch(error => this.alertError(error.message));
+  }
+
+  componentWillUpdate(nextProps) {
+    if (this.props.markerIndex !== nextProps.markerIndex && !nextProps.scroll) {
+      this.animate(nextProps.markerIndex);
+    }
   }
 
   // Clear watch when component unmounts
@@ -82,18 +87,21 @@ class MapViews extends Component {
         (index - 0.7),
         (index - 0.2),
         (index),
-        (index + 0.3),
+        (index + 0.3)
       ];
+
       const scale = this.animation.interpolate({
         inputRange,
         outputRange: [1, 1.75, 2.5, 1],
-        extrapolate: 'clamp',
+        extrapolate: 'clamp'
       });
+
       const opacity = this.animation.interpolate({
         inputRange,
         outputRange: [0, 1, 0, 0],
-        extrapolate: 'clamp',
+        extrapolate: 'clamp'
       });
+
       return { scale, opacity };
     });
   }
@@ -103,19 +111,22 @@ class MapViews extends Component {
     this.watchID = navigator.geolocation.watchPosition(position => {
       const myLastPosition = this.props.userPosition;
       const myPosition =
-      {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA
-      };
+        {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          latitudeDelta: LATITUDE_DELTA,
+          longitudeDelta: LONGITUDE_DELTA
+        };
+
       if (!isEqual(myPosition, myLastPosition)) {
         this.props.updateUserPosition({ userPosition: myPosition });
+
         firebase.database().ref('current_location').child(this.props.uid)
-          .update({ currentLocation: [myPosition.latitude, myPosition.longitude] });
+          .set({ currentLocation: [myPosition.latitude, myPosition.longitude] })
+          .catch(err => this.alertError(err.message));
       }
     },
-    err => this.props.errorMessage({ error: err }),
+    err => this.alertError(err.message),
     this.geolocationOptions);
   }
 
@@ -130,10 +141,16 @@ class MapViews extends Component {
     );
   }
 
+  handleOnPress(index) {
+    this.animate(index);
+    this.props.updateMarkerIndex({ markerIndex: index, scroll: true });
+  }
+
   animate(index) {
-    this.index = index;
-    this.animateToRegion();
+    this.animateToRegion(index);
+
     const initialValue = (index - 0.7);
+
     this.animation.setValue(initialValue);
     Animated.timing(
       this.animation,
@@ -145,14 +162,14 @@ class MapViews extends Component {
     ).start();
   }
 
-  animateToRegion() {
-    const { coordinates } = this.props.markerPositions[this.index];
+  animateToRegion(index) {
+    const { coordinates } = this.props.markerPositions[index];
     // Begin animation to region based on selected marker
     this.refs.map.animateToRegion(
       {
         ...coordinates,
-        latitudeDelta: LATITUDE_DELTA, 
-        longitudeDelta: LONGITUDE_DELTA
+        latitudeDelta: LATITUDE_DELTA / 8, 
+        longitudeDelta: LONGITUDE_DELTA / 8
       }
     );
   }
@@ -178,7 +195,7 @@ class MapViews extends Component {
           key={index} 
           coordinate={location.coordinates}
           style={styles.markerWrap}
-          onPress={() => this.animate(index)}
+          onPress={() => this.handleOnPress(index)}
         >
           <Animated.View style={[styles.ring, opacityStyle, scaleStyle]} />
           <Animated.Image 
@@ -187,7 +204,7 @@ class MapViews extends Component {
               resizeMode='contain'
           />
         </MapView.Marker>
-        );
+      );
     });
   }
 
@@ -195,7 +212,6 @@ class MapViews extends Component {
     return (
       <View style={styles.container}>
       {/* Alert the user if there was an issue */}
-        {this.props.error && this.alertError(this.props.error)}
         <MapView
           showsUserLocation
           style={styles.map}
@@ -206,6 +222,7 @@ class MapViews extends Component {
         >
           {this.props.markerPositions && this.renderMarkers()}
         </MapView>
+        {this.props.markerPositions && <MarkerDetails />}
       </View>
     );
   }
@@ -256,5 +273,5 @@ export default connect(mapStateToProps,
     updateUserPosition,
     updateMapRegion,
     updateMarkers,
-    errorMessage
+    updateMarkerIndex
   })(MapViews);
