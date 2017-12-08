@@ -14,7 +14,7 @@ let currentLocation;
 module.exports = (event) => {
   // triggers when there is an update to users in the database.
   // onUpdate should be updated to onCreate once getCurrentLocation is applied
-  event.geoFireStart = functions.database.ref('current_location').onUpdate(event => {
+  event.geoFireBase = functions.database.ref('user').onUpdate(event => {
    
     // this grabs the user's uid
     uid = event.auth.variable ? event.auth.variable.uid : null;
@@ -56,10 +56,10 @@ module.exports = (event) => {
             // note: radius scale is km
           });
 
-          geoQuery.updateCriteria({
-            center: currentLocation,   // coordinates each time we move
-            radius: 2                  // stays as is
-          });
+          // geoQuery.updateCriteria({
+          //   center: currentLocation,   // coordinates each time we move
+          //   radius: 2                  // stays as is
+          // });
           
           // gathers fbLocations that are x distance from the center
           const locations = [];
@@ -73,15 +73,15 @@ module.exports = (event) => {
             locations.push(location);
           });
 
-          // fires when a key (name) moves from a location inside of this query to one outside of it. 
-          const onKeyExitedRegistration = geoQuery.on('key_exited', (key, location, distance) => {
-            locations.push(location);
-          });
+          // // fires when a key (name) moves from a location inside of this query to one outside of it. 
+          // const onKeyExitedRegistration = geoQuery.on('key_exited', (key, location, distance) => {
+          //   locations.push(location);
+          // });
 
-          // fires when a key which is already in this query moves to another location inside of it.
-          const onKeyMovedRegistration = geoQuery.on('key_moved', (key, location, distance) => {
-            locations.push(location);
-          }); 
+          // // fires when a key which is already in this query moves to another location inside of it.
+          // const onKeyMovedRegistration = geoQuery.on('key_moved', (key, location, distance) => {
+          //   locations.push(location);
+          // }); 
           
           // fires once when this query's initial state has been loaded from the server.
           // this will be used the most
@@ -96,10 +96,10 @@ module.exports = (event) => {
 
             // Cancel the "key_entered" callback
             onKeyEnteredRegistration.cancel();
-            // Cancel the "key_exited" callback
-            onKeyExitedRegistration.cancel();
-            // Cancel the "key_moved" callback
-            onKeyMovedRegistration.cancel();
+            // // Cancel the "key_exited" callback
+            // onKeyExitedRegistration.cancel();
+            // // Cancel the "key_moved" callback
+            // onKeyMovedRegistration.cancel();
           });
         })
         .catch(err => console.log(err));
