@@ -1,7 +1,7 @@
 const profileBadgesGreyScale = [
   {
     fileName: '001-parrot.png',
-    image: require('./../assets/icons/001-parrot.png')
+    image: require('./../assets/icons_greyscale/001-parrot.png')
   },
   {
     fileName: '002-pirate-hat.png',
