@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
+import Communications from "react-native-communications";
 import { CardSection, Button, Header } from '../common';
 import { logOut } from '../../actions/AuthActions';
 
@@ -20,7 +21,17 @@ class More extends Component {
   }
 
   pressedContact = () => {
-    this.props.navigation.navigate('Contact');
+    Communications.email(
+    ['arkrewucla@gmail.com'],
+    ['lowkeendonovan@gmail.com', 'lugraciecy@gmail.com'],
+    null,
+    'ARgo User',
+    'Talk to us!'
+    );
+  }
+
+  pressedDevelopment = () => {
+    Communications.web('https://github.com/ARKrew/workingArgo');
   }
 
   pressedLogOut = async () => {
@@ -49,6 +60,11 @@ class More extends Component {
         <CardSection>
           <Button onPress={this.pressedContact}>
             Contact
+          </Button>
+        </CardSection>
+        <CardSection>
+          <Button onPress={this.pressedDevelopment}>
+            Development
           </Button>
         </CardSection>
         <CardSection>
