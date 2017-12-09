@@ -3,14 +3,15 @@ import {
   ARRAY_OF_COLLECTED_BADGES
 } from '../actions/types';
 
-import profileBadges from './profileBadges.js';
+import profileBadges from '../constants/profileBadges';
+import profileBadgesGreyScale from '../constants/profileBadgesGreyScale';
 
 const INITIAL_STATE = {
   displayBadge: {
     fileName: '043-compass-1.png',
     image: require('./../assets/icons/043-compass-1.png')
   },
-  collectedBadges: profileBadges
+  collectedBadges: profileBadgesGreyScale
 };
 
 export default (state = INITIAL_STATE, action) => {
