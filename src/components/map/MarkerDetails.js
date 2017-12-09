@@ -3,9 +3,10 @@ import { Animated, Dimensions, ScrollView, View, Easing, PanResponder, Image } f
 import { connect } from 'react-redux';
 import { Card, CardSection, Header } from '../common';
 import { updateMarkerIndex } from '../../actions';
+import MarkerDetailItem from './MarkerDetailItem';
 
 const screen = Dimensions.get('window');
-const height = (screen.height - 100);
+const height = (screen.height - 105);
 const initialHeight = screen.height * 0.15;
 const width = screen.width;
 
@@ -30,12 +31,15 @@ class MarkerDetails extends Component {
 
   componentWillUpdate(nextProps) {
     if (nextProps.scroll) {
-      this.animate(initialHeight, 200);
+      this.animate(initialHeight, 1000);
     } 
     if (this.props.markerIndex !== nextProps.markerIndex && nextProps.scroll) {
       const scrollPosition = nextProps.markerIndex * width;
 
       this.scrollToPosition(scrollPosition, nextProps.markerIndex);
+    }
+    if (nextProps.isHunting) {
+      this.animate(0, 200);
     }
   }
 
@@ -80,28 +84,18 @@ class MarkerDetails extends Component {
             style={[{ flex: 1 }, { width }]}
           >
           {this.props.markers && this.props.markers.map((marker, index) => {
-            // console.log(marker.badge.image)
             return (
             <View key={index} style={styles.card} {...this.panResponder.panHandlers}>
-              <Card>
-                <CardSection>
-                  <Header headerText={index} />
-                </CardSection>
-                <CardSection>
-                  <Image 
-                    style={{ width: 50, height: 50 }}
-                    source={marker.badge.image} 
-                  />
-                </CardSection>
-              </Card>
+              <MarkerDetailItem
+                header={index}
+                badge={marker.badge}
+              />
             </View>
-            
             );
           }
         )}
-        
           </ScrollView>
-         </Animated.View>
+        </Animated.View>
       ); 
   }   
 }

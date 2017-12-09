@@ -18,7 +18,6 @@ import {
 } from '../actions';
 
 const FBSDK = require('react-native-fbsdk');
-// const pirateImg = require('../assets/images/pirate.png');
 const pirateShipGIF = require('../assets/images/pirate_ship.gif');
 const FBLogo = require('../assets/images/FB-f-Logo__white_144.png');
 
@@ -100,6 +99,17 @@ class Login extends Component {
     }
   }
 
+  setInitialBadgeState(badges) {
+    // Need to set up collected badges from firebase
+    const collectedBadges = badges || [];
+
+    this.props.updateProfileBadges({ collectedBadges });
+
+    const availableBadges = this.props.badges.availableBadges.filter(badge => collectedBadges.indexOf(badge.fileName) === -1);
+    
+    this.props.updateAvailableBadges({ availableBadges });
+  }
+
   handleCallBack(result) {
     const that = this;
 
@@ -133,18 +143,7 @@ class Login extends Component {
         );
       }
   }
-
-  setInitialBadgeState(badges) {
-    // Need to set up collected badges from firebase
-    const collectedBadges = badges || [];
-
-    this.props.updateProfileBadges({ collectedBadges });
-
-    const availableBadges = this.props.badges.availableBadges.filter(badge => collectedBadges.indexOf(badge.fileName) === -1);
-    
-    this.props.updateAvailableBadges({ availableBadges });
-  }
-
+  
   alertError(errorMessage) {
     Alert.alert(
       'Error Occurred',
