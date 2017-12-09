@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Animated, Dimensions, ScrollView, View, Easing, PanResponder, Image } from 'react-native';
+import { Animated, Dimensions, ScrollView, View, Easing, PanResponder } from 'react-native';
 import { connect } from 'react-redux';
-import { Card, CardSection, Header } from '../common';
 import { updateMarkerIndex } from '../../actions';
 import MarkerDetailItem from './MarkerDetailItem';
 
@@ -70,39 +69,35 @@ class MarkerDetails extends Component {
   }
 
   render() {
-    console.log(this.props);
-
-      return (
-        <Animated.View style={[styles.wrapper, { height: this.animation }]}>
-          <ScrollView
-            horizontal
-            ref='scrollView'
-            scrollEventThrottle={400}
-            scrollEnabled={false}
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-            style={[{ flex: 1 }, { width }]}
-          >
-          {this.props.markers && this.props.markers.map((marker, index) => {
-            return (
+    return (
+      <Animated.View style={[styles.wrapper, { height: this.animation }]}>
+        <ScrollView
+          horizontal
+          ref='scrollView'
+          scrollEventThrottle={400}
+          scrollEnabled={false}
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          style={[{ flex: 1 }, { width }]}
+        >
+        {this.props.markers && this.props.markers.map((marker, index) => {
+          return (
             <View key={index} style={styles.card} {...this.panResponder.panHandlers}>
               <MarkerDetailItem
                 header={index}
                 badge={marker.badge}
               />
             </View>
-            );
-          }
-        )}
-          </ScrollView>
-        </Animated.View>
-      ); 
+          );
+        })}
+        </ScrollView>
+      </Animated.View>
+    ); 
   }   
 }
 
 const styles = { 
   scrollView: {
-    // flex: 1
     position: 'absolute',
     bottom: 0,
     left: 0,
@@ -116,14 +111,14 @@ const styles = {
   },
   card: {
     padding: 10,
-    backgroundColor: "#FFF",
-    shadowColor: "#000",
+    backgroundColor: '#FFF',
+    shadowColor: '#000',
     shadowRadius: 5,
     shadowOpacity: 0.3,
     shadowOffset: { x: 2, y: -2 },
     height,
     width,
-    overflow: "hidden",
+    overflow: 'hidden',
   },
   wrapper: {
     position: 'absolute',
