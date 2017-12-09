@@ -18,7 +18,7 @@ import {
 } from 'react-navigation';
 import DemoARPortal from './DemoARPortal';
 // import { AppNavigator } from '../../../AppNavigator';
-import { 
+import {
   routerInitialState,
   router,
   ROUTES
@@ -72,11 +72,11 @@ const sharedProps = {
           <View style={styles.outer} >
             <ViroARSceneNavigator style={styles.arView} {...this.state.sharedProps} initialScene={{ scene: DemoARPortal }} />
               <View style={styles.buttonContainer}>
-                <TouchableOpacity 
-                  style={styles.buttons} 
+                <TouchableOpacity
+                  style={styles.buttons}
                   onPress={this.onExit}
                   underlayColor={'#00000000'} >
-                  <Image 
+                  <Image
                     style={styles.buttonImage}
                     source={require('../../../assets/models/button/icon_arrow.png')} />
                 </TouchableOpacity>
@@ -104,10 +104,10 @@ const styles = StyleSheet.create({
   arView: {
     flex: 1,
   },
-  buttonContainer: { 
-    position: 'absolute', 
-    left: 5, 
-    top: 9,
+  buttonContainer: {
+    position: 'absolute',
+    left: 10,
+    top: 675,
     alignItems: 'flex-start',
     height: 10,
     width: 10
@@ -124,9 +124,9 @@ const styles = StyleSheet.create({
     width: 50,
   },
   profileButton: {
-    color: 'black', 
-    fontSize: 22, 
-    marginTop: 35, 
+    color: 'black',
+    fontSize: 22,
+    marginTop: 35,
     fontFamily: 'Lato-Regular'
   },
   badge: {
