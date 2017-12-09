@@ -12,7 +12,8 @@ const INITIAL_STATE = {
     fileName: '043-compass-1.png',
     image: require('./../assets/icons/043-compass-1.png')
   },
-  collectedBadges: [],
+  // collectedBadges: [],
+  collectedBadges: profileBadgesGreyScale,
   availableBadges: profileBadges
 };
 

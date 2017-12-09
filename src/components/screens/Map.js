@@ -6,7 +6,7 @@ import MapViews from '../map/MapView';
 
 class Map extends Component {
   shouldComponentUpdate(nextProps) {
-    return nextProps.currentRoute === 1 ? true : false;
+    return nextProps.currentRoute === 1;
   }
 
   render() {

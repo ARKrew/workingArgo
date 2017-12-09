@@ -8,7 +8,7 @@ import { logOut } from '../../actions/AuthActions';
 class More extends Component {
 
   shouldComponentUpdate(nextProps) {
-    return nextProps.currentRoute === 3 ? true : false;
+    return nextProps.currentRoute === 3;
   }
 
   pressedTerms = () => {

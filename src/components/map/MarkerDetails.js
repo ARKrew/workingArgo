@@ -127,8 +127,8 @@ const styles = {
     shadowRadius: 5,
     shadowOpacity: 0.3,
     shadowOffset: { x: 2, y: -2 },
-    height: height,
-    width: width,
+    height,
+    width,
     overflow: "hidden",
   },
   wrapper: {
@@ -140,6 +140,6 @@ const styles = {
   }
 };
 
-const mapStateToProps = state => ({ ...state.map, badges: state.badge.badgeList });
+const mapStateToProps = state => state.map;
 
 export default connect(mapStateToProps, { updateMarkerIndex })(MarkerDetails);

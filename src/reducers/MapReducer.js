@@ -10,8 +10,7 @@ const INITIAL_STATE = {
   mapRegion: null,
   markers: null,
   markerIndex: null,
-  scroll: false,
-  error: null
+  scroll: false
 };
 
 export default (state = INITIAL_STATE, action) => {

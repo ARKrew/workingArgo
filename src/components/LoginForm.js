@@ -136,7 +136,7 @@ class Login extends Component {
 
   setInitialBadgeState(badges) {
     // Need to set up collected badges from firebase
-    const collectedBadges = badges ? collectedBadges : [];
+    const collectedBadges = badges || [];
 
     this.props.updateProfileBadges({ collectedBadges });
 
@@ -177,7 +177,8 @@ class Login extends Component {
   render() {
     return (
       this.state.showSpinner ? <View style={styles.spinner}>
-      <ActivityIndicator animating={this.state.showSpinner} /></View> :
+      <ActivityIndicator animating={this.state.showSpinner} />
+      </View> :
       <View style={{ flex: 1, backgroundColor: '#f37a81' }}>
           <View style={styles.container}>
             <ImageBackground
