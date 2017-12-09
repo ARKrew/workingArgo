@@ -71,7 +71,15 @@ class MapViews extends Component {
       this.animate(nextProps.markerIndex);
     }
     if (this.props.isHunting) {
-      this.midPoint(this.props.userPosition, this.props.selectedMarker, 0.20);
+      const midpoint = this.midPoint(this.props.userPosition, this.props.selectedMarker, 0.20);
+
+      this.refs.map.animateToRegion(
+        {
+          ...midpoint,
+          latitudeDelta: LATITUDE_DELTA / 8, 
+          longitudeDelta: LONGITUDE_DELTA / 8
+        }
+      );
     }
   }
 

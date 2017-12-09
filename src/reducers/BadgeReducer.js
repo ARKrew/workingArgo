@@ -8,13 +8,12 @@ import profileBadges from '../constants/profileBadges';
 import profileBadgesGreyScale from '../constants/profileBadgesGreyScale';
 
 const INITIAL_STATE = {
-  displayBadge: {
-    fileName: '043-compass-1.png',
-    image: require('./../assets/icons/043-compass-1.png')
-  },
-  // collectedBadges: [],
-  collectedBadges: profileBadgesGreyScale,
-  availableBadges: profileBadges
+  availableBadges: profileBadges,
+  displayBadge: {},
+  collectedBadges: ['001-parrot.png', '002-pirate-hat.png', '003-anchor.png'],
+  profileBadges: [],
+  colorBadges: profileBadges,
+  greyBadges: profileBadgesGreyScale
 };
 
 export default (state = INITIAL_STATE, action) => {

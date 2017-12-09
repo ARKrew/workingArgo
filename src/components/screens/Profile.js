@@ -11,10 +11,14 @@ constructor(props) {
 }
 
 // TODO: Pass in user info from firebase to update badges
-// componentWillMount() {
-//   const selectedBadge = '016-bomb.png';
-//   this.props.updateProfileBadges({ displayBadge: selectedBadge });
-// }
+componentWillMount() {
+    const profileBadges = this.props.userBadges.greyBadges.reduce((acc, curr, index) => {
+      acc[index] = this.props.userBadges.collectedBadges.indexOf(curr.fileName) === -1 ? curr : this.props.userBadges.colorBadges[index];
+      return acc;
+    }, 
+  []);
+  this.props.updateProfileBadges({ profileBadges });
+}
 
 // shouldComponentUpdate(nextProps) {
 //   console.log('this is the current route');
@@ -24,8 +28,7 @@ constructor(props) {
 
 // Displays badges collected by user
 renderUserBadges() {
-  return this.props.userBadges.collectedBadges.map((badge) => {
-    console.log(badge.image);
+  return this.props.userBadges.profileBadges.map((badge) => {
     return (
       <Image
         style={styles.badge}
