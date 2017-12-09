@@ -8,7 +8,6 @@ const screen = Dimensions.get('window');
 const height = (screen.height - 100);
 const initialHeight = screen.height * 0.15;
 const width = screen.width;
-const image = require('../../assets/icons/049-whale.png');
 
 class MarkerDetails extends Component {
   constructor(props) {
@@ -89,12 +88,10 @@ class MarkerDetails extends Component {
                   <Header headerText={index} />
                 </CardSection>
                 <CardSection>
-                  <View>
-                <Image 
-                  style={{ width: 50, height: 50 }}
-                  source={marker.badge.image} 
-                />
-                  </View>
+                  <Image 
+                    style={{ width: 50, height: 50 }}
+                    source={marker.badge.image} 
+                  />
                 </CardSection>
               </Card>
             </View>

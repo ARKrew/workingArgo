@@ -11,14 +11,18 @@ import {
 } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
-import { loginSuccess, updateAvailableBadges, updateProfileBadges } from '../actions';
+import { 
+  loginSuccess, 
+  updateAvailableBadges, 
+  updateProfileBadges 
+} from '../actions';
 
 const FBSDK = require('react-native-fbsdk');
 // const pirateImg = require('../assets/images/pirate.png');
 const pirateShipGIF = require('../assets/images/pirate_ship.gif');
 const FBLogo = require('../assets/images/FB-f-Logo__white_144.png');
 
-const { LoginButton, LoginManager, AccessToken } = FBSDK;
+const { LoginManager, AccessToken } = FBSDK;
 
 class Login extends Component {
   constructor(props) {
@@ -45,7 +49,6 @@ class Login extends Component {
             this.firebaseRef.child(auth.uid).off('value');
             this.props.loginSuccess({ ...user, joinDate, displayName });
             this.setInitialBadgeState(user.collectedBadges);
-
             this.getCurrentLocation(user);
           }
         });
@@ -134,8 +137,10 @@ class Login extends Component {
   setInitialBadgeState(badges) {
     // Need to set up collected badges from firebase
     const collectedBadges = badges ? collectedBadges : [];
+
     this.props.updateProfileBadges({ collectedBadges });
-    const availableBadges = this.props.badges.availableBadges.filter(badge => collectedBadges.indexOf(badge) === -1);
+
+    const availableBadges = this.props.badges.availableBadges.filter(badge => collectedBadges.indexOf(badge.fileName) === -1);
     
     this.props.updateAvailableBadges({ availableBadges });
   }
@@ -189,8 +194,10 @@ class Login extends Component {
               >
                 <View style={styles.FBLoginButton}>
                   <Image style={styles.FBLogo} source={FBLogo} />
-                  <Text style={styles.FBLoginButtonText}
-                    numberOfLines={1}>Continue with Facebook</Text>
+                  <Text 
+                    style={styles.FBLoginButtonText}
+                    numberOfLines={1}
+                  >Continue with Facebook</Text>
                 </View>
               </TouchableHighlight>
               </ImageBackground>
@@ -271,4 +278,9 @@ const mapStateToProps = state => (
   }
 );
 
-export default connect(mapStateToProps, { loginSuccess, updateAvailableBadges, updateProfileBadges })(Login);
+export default connect(mapStateToProps, 
+  { 
+    loginSuccess, 
+    updateAvailableBadges, 
+    updateProfileBadges 
+  })(Login);
