@@ -18,7 +18,7 @@ import {
 } from 'react-navigation';
 import DemoARPortal from './DemoARPortal';
 // import { AppNavigator } from '../../../AppNavigator';
-import { 
+import {
   routerInitialState,
   router,
   ROUTES
@@ -67,26 +67,26 @@ const sharedProps = {
     // Replace this function with the contents of _getDemoSceneARNavigator() or _getMainSceneARNavigator()
     // if you are building a specific type of experience.
     render() {
-      console.log('+++++++ar+++++' + this.props.ARstate.enterAR);
     if (this.props.ARstate.enterAR === true) {
         return (
           <View style={styles.outer} >
             <ViroARSceneNavigator style={styles.arView} {...this.state.sharedProps} initialScene={{ scene: DemoARPortal }} />
-              <View style={{ position: 'absolute', left: 0, right: 0, bottom: 77, alignItems: 'center' }}>
-                <TouchableHighlight
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
                   style={styles.buttons}
                   onPress={this.onExit}
-                  underlayColor={'#00000000'}
-                >
-                  <Image source={require('../../../assets/models/button/icon_close.png')} />
-                </TouchableHighlight>
+                  underlayColor={'#00000000'} >
+                  <Image
+                    style={styles.buttonImage}
+                    source={require('../../../assets/models/button/icon_arrow.png')} />
+                </TouchableOpacity>
               </View>
           </View>
         );
       }
         return (
           <TouchableOpacity >
-            <Text style={{ color: 'black', fontSize: 22, marginTop: 35, fontFamily: 'Lato-Regular' }}>
+            <Text style={styles.profileButton}>
               Congrats you picked up your first badge!
               Now head to your Profile Page to see your new badge!
             </Text>
@@ -104,17 +104,30 @@ const styles = StyleSheet.create({
   arView: {
     flex: 1,
   },
+  buttonContainer: {
+    position: 'absolute',
+    left: 10,
+    top: 675,
+    alignItems: 'flex-start',
+    height: 10,
+    width: 10
+  },
   buttons: {
-    height: 80,
-    width: 80,
-    paddingTop: 20,
-    paddingBottom: 20,
-    marginTop: 10,
-    marginBottom: 10,
+    maxHeight: 10,
     backgroundColor: '#00000000',
-    borderRadius: 10,
+    borderRadius: 1,
     borderWidth: 1,
     borderColor: '#ffffff00',
+  },
+  buttonImage: {
+    height: 50,
+    width: 50,
+  },
+  profileButton: {
+    color: 'black',
+    fontSize: 22,
+    marginTop: 35,
+    fontFamily: 'Lato-Regular'
   },
   badge: {
     width: 70,
