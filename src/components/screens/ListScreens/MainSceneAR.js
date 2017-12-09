@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     position: 'absolute',
     left: 10,
-    top: 675,
+    bottom: 0,
     alignItems: 'flex-start',
     height: 10,
     width: 10
