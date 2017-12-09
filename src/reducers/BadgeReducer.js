@@ -4,10 +4,14 @@ import {
   AVAILABLE_BADGES
 } from '../actions/types';
 
-import profileBadges from './profileBadges.js';
+import profileBadges from '../constants/profileBadges';
+import profileBadgesGreyScale from '../constants/profileBadgesGreyScale';
 
 const INITIAL_STATE = {
-  displayBadge: {},
+  displayBadge: {
+    fileName: '043-compass-1.png',
+    image: require('./../assets/icons/043-compass-1.png')
+  },
   collectedBadges: [],
   availableBadges: profileBadges
 };

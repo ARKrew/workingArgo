@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   badgeContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-around',
     alignItems: 'stretch'
   },
   badge: {

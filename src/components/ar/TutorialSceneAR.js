@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
 // ===== 3d Model aterials =====
 ViroMaterials.createMaterials({
   defaultBadge: {
-    diffuseTexture: require('../../assets/icons/027-coin.png'),
+    diffuseTexture: require('../../assets/icons/001-parrot.png'),
   },
   flag: {
     diffuseTexture: require('../../assets/models/flag/flag_texture.png'),
