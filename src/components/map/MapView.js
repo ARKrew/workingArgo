@@ -70,6 +70,9 @@ class MapViews extends Component {
     if (this.props.markerIndex !== nextProps.markerIndex && !nextProps.scroll) {
       this.animate(nextProps.markerIndex);
     }
+    if (this.props.isHunting) {
+      this.midPoint(this.props.userPosition, this.props.selectedMarker, 0.20);
+    }
   }
 
   // Clear watch when component unmounts
@@ -147,6 +150,15 @@ class MapViews extends Component {
   handleOnPress(index) {
     this.animate(index);
     this.props.updateMarkerIndex({ markerIndex: index, scroll: true });
+  }
+
+  midPoint(current, marker, per) {
+    const lat1 = current.latitude;
+    const lat2 = marker.coordinates.latitude;
+    const long1 = current.longitude;
+    const long2 = marker.coordinates.longitude;
+
+    return [lat1 + (lat2 - lat1) * per, long1 + (long2 - long1) * per];
   }
 
   animate(index) {

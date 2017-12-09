@@ -85,7 +85,7 @@ class MarkerDetails extends Component {
             <View key={index} style={styles.card} {...this.panResponder.panHandlers}>
               <MarkerDetailItem
                 header={index}
-                badge={marker.badge}
+                marker={marker}
               />
             </View>
           );

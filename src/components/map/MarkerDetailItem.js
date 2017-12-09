@@ -10,15 +10,15 @@ class MarkerDetailItem extends Component {
   }
 
   handleOnPress() {
-    this.props.updateDisplayBadge({ displayBadge: this.props.badge });
+    this.props.updateDisplayBadge({ displayBadge: this.props.marker.badge });
     // Need to disable ishunting when hunt is complete
-    this.props.initializeHunt({ isHunting: true });
+    this.props.initializeHunt({ isHunting: true, selectedMarker: this.props.marker });
     console.log('after click');
     console.log(this.props);
   }
 
   render() {
-    const { header, badge } = this.props;
+    const { header, marker } = this.props;
 
     return (
       <Card>
@@ -29,7 +29,7 @@ class MarkerDetailItem extends Component {
         </CardSection>
         <CardSection>
           <View>
-            <Image style={{ height: 50, width: 50 }} source={badge.image} />
+            <Image style={{ height: 50, width: 50 }} source={marker.badge.image} />
           </View>
         </CardSection>
           <View>

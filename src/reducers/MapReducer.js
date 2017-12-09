@@ -12,6 +12,7 @@ const INITIAL_STATE = {
   markers: null,
   markerIndex: null,
   isHunting: null,
+  selectedMarker: null,
   scroll: false
 };
 
