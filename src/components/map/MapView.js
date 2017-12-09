@@ -45,19 +45,22 @@ class MapViews extends Component {
     firebase.database().ref(queryPath).once('value')
     .then( 
       snapshot => {
-        const markerPositions = snapshot.val().reduce((acc, curr, index) => {
+        const markers = snapshot.val().reduce((acc, curr, index) => {
+          // Need to set up check to see which badges user has collected
+          // Need to set up removal of collected badges.
           acc[index] = 
             { 
               coordinates:
                 { 
                   latitude: curr[0], 
                   longitude: curr[1] 
-                } 
+                },
+              badge: this.props.availableBadges[index] 
             }; 
           return acc;
         }, []);
         
-        this.props.updateMarkers({ markerPositions });
+        this.props.updateMarkers({ markers });
       }
     )
     .catch(error => this.alertError(error.message));
@@ -82,7 +85,7 @@ class MapViews extends Component {
   }
 
   setInterpolation() {
-    this.interpolations = this.props.markerPositions.map((marker, index) => {
+    this.interpolations = this.props.markers.map((marker, index) => {
       const inputRange = [
         (index - 0.7),
         (index - 0.2),
@@ -163,7 +166,7 @@ class MapViews extends Component {
   }
 
   animateToRegion(index) {
-    const { coordinates } = this.props.markerPositions[index];
+    const { coordinates } = this.props.markers[index];
     // Begin animation to region based on selected marker
     this.refs.map.animateToRegion(
       {
@@ -177,7 +180,7 @@ class MapViews extends Component {
   renderMarkers() {
     this.setInterpolation();
     
-    return this.props.markerPositions.map((location, index) => {
+    return this.props.markers.map((location, index) => {
       const scaleStyle = {
         transform: [
           {
@@ -209,6 +212,7 @@ class MapViews extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <View style={styles.container}>
       {/* Alert the user if there was an issue */}
@@ -220,9 +224,9 @@ class MapViews extends Component {
           onRegionChange={this.onRegionChange.bind(this)}
           onRegionChangeComplete={this.onRegionChange.bind(this)}
         >
-          {this.props.markerPositions && this.renderMarkers()}
+          {this.props.markers && this.renderMarkers()}
         </MapView>
-        {this.props.markerPositions && <MarkerDetails />}
+        {this.props.markers && <MarkerDetails />}
       </View>
     );
   }
@@ -266,7 +270,7 @@ const styles = {
   }
 };
 
-const mapStateToProps = state => ({ ...state.map, ...state.auth.user });
+const mapStateToProps = state => ({ ...state.map, ...state.auth.user, ...state.badge });
 
 export default connect(mapStateToProps,
   {

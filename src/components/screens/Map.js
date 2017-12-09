@@ -10,7 +10,7 @@ class Map extends Component {
   }
 
   render() {
-    console.log('map')
+    console.log('map screen rendered');
     return (
       <View style={{ flex: 1 }}>
         <Header headerText={'Map'} />

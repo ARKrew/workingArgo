@@ -25,6 +25,7 @@ constructor(props) {
 // Displays badges collected by user
 renderUserBadges() {
   return this.props.userBadges.collectedBadges.map((badge) => {
+    console.log(badge.image);
     return (
       <Image
         style={styles.badge}

@@ -8,7 +8,7 @@ import {
 const INITIAL_STATE = {
   userPosition: null,
   mapRegion: null,
-  markerPositions: null,
+  markers: null,
   markerIndex: null,
   scroll: false,
   error: null

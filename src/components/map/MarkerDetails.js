@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Animated, Dimensions, ScrollView, View, Easing, PanResponder } from 'react-native';
+import { Animated, Dimensions, ScrollView, View, Easing, PanResponder, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { Card, CardSection, Header } from '../common';
 import { updateMarkerIndex } from '../../actions';
@@ -8,6 +8,7 @@ const screen = Dimensions.get('window');
 const height = (screen.height - 100);
 const initialHeight = screen.height * 0.15;
 const width = screen.width;
+const image = require('../../assets/icons/049-whale.png');
 
 class MarkerDetails extends Component {
   constructor(props) {
@@ -66,6 +67,8 @@ class MarkerDetails extends Component {
   }
 
   render() {
+    console.log(this.props);
+
       return (
         <Animated.View style={[styles.wrapper, { height: this.animation }]}>
           <ScrollView
@@ -77,14 +80,21 @@ class MarkerDetails extends Component {
             showsHorizontalScrollIndicator={false}
             style={[{ flex: 1 }, { width }]}
           >
-          
-          {this.props.markerPositions && this.props.markerPositions.map((marker, index) => {
+          {this.props.markers && this.props.markers.map((marker, index) => {
+            // console.log(marker.badge.image)
             return (
-            
             <View key={index} style={styles.card} {...this.panResponder.panHandlers}>
               <Card>
                 <CardSection>
                   <Header headerText={index} />
+                </CardSection>
+                <CardSection>
+                  <View>
+                <Image 
+                  style={{ width: 50, height: 50 }}
+                  source={marker.badge.image} 
+                />
+                  </View>
                 </CardSection>
               </Card>
             </View>
@@ -133,6 +143,6 @@ const styles = {
   }
 };
 
-const mapStateToProps = state => state.map;
+const mapStateToProps = state => ({ ...state.map, badges: state.badge.badgeList });
 
 export default connect(mapStateToProps, { updateMarkerIndex })(MarkerDetails);
