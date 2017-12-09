@@ -12,23 +12,22 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { ViroARSceneNavigator } from 'react-viro';
-import { 
-  NavigationActions, 
-  addNavigationHelpers 
+import {
+  NavigationActions,
+  addNavigationHelpers
 } from 'react-navigation';
 import DemoARPortal from './DemoARPortal';
 // import { AppNavigator } from '../../../AppNavigator';
-import ListNav from './ListNav';
 import { 
-  routerInitialState, 
-  router, 
-  ROUTES 
+  routerInitialState,
+  router,
+  ROUTES
 } from '../../../AppNavigator';
 import { Button } from '../../../components/common';
-import { 
-  listNavigate, 
-  enterAR, 
-  updateDisplayBadge 
+import {
+  listNavigate,
+  enterAR,
+  updateDisplayBadge
 } from '../../../actions';
 
 const sharedProps = {
@@ -46,7 +45,7 @@ const sharedProps = {
     }
 
     onExit = () => {
-      this.props.enterAR({ enterAR: false }); 
+      this.props.enterAR({ enterAR: false });
     }
 
     exitAR = () => {
@@ -74,10 +73,10 @@ const sharedProps = {
           <View style={styles.outer} >
             <ViroARSceneNavigator style={styles.arView} {...this.state.sharedProps} initialScene={{ scene: DemoARPortal }} />
               <View style={{ position: 'absolute', left: 0, right: 0, bottom: 77, alignItems: 'center' }}>
-                <TouchableHighlight 
-                  style={styles.buttons} 
+                <TouchableHighlight
+                  style={styles.buttons}
                   onPress={this.onExit}
-                  underlayColor={'#00000000'} 
+                  underlayColor={'#00000000'}
                 >
                   <Image source={require('../../../assets/models/button/icon_close.png')} />
                 </TouchableHighlight>
@@ -133,8 +132,8 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { 
-  listNavigate, 
+export default connect(mapStateToProps, {
+  listNavigate,
   enterAR,
   updateDisplayBadge
 })(MainSceneAR);
