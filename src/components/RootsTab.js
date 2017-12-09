@@ -30,7 +30,7 @@ const RootsTab = TabNavigator({
       gesturesEnabled: false,
       tabBarIcon: () => (
       <Image
-        source={require('../assets/icons/006-skull-1.png')}
+        source={require('../assets/icons/027-skull-1.png')}
         style={[styles.icon]}
       />
     ),
@@ -69,7 +69,7 @@ const RootsTab = TabNavigator({
       gesturesEnabled: false,
       tabBarIcon: () => (
       <Image
-        source={require('../assets/icons/003-helm.png')}
+        source={require('../assets/icons/013-helm.png')}
         style={[styles.icon]}
       />
     ),

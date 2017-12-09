@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
 // ===== 3d Model aterials =====
 ViroMaterials.createMaterials({
   defaultBadge: {
-    diffuseTexture: require('./../../../assets/icons/027-coin.png'),
+    diffuseTexture: require('./../../../assets/icons/006-coin.png'),
   },
   flag: {
     diffuseTexture: require('./../../../assets/models/flag/flag_texture.png'),
