@@ -6,6 +6,7 @@ const GeoFire = require('geofire');
 
 let uid;
 let currentLocation;
+let allPortalsCompleted = [];
 
 module.exports = (event) => {
   // triggers when there is an update to current_location in the database, such
@@ -20,6 +21,19 @@ module.exports = (event) => {
       currentLocation = snapshot.val();
       console.log('snapshot of current location', currentLocation);
     }).catch(err => console.log(err))
+    .then(() => {
+
+    // this only returns the 1st key if there are many
+    admin.database().ref(`portals_completed/${uid}`).once('value', snapshot => { 
+      snapshot.forEach((child) => {
+        let singlePortalCompleted = child.key;
+        allPortalsCompleted.push(singlePortalCompleted);
+        // console.log('single value', child.key);
+      })
+      console.log('all value of portals completed', allPortalsCompleted);
+    }).catch(err => console.log(err));
+
+    })
     .then(() => {
       // Create a GeoFire index
       const geoFire = new GeoFire(admin.database().ref('geofire'));
@@ -38,50 +52,20 @@ module.exports = (event) => {
       let locations = [];
       let openPortal = '';
       let portalKey = '';
-
-      admin.database().ref(`portals_completed/${uid}/`).once('value', snapshot => { 
-        snapshot.forEach(child => {
-          portalDoneKey = child.key;
-          console.log('portal key', portalDoneKey);
-        });
-      }).catch(err => console.log(err));
-
+      
       // fires when a key (name) moves from a location outside of this query
       // to one inside of it or when a key is written to GeoFire for the
       // first time and it falls within this query.
       const onKeyEnteredRegistration = geoQuery.on('key_entered', (key, location, distance) => {          
-        
-        /*
-        admin.database().ref(`portals_completed/${uid}/`).once('value', snapshot => { 
-          snapshot.forEach(child => {
-            let portalDoneKey = child.key;
-            console.log('portal key', portalDoneKey);
 
-            if (key !== portalDoneKey) {
-                locations.push(location);
-      
-                // distance <= 100 ft
-                if (distance <= 0.03) { 
-                  openPortal = true;
-                  portalKey = key;
-                }
-              }
+        function doesPortalExist(value) {
+          if (key === value) {
+            continue;
+            console.log('key & location value', key + ', ' + value);
+          } return locations.push(location);
+        }
 
-          });
-        }).catch(err => console.log(err));
-        */
-
-        // if (key !== portalDoneKey) {
-        //   locations.push(location);
-
-        //   // distance <= 100 ft
-        //   if (distance <= 0.03) { 
-        //     openPortal = true;
-        //     portalKey = key;
-        //   }
-        // }
-        
-        locations.push(location);
+        allPortalsCompleted.filter(doesPortalExist);
 
         // distance <= 100 ft
         if (distance <= 0.03) { 
@@ -89,6 +73,8 @@ module.exports = (event) => {
           portalKey = key;
         }
         
+        // locations.push(location);
+
         // console.log('open portal', openPortal);
         // console.log('geofire key', portalKey);
       });
@@ -107,7 +93,7 @@ module.exports = (event) => {
       // 'ready' will fire again once each time updateCriteria() is called, after
       // all new data is loaded and all other new events have been fired. 
       const onReadyRegistration = geoQuery.on('ready', () => {
-        // console.log('GeoQuery has loaded and fired all other events for initial data');
+        console.log('Moved - GeoQuery has loaded and fired all other events for initial data');
     
         // Update state using the `locations` array
         // console.log('near portals, inside ready', locations);
@@ -125,6 +111,9 @@ module.exports = (event) => {
         onKeyExitedRegistration.cancel();
         // Cancel the "key_moved" callback
         onKeyMovedRegistration.cancel();
+
+        // clear
+        allPortalsCompleted = [];
       });
     })
     .catch(err => console.log(err));

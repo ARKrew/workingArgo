@@ -14,7 +14,7 @@ let currentLocation;
 module.exports = (event) => {
   // triggers when there is an update to users in the database.
   // onUpdate should be updated to onCreate once getCurrentLocation is applied
-  event.geoFireNewUser = functions.database.ref('user').onUpdate(event => {
+  event.geoFireNewUser = functions.database.ref('users').onUpdate(event => {
    
     // this grabs the user's uid
     uid = event.auth.variable ? event.auth.variable.uid : null;
@@ -58,11 +58,20 @@ module.exports = (event) => {
           
           // gathers fbLocations that are x distance from the center
           const locations = [];
+          let openPortal = '';
+          let portalKey = '';
 
           // fires when a key (name) moves from a location outside of this query to one inside of it or
           // when a key is written to GeoFire for the first time and it falls within this
           // query.
           const onKeyEnteredRegistration = geoQuery.on('key_entered', (key, location, distance) => {
+            
+            // distance <= 100 ft
+            if (distance <= 0.03) { 
+              openPortal = true;
+              portalKey = key;
+            }
+        
             locations.push(location);
           });
 
@@ -75,7 +84,11 @@ module.exports = (event) => {
             console.log('near portals, inside ready', locations);
             
             // push nearby locations into the database. template literal baby!
-            admin.database().ref(`location_config/${uid}`).set({ nearby_portal: locations })
+            admin.database().ref(`location_config/${uid}`).set({ nearby_portal: locations });
+
+            // push 'true' locations into the database. but this needs to be deleted afterwards. 
+            admin.database().ref(`portal_open/${uid}`).update({ open_portal: openPortal });
+            admin.database().ref(`portal_open/${uid}`).update({ portal_key: portalKey });          
 
             // Cancel the "key_entered" callback
             onKeyEnteredRegistration.cancel();

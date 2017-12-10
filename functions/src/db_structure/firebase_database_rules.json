@@ -6,14 +6,18 @@
         ".write": "$uid === auth.uid"
       }
     },
+    "current_location": {
+      "$uid": {
+      	// Allow authenticated user to add, update, or remove keys in the location_config index
+      	".read": "$uid === auth.uid",
+    		".write": "$uid === auth.uid"
+      }
+    },
     "location_config": {
-      // Allow anyone to read the location_config index
-      ".read": true,
-
-      // Schema validation
-      "$key": {
-        // Allow any authentication user to add, update, or remove keys in the location_config index
-        ".write": "auth !== null",
+      "$uid": {
+      	// Allow authenticated user to add, update, or remove keys in the location_config index
+      	".read": "$uid === auth.uid",
+    		".write": "$uid === auth.uid"
       }
     },
     "geofire": {
