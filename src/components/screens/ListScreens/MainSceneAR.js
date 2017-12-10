@@ -133,11 +133,7 @@ const styles = StyleSheet.create({
     bottom: 10,
     textAlign: 'center',
     color: '#ffffff',
-    // marginLeft: 20,
-    // marginRight: 20,
-    // top: 250,
     fontSize: 22,
-    // marginTop: 35,
     fontFamily: 'Lato-Regular'
   },
   badge: {
