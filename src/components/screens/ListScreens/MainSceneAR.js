@@ -72,16 +72,16 @@ const sharedProps = {
       }
         return (
           <View style={styles.container}>
-          {this.renderDisplayBadge()}
               <Text style={styles.badgeText}>
                 Congrats on your first badge!
               </Text>
-
+              <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                {this.renderDisplayBadge()}
+              </View>
               <Text style={styles.badgeText}>
                 Now head to your Profile Page to see your new badge!
               </Text>
               <TouchableHighlight>
-
                 <Text style={styles.profileButton} onPress={this.exitAR}>Profile Page</Text>
               </TouchableHighlight>
         </View>
@@ -117,23 +117,27 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#f37a81'
   },
   profileButton: {
-    top: 275,
+    top: 5,
     fontSize: 22,
     textAlign: 'center',
     fontFamily: 'Lato-Bold',
     color: '#C8243B',
   },
   badgeText: {
+    bottom: 10,
     textAlign: 'center',
     color: '#ffffff',
-    marginLeft: 20,
-    marginRight: 20,
-    top: 250,
+    // marginLeft: 20,
+    // marginRight: 20,
+    // top: 250,
     fontSize: 22,
-    marginTop: 35,
+    // marginTop: 35,
     fontFamily: 'Lato-Regular'
   },
   badge: {
