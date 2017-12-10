@@ -2,7 +2,8 @@ import {
   USER_POSITION_CHANGE,
   MAP_REGION_CHANGE,
   UPDATE_MARKERS,
-  UPDATE_MARKER_INDEX
+  UPDATE_MARKER_INDEX,
+  INITIALIZE_HUNT
 } from './types';
 
 export const updateUserPosition = data => (
@@ -33,3 +34,9 @@ export const updateMarkerIndex = data => (
   }
 );
 
+export const initializeHunt = data => (
+  {
+    type: INITIALIZE_HUNT,
+    payload: data
+  }
+)
