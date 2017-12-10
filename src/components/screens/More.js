@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
-import { View, StyleSheet } from 'react-native';
+import { ScrollView, View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import Communications from "react-native-communications";
 import { CardSection, Button, Header } from '../common';
@@ -47,35 +47,43 @@ class More extends Component {
     return (
       <View>
         <Header headerText={'More'} />
-        <CardSection>
-          <Button onPress={this.pressedAbout}>
-            About
-          </Button>
-        </CardSection>
-        <CardSection>
-          <Button onPress={this.pressedTerms}>
-            Terms of Service
-          </Button>
-        </CardSection>
-        <CardSection>
-          <Button onPress={this.pressedContact}>
-            Contact
-          </Button>
-        </CardSection>
-        <CardSection>
-          <Button onPress={this.pressedDevelopment}>
-            Development
-          </Button>
-        </CardSection>
-        <CardSection>
-          <Button onPress={this.pressedLogOut.bind(this)}>
-            Log Out
-          </Button>
-        </CardSection>
+        <ScrollView style={styles.scrollStyle}>
+          <CardSection>
+            <Button onPress={this.pressedAbout}>
+              About
+            </Button>
+          </CardSection>
+          <CardSection>
+            <Button onPress={this.pressedTerms}>
+              Terms of Service
+            </Button>
+          </CardSection>
+          <CardSection>
+            <Button onPress={this.pressedContact}>
+              Contact
+            </Button>
+          </CardSection>
+          <CardSection>
+            <Button onPress={this.pressedDevelopment}>
+              Development
+            </Button>
+          </CardSection>
+          <CardSection>
+            <Button onPress={this.pressedLogOut.bind(this)}>
+              Log Out
+            </Button>
+          </CardSection>
+        </ScrollView>
       </View>
     );
   }
 }
+
+const styles = {
+  scrollStyle: {
+    paddingBottom: 250
+  }
+};
 
 const mapStateToProps = state => ({ currentRoute: state.nav.routes[1].index, logged: state.auth.loggedIn });
 
