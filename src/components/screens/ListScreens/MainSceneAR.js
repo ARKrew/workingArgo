@@ -75,11 +75,12 @@ const sharedProps = {
               <Text style={styles.badgeText}>
                 Congrats on your first badge!
               </Text>
-              {this.renderDisplayBadge()}
+
               <Text style={styles.badgeText}>
                 Now head to your Profile Page to see your new badge!
               </Text>
               <TouchableHighlight>
+                {this.renderDisplayBadge()}
                 <Text style={styles.profileButton} onPress={this.exitAR}>Profile Page</Text>
               </TouchableHighlight>
         </View>
