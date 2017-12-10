@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Animated, Dimensions, ScrollView, View, Easing, PanResponder } from 'react-native';
 import { connect } from 'react-redux';
-import { Card, CardSection, Header } from '../common';
 import { updateMarkerIndex } from '../../actions';
+import MarkerDetailItem from './MarkerDetailItem';
 
 const screen = Dimensions.get('window');
-const height = (screen.height - 100);
+const height = (screen.height - 105);
 const initialHeight = screen.height * 0.15;
 const width = screen.width;
 
@@ -30,12 +30,15 @@ class MarkerDetails extends Component {
 
   componentWillUpdate(nextProps) {
     if (nextProps.scroll) {
-      this.animate(initialHeight, 200);
+      this.animate(initialHeight, 1000);
     } 
     if (this.props.markerIndex !== nextProps.markerIndex && nextProps.scroll) {
       const scrollPosition = nextProps.markerIndex * width;
 
       this.scrollToPosition(scrollPosition, nextProps.markerIndex);
+    }
+    if (nextProps.isHunting) {
+      this.animate(0, 200);
     }
   }
 
@@ -66,42 +69,35 @@ class MarkerDetails extends Component {
   }
 
   render() {
-      return (
-        <Animated.View style={[styles.wrapper, { height: this.animation }]}>
-          <ScrollView
-            horizontal
-            ref='scrollView'
-            scrollEventThrottle={400}
-            scrollEnabled={false}
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-            style={[{ flex: 1 }, { width }]}
-          >
-          
-          {this.props.markerPositions && this.props.markerPositions.map((marker, index) => {
-            return (
-            
+    return (
+      <Animated.View style={[styles.wrapper, { height: this.animation }]}>
+        <ScrollView
+          horizontal
+          ref='scrollView'
+          scrollEventThrottle={400}
+          scrollEnabled={false}
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          style={[{ flex: 1 }, { width }]}
+        >
+        {this.props.markers && this.props.markers.map((marker, index) => {
+          return (
             <View key={index} style={styles.card} {...this.panResponder.panHandlers}>
-              <Card>
-                <CardSection>
-                  <Header headerText={index} />
-                </CardSection>
-              </Card>
+              <MarkerDetailItem
+                header={index}
+                marker={marker}
+              />
             </View>
-            
-            );
-          }
-        )}
-        
-          </ScrollView>
-         </Animated.View>
-      ); 
+          );
+        })}
+        </ScrollView>
+      </Animated.View>
+    ); 
   }   
 }
 
 const styles = { 
   scrollView: {
-    // flex: 1
     position: 'absolute',
     bottom: 0,
     left: 0,
@@ -115,14 +111,14 @@ const styles = {
   },
   card: {
     padding: 10,
-    backgroundColor: "#FFF",
-    shadowColor: "#000",
+    backgroundColor: '#FFF',
+    shadowColor: '#000',
     shadowRadius: 5,
     shadowOpacity: 0.3,
     shadowOffset: { x: 2, y: -2 },
-    height: height,
-    width: width,
-    overflow: "hidden",
+    height,
+    width,
+    overflow: 'hidden',
   },
   wrapper: {
     position: 'absolute',

@@ -10,7 +10,7 @@ import { enterAR, enterARTutorial } from '../../actions';
 class List extends Component {
 
   shouldComponentUpdate(nextProps) {
-    return nextProps.currentRoute === 2 ? true : false;
+    return nextProps.currentRoute === 2;
   }
 
   pressedDemo = () => {
