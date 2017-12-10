@@ -28,12 +28,16 @@ const markerImg = require('../../assets/icons/flag2.png');
 class MapViews extends Component {
   constructor(props) {
     super(props);
-    
+    this.state = {
+      enablePolyline: false
+    };
     this.animation = new Animated.Value(-1);
     this.interpolations = null;
     this.animate.bind(this);
     this.watchId = null;
+    this.isAnimating = false;
     this.geolocationOptions = { enableHighAccuracy: true, distanceFilter: 1, timeout: 20000, maximumAge: 1000 };
+    // this.polyLineCoords = [{ latitude: 34.06365072138657, longitude: -118.448552464198 }, { latitude: 34.061292, longitude: -118.447139 }];
   }
 
   // Best place to fetch data, will fetch after initial render
@@ -49,7 +53,7 @@ class MapViews extends Component {
           // Need to set up check to see which badges user has collected
           // Need to set up removal of collected badges.
           acc[index] = 
-            { 
+            { id: index,
               coordinates:
                 { 
                   latitude: curr[0], 
@@ -70,16 +74,16 @@ class MapViews extends Component {
     if (this.props.markerIndex !== nextProps.markerIndex && !nextProps.scroll) {
       this.animate(nextProps.markerIndex);
     }
-    if (this.props.isHunting) {
-      const midpoint = this.midPoint(this.props.userPosition, this.props.selectedMarker, 0.20);
-
-      this.refs.map.animateToRegion(
-        {
-          ...midpoint,
-          latitudeDelta: LATITUDE_DELTA / 8, 
-          longitudeDelta: LONGITUDE_DELTA / 8
-        }
-      );
+    // Might need to do this.props.isANimating
+    if (nextProps.isHunting && !this.isAnimating) {
+      const midpoint = this.calcMidPoint(nextProps.userPosition, nextProps.selectedMarker);
+      let latitudeDelta = Math.abs(nextProps.userPosition.latitude - nextProps.selectedMarker.coordinates.latitude);
+      let longitudeDelta = Math.abs(nextProps.userPosition.longitude - nextProps.selectedMarker.coordinates.longitude);
+      latitudeDelta += (latitudeDelta / 3);
+      longitudeDelta += (longitudeDelta / 3);
+      
+      this.animateToRegion(midpoint, latitudeDelta, longitudeDelta);
+      this.setState({ enablePolyline: true });
     }
   }
 
@@ -131,7 +135,8 @@ class MapViews extends Component {
           latitudeDelta: LATITUDE_DELTA,
           longitudeDelta: LONGITUDE_DELTA
         };
-
+        console.log('my position is here')
+        console.log(myPosition);
       if (!isEqual(myPosition, myLastPosition)) {
         this.props.updateUserPosition({ userPosition: myPosition });
 
@@ -160,17 +165,22 @@ class MapViews extends Component {
     this.props.updateMarkerIndex({ markerIndex: index, scroll: true });
   }
 
-  midPoint(current, marker, per) {
+  calcMidPoint(current, marker) {
+    this.isAnimating = true;
     const lat1 = current.latitude;
     const lat2 = marker.coordinates.latitude;
     const long1 = current.longitude;
     const long2 = marker.coordinates.longitude;
 
-    return [lat1 + (lat2 - lat1) * per, long1 + (long2 - long1) * per];
+    return { latitude: (lat2 + lat1) / 2, longitude: (long2 + long1) / 2 };
   }
 
   animate(index) {
-    this.animateToRegion(index);
+    const { coordinates } = this.props.markers[index];
+    const singleMarkerLatDelta = LATITUDE_DELTA / 8;
+    const singleMarkerLongDelta = LONGITUDE_DELTA / 8;
+
+    this.animateToRegion(coordinates, singleMarkerLatDelta, singleMarkerLongDelta);
 
     const initialValue = (index - 0.7);
 
@@ -185,54 +195,77 @@ class MapViews extends Component {
     ).start();
   }
 
-  animateToRegion(index) {
-    const { coordinates } = this.props.markers[index];
+  animateToRegion(coordinates, latitudeDelta, longitudeDelta) {
     // Begin animation to region based on selected marker
     this.refs.map.animateToRegion(
       {
         ...coordinates,
-        latitudeDelta: LATITUDE_DELTA / 8, 
-        longitudeDelta: LONGITUDE_DELTA / 8
+        latitudeDelta,
+        longitudeDelta
       }
     );
   }
 
-  renderMarkers() {
+  initializeMarkers() {
     this.setInterpolation();
     
     return this.props.markers.map((location, index) => {
-      const scaleStyle = {
-        transform: [
-          {
-            scale: this.interpolations[index].scale,
-          },
-        ],
-      };
-
-      const opacityStyle = {
-        opacity: this.interpolations[index].opacity,
-      };
-
-      return (
-        <MapView.Marker 
-          key={index} 
-          coordinate={location.coordinates}
-          style={styles.markerWrap}
-          onPress={() => this.handleOnPress(index)}
-        >
-          <Animated.View style={[styles.ring, opacityStyle, scaleStyle]} />
-          <Animated.Image 
-              style={[styles.markerImage, scaleStyle]}
-              source={markerImg} 
-              resizeMode='contain'
-          />
-        </MapView.Marker>
-      );
+      if (!this.props.isHunting) {
+        return this.renderMarkers(location, index);
+      } else if (this.props.isHunting && this.props.selectedMarker.id === index) {
+        return this.renderMarkers(location, index);
+      }
     });
   }
 
+  renderMarkers(location, index) {
+    const scaleStyle = {
+      transform: [
+        {
+          scale: this.interpolations[index].scale,
+        },
+      ],
+    };
+
+    const opacityStyle = {
+      opacity: this.interpolations[index].opacity,
+    };
+
+    return (
+      <MapView.Marker 
+        key={index} 
+        coordinate={location.coordinates}
+        style={styles.markerWrap}
+        onPress={() => this.handleOnPress(index)}
+      >
+        <Animated.View style={[styles.ring, opacityStyle, scaleStyle]} />
+        <Animated.Image 
+            style={[styles.markerImage, scaleStyle]}
+            source={markerImg} 
+            resizeMode='contain'
+        />
+      </MapView.Marker>
+    );
+  }
+
+  renderPolyline() {
+    const startingCoordinates = { latitude: this.props.userPosition.latitude, longitude: this.props.userPosition.longitude };
+    const endingCoordinates = { latitude: this.props.selectedMarker.coordinates.latitude, longitude: this.props.selectedMarker.coordinates.longitude }
+    const polyLineCoords = [startingCoordinates, endingCoordinates];
+    
+    console.log('polyline');
+    // console.log(polyLineCoords);
+    return (
+      <MapView.Polyline 
+        coordinates={polyLineCoords} 
+        strokeColor='#FEA2A4'
+        strokeWidth={3}
+        lineDashPattern={[5]} 
+      />
+    );
+  }
+
   render() {
-    console.log(this.props)
     return (
       <View style={styles.container}>
       {/* Alert the user if there was an issue */}
@@ -244,7 +277,8 @@ class MapViews extends Component {
           onRegionChange={this.onRegionChange.bind(this)}
           onRegionChangeComplete={this.onRegionChange.bind(this)}
         >
-          {this.props.markers && this.renderMarkers()}
+          {this.props.markers && this.initializeMarkers()}
+          {this.state.enablePolyline && this.renderPolyline()}
         </MapView>
         {this.props.markers && <MarkerDetails />}
       </View>
