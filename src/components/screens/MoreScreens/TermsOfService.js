@@ -39,7 +39,7 @@ const styles = {
   viewStyle: {
     paddingLeft: 8,
     paddingRight: 8,
-    paddingBottom: 65,
+    marginBottom: 65
   },
   titleStyle: {
     fontSize: 16,

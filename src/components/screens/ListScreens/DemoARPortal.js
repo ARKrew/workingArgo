@@ -292,11 +292,11 @@ class DemoARPortal extends Component {
 
 const styles = StyleSheet.create({
   helloWorldTextStyle: {
-    fontFamily: 'Arial',
+    fontFamily: 'IM Fell English',
     fontSize: 30,
     color: '#ffffff',
     textAlignVertical: 'center',
-    textAlign: 'center',
+    textAlign: 'center'
   },
 });
 
