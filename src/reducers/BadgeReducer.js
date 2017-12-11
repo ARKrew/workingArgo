@@ -10,8 +10,8 @@ import profileBadgesGreyScale from '../constants/profileBadgesGreyScale';
 const INITIAL_STATE = {
   availableBadges: profileBadges,
   displayBadge: {
-    fileName: '006-coin.png',
-    image: require('./../assets/icons/006-coin.png')
+    fileName: '009-pirate-1.png',
+    image: require('./../assets/icons/009-pirate-1.png')
   },
   collectedBadges: ['001-parrot.png', '002-pirate-hat.png', '003-anchor.png'],
   profileBadges: [],
