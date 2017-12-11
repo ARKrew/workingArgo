@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import DemoARPortal from './DemoARPortal';
-import BadgeAR from '../BadgeAR';
 import {
   Text,
   View,
@@ -15,13 +13,14 @@ import {
   listNavigate,
   enterAR,
   updateDisplayBadge
-} from '../../../actions';
+} from '../../actions';
+import DemoARPortal from './ListScreens/DemoARPortal';
 
 const sharedProps = {
     apiKey: 'D5FCCB74-1B13-4E50-BCE8-3DAE6B9ED443'
   };
 
-  class MainSceneAR extends Component {
+  class BadgeAR extends Component {
 
     constructor() {
       super();
@@ -31,12 +30,16 @@ const sharedProps = {
       this.onExit.bind(this);
     }
 
+    componentWillUnmount() {
+      console.log("BadgeAR UNMOUNTED ASDFASDFLKAGSEJLAJWKELGKA");
+    }
+
     onExit = () => {
       this.props.enterAR({ enterAR: false });
     }
 
     exitAR = () => {
-      // Reset to list screen from MainSceneAR
+      // Reset to list screen from BadgeAR
       this.props.navigation.navigate('List');
       this.props.listNavigate();
     }
@@ -51,29 +54,28 @@ const sharedProps = {
       );
     }
 
+    // Replace this function with the contents of _getDemoSceneARNavigator() or _getBadgeARNavigator()
+    // if you are building a specific type of experience.
     render() {
     if (this.props.ARstate.enterAR === true) {
         return (
-           <BadgeAR />
+          <View style={styles.outer} >
+            <ViroARSceneNavigator style={styles.arView} {...this.state.sharedProps} initialScene={{ scene: DemoARPortal }} />
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={styles.buttons}
+                  onPress={this.onExit}
+                  underlayColor={'#00000000'} >
+                  <Image
+                    style={styles.buttonImage}
+                    source={require('../../assets/models/button/icon_arrow.png')} />
+                </TouchableOpacity>
+              </View>
+          </View>
         );
       }
-        return (
-          <View style={styles.container}>
-              <Text style={styles.badgeText}>
-                Congrats on your first badge!
-              </Text>
-              <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                {this.renderDisplayBadge()}
-              </View>
-              <Text style={styles.badgeText}>
-                Now head to your Profile Page to see your new badge!
-              </Text>
-              <TouchableHighlight>
-                <Text style={styles.profileButton} onPress={this.exitAR}>Profile Page</Text>
-              </TouchableHighlight>
-        </View>
-        );
-    }
+      return null;
+  }
 }
 
 const styles = StyleSheet.create({
@@ -143,4 +145,4 @@ export default connect(mapStateToProps, {
   listNavigate,
   enterAR,
   updateDisplayBadge
-})(MainSceneAR);
+})(BadgeAR);

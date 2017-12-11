@@ -3,12 +3,6 @@ import {
 } from 'react-viro';
 
 const badgeMaterials = ViroMaterials.createMaterials({
-  // {
-  //   diffuseTexture: require('../../assets/icons/006-coin.png'),
-  // },
-  // badge001: {
-  //   diffuseTexture: require('../../assets/icons/006-coin.png'),
-  // },
   '001-parrot.png': {
     diffuseTexture: require('./../assets/icons/001-parrot.png')
   },
