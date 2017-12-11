@@ -67,6 +67,9 @@ class DemoARPortal extends Component {
 // HELPER FUNCTIONS
 // ==============================================================================
 
+  componentWillUnmount() {
+    console.log("DEMOARPORTAL UNMOUNTED ASDFASDFLKAGSEJLAJWKELGKA");
+  }
 // ===== Text update when AR initialized =====
   _onInitialized() {
     this.setState({

@@ -1,0 +1,113 @@
+{
+	"users": {
+    "0mFMmXYKdyO5K6p7vopxlpnUKGq1" : {
+      "dp" : "https://graph.facebook.com/10212985497967952/picture?height=120",
+      "first_name" : "Mike",
+      "id" : "10212985497967952",
+      "last_name" : "Yamato",
+      "token" : "EAABzZC3o7pzwBAB885d0rZC5pZARYPRbAhFNWlomticolZACXuAEeSRjRfaThlU4ZAxaZA6AJdRZCZCsX8JoJhmLAE27MaL1W49Ug3geT2NVpHPubIOtHsDy3JiIxpdi82rSGyy4gAvJAlV7jVUUeAio3ZBbw2NciwZAN80ZBWV2ZA1mQ2AqOaVzptZBpvj582u6tTFj6fi0HbJCy2jvx9v7fLhDwUMyIsln99b2XWTSemz0OipZCrxcTUMLSUYkRaxLn7gX2tlRhdIj2itQZDZD",
+      "uid" : "0mFMmXYKdyO5K6p7vopxlpnUKGq1"
+    },
+    "xA2P1xlvG7WROjOkrVQ4I4ayZRn2" : {
+      "dp" : "https://graph.facebook.com/10212457919136477/picture?height=120",
+      "first_name" : "James",
+      "id" : "10212457919136477",
+      "last_name" : "Tu",
+      "token" : "EAABzZC3o7pzwBADON7o2hIgmsuNWhItfSaQxgpRxTZBNU8x0vQ2tMgafbgVZBgGqcpaa5oeBr3PraLHvY0w8NPZCQfXiG3nevCO5ZAPsuSPPXhBvL0bGABqWwKMvZAuKlYtCL1jVvmgJftVtZA1g61QVQkM9apkQpOnlWWLftyquFd3BT5ugaJpiPdEwKlXZCUhVZBxP0rzZBzPQ8cS2SyHfYs8vZBAo2PAflK6a13DMTSAAwZDZD",
+      "uid" : "xA2P1xlvG7WROjOkrVQ4I4ayZRn2"
+    }
+	},
+	"awards_received_by_id": {
+    // firebase id (Mike)
+		"0mFMmXYKdyO5K6p7vopxlpnUKGq1": {
+			"first_time": true,
+			"five_in_a_row": true,
+			"share_with_friend": false,
+			"create_your_own": false
+		},
+		"xA2P1xlvG7WROjOkrVQ4I4ayZRn2": {
+			"first_time": false,
+			"five_in_a_row": false,
+			"share_with_friend": false,
+			"create_your_own": false
+		}
+  },
+  "awards_received_by_award": {
+		"first_time": {
+			"0mFMmXYKdyO5K6p7vopxlpnUKGq1": true,
+			"xA2P1xlvG7WROjOkrVQ4I4ayZRn2": true
+		},
+		"five_in_a_row": {
+			"0mFMmXYKdyO5K6p7vopxlpnUKGq1": true,
+			"xA2P1xlvG7WROjOkrVQ4I4ayZRn2": true
+		}
+  },
+	// or should it be broken up between 'completed' and 'all'?
+	"portals_completed_by_id": {
+		"0mFMmXYKdyO5K6p7vopxlpnUKGq1": {
+			"-L-967fQCEqC_ZaSH9mD": true,
+      "-L-96AfaYYnhsaSyZycD": true
+    },
+    "xA2P1xlvG7WROjOkrVQ4I4ayZRn2": {
+			"-L-967fQCEqC_ZaSH9mD": true,
+      "-L-96CyJqAzG2WKmqdqp": true
+    }
+  },
+  "portals_completed_by_portal": {
+		"-L-967fQCEqC_ZaSH9mD": {
+			"0mFMmXYKdyO5K6p7vopxlpnUKGq1": true,
+			"xA2P1xlvG7WROjOkrVQ4I4ayZRn2": true
+    },
+    "-L-96AfaYYnhsaSyZycD": {
+			"0mFMmXYKdyO5K6p7vopxlpnUKGq1": true,
+			"xA2P1xlvG7WROjOkrVQ4I4ayZRn2": true
+    }
+  },
+  // good structure, don't adjust
+	"portal_coordinates_all": {
+    "-L-967fQCEqC_ZaSH9mD": [34.063056, -118.447778],
+    "-L-96AfaYYnhsaSyZycD": [34.071864, -118.442188],
+    "-L-96CyJqAzG2WKmqdqp": [34.070029, -118.450036],
+    "-L-96FF5Ijd3P-xLTOR8": [34.061292, -118.447139],
+    "-L-96HnM-JkM67ySd60T": [34.062759, -118.443877],
+    "-L-96KQtEQSv6Ae-3Orp": [33.941589, -118.408498],
+    "-L-96N0QbWgUajZeDs3i": [34.198608, -118.357434],
+    "-L-96Q0GxbQXC6B89yQ3": [33.676119, -117.867390]
+  },
+  // don't tweak
+  "geofire" : {
+    "-L-967fQCEqC_ZaSH9mD" : {
+      ".priority" : "9q5cb8uzwt",
+      "g" : "9q5cb8uzwt",
+      "l" : [ 34.063056, -118.447778 ]
+    },
+    "-L-96AfaYYnhsaSyZycD" : {
+      ".priority" : "9q5cbf94bz",
+      "g" : "9q5cbf94bz",
+      "l" : [ 34.071864, -118.442188 ]
+    }
+  },
+  "location_config": {
+		"0mFMmXYKdyO5K6p7vopxlpnUKGq1": {
+			"current_location": [34.047220, -118.443534],
+			"nearby_locations": [
+        [ 34.061292, -118.447139 ], 
+        [ 34.063056, -118.447778 ], 
+        [ 34.062759, -118.443877 ]
+      ]
+    },
+    "xA2P1xlvG7WROjOkrVQ4I4ayZRn2": {
+			"current_location": [34.047220, -118.443534],
+			"nearby_locations": [
+        [ 34.061292, -118.447139 ],
+        [ 34.063056, -118.447778 ],
+        [ 34.062759, -118.443877 ]
+      ]
+    }
+  },
+	// 'images' don't have any 'users' relationship but does have app relationship, place in database?
+	"images": {
+		"image01": "http://www.petwave.com/~/media/Images/Center/Care-and-Nutrition/Cat/Kittensv2/Kitten-3.ashx",
+		"image02": "http://www.puppyoung.com/wp-content/uploads/sh/shiba-shiba-inu-puppies-breed.jpg"	
+	}
+}
