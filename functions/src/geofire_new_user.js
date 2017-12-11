@@ -13,19 +13,17 @@ let currentLocation;
 
 module.exports = (event) => {
   // triggers when there is an update to users in the database.
-  // onUpdate should be updated to onCreate once getCurrentLocation is applied
   event.geoFireNewUser = functions.database.ref('users').onUpdate(event => {
    
     // this grabs the user's uid
     uid = event.auth.variable ? event.auth.variable.uid : null;
-    console.log('uid', `${uid}`);
+    console.log('new_uid', `${uid}`);
 
     // grab current location from database
     // try and refactor this under a separate function
     admin.database().ref(`current_location/${uid}/currentLocation`).once('value', snapshot => {
       currentLocation = snapshot.val();
-      console.log('snapshot of current location', currentLocation);
-      // if null then ??
+      // console.log('snapshot of current location', currentLocation);
     }).catch(err => console.log(err))
 
     .then(() => {
@@ -44,14 +42,12 @@ module.exports = (event) => {
         // create a geofire specific key for all portals in the database 
         geoFire.set(fbLocation)
         .then(() => {
-          console.log('Provided key has been added to GeoFire');
+          // console.log('Provided key has been added to GeoFire');
         }).catch(err => console.log(err))
         .then(() => {
           // define what the center location is
           const geoQuery = geoFire.query({
-            // swap lat/long coordinates w/ 'currentLocation'
-            center: currentLocation, // zankou
-            // center: [33.668648, -117.866387], // south coast benihana
+            center: currentLocation,
             radius: 2
             // note: radius scale is km
           });
@@ -78,10 +74,9 @@ module.exports = (event) => {
           // fires once when this query's initial state has been loaded from the server.
           // this will be used the most
           const onReadyRegistration = geoQuery.on('ready', () => {
-            console.log('GeoQuery has loaded and fired all other events for initial data');
+            console.log('New - GeoQuery has loaded and fired all other events for initial data');
             
-            // Update state using the `locations` array
-            console.log('near portals, inside ready', locations);
+            // console.log('near portals, inside ready', locations);
             
             // push nearby locations into the database. template literal baby!
             admin.database().ref(`location_config/${uid}`).set({ nearby_portal: locations });
@@ -93,6 +88,18 @@ module.exports = (event) => {
             // Cancel the "key_entered" callback
             onKeyEnteredRegistration.cancel();
           });
+
+          // ---------- comment out below when not needed ----------
+          // -------------- use when removing portals --------------
+          // -------------------------------------------------------
+          // geoFire.remove('-L-mB9hllJhPtzg8QM7D').then(() => {
+          //   console.log('Provided key has been removed from GeoFire');
+          // }, (error) => {
+          //   console.log('Error: ' + error);
+          // });
+          // -------------------------------------------------------
+          // ---------- comment out above when not needed ----------
+
         })
         .catch(err => console.log(err));
       });

@@ -1,21 +1,8 @@
 {
   "rules": {
-    "users": {
-      "$uid": {
-        ".read": "$uid === auth.uid",
-        ".write": "$uid === auth.uid"
-      }
-    },
     "current_location": {
       "$uid": {
-      	// Allow authenticated user to add, update, or remove keys in the location_config index
-      	".read": "$uid === auth.uid",
-    		".write": "$uid === auth.uid"
-      }
-    },
-    "location_config": {
-      "$uid": {
-      	// Allow authenticated user to add, update, or remove keys in the location_config index
+        // Allow authenticated user to add, update, or remove keys in the location_config index
       	".read": "$uid === auth.uid",
     		".write": "$uid === auth.uid"
       }
@@ -23,23 +10,23 @@
     "geofire": {
       // Allow anyone to read the GeoFire index
       ".read": true,
-
+      
       // Index each location's geohash for faster querying
       ".indexOn": "g",
-
+      
       // Schema validation
       "$key": {
         // Allow any authentication user to add, update, or remove keys in the GeoFire index
         ".write": "auth !== null",
-
+        
         // Key validation
         ".validate": "newData.hasChildren(['g', 'l']) && newData.getPriority().length <= 22 && newData.getPriority().length > 0",
-
+        
         // Geohash validation
         "g": {
           ".validate": "newData.val() == newData.parent().getPriority()"
         },
-
+        
         // Location coordinates validation
         "l": {
           "0" : {
@@ -52,11 +39,54 @@
             ".validate": false
           }
         },
-
+        
         // Don't allow any other keys to be written
         "$other": {
           ".validate": false
         }
+      }
+    },
+    "initial_portal": {
+      "$uid": {
+        // Allow authenticated user to add, update, or remove keys in the location_config index
+      	".read": "$uid === auth.uid",
+    		".write": "$uid === auth.uid"
+      }
+    },
+    "location_config": {
+      "$uid": {
+        // Allow authenticated user to add, update, or remove keys in the location_config index
+      	".read": "$uid === auth.uid",
+    		".write": "$uid === auth.uid"
+      }
+    },
+    "portal_coordinates_all": {
+      // Allow anyone to read all portal coordinates node
+      ".read": true
+    },
+    "portal_images": {
+      // Allow anyone to read all portal coordinates node
+      ".read": true
+    },
+    "portal_open": {
+      "$uid": {
+        // Allow authenticated user to add, update, or remove keys in the location_config index
+      	".read": "$uid === auth.uid",
+    		".write": "$uid === auth.uid"
+      }
+    },
+    "portals_completed": {
+      "$uid": {
+        // Allow authenticated user to add, update, or remove keys in the location_config index
+      	".read": "$uid === auth.uid",
+    		".write": "$uid === auth.uid"
+      }
+    },
+    "users": {
+      "$uid": {
+        // Allow authenticated user to add, update, or remove keys in the location_config index
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
       }
     }
   }

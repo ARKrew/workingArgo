@@ -2,16 +2,13 @@
 
 const functions = require('firebase-functions');
 
-// const mkdirp = require('mkdirp-promise');
 // // Include a Service Account Key to use a Signed URL
 const gcs = require('@google-cloud/storage')({ keyFilename: 'argo-4cbff-firebase-adminsdk-1ft9p-5a78f16f28.json' });
-// ({keyFilename: 'service-account-credentials.json'});
 
 // this allows the ImageMagick CLI to run
 // ImageMagick is already provided by Cloud Functions
 // spawn method loads and executes an external application in a new process
 const spawn = require('child-process-promise').spawn;
-
 
 // modularizing firebase-admin
 const admin = require('../config/fb-admin.js');
