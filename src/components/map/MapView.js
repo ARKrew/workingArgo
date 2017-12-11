@@ -10,6 +10,7 @@ import MapView from 'react-native-maps';
 import isEqual from 'lodash/isEqual';
 import firebase from 'firebase';
 import MarkerDetails from './MarkerDetails';
+import MapARNav from './MapARNav';
 import {
   updateUserPosition,
   updateMapRegion,
@@ -216,6 +217,10 @@ class MapViews extends Component {
         return this.renderMarkers(location, index);
       }
     });
+  }
+
+  renderModal() {
+    return <MapARNav />;
   }
 
   renderMarkers(location, index) {
