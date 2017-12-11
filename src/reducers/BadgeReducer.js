@@ -22,6 +22,12 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CURRENT_DISPLAY_BADGE:
+    // {
+    //   const selectedBadge = profileBadges.filter((badge) => {
+    //     return (badge.fileName === action.payload.displayBadge);
+    //   });
+    //   return { ...state, displayBadge: selectedBadge[0] };
+    // }
       return { ...state, ...action.payload };
     case ARRAY_OF_COLLECTED_BADGES:
       return { ...state, ...action.payload };
