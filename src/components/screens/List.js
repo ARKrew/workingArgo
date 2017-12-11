@@ -28,6 +28,8 @@ class List extends Component {
   }
 
   render() {
+    console.log('this is for list')
+    console.log(this.props);
     return (
       <View>
         <Header headerText={'List'} />
