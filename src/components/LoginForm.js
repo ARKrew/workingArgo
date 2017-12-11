@@ -95,7 +95,7 @@ class Login extends Component {
         },
         error => this.alertError(error.message),
         { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
-      );
+      ).catch(err => console.log(err)); // needed?
     }
   }
 
