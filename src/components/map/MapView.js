@@ -10,6 +10,7 @@ import MapView from 'react-native-maps';
 import isEqual from 'lodash/isEqual';
 import firebase from 'firebase';
 import MarkerDetails from './MarkerDetails';
+import MapARNav from './MapARNav';
 import {
   updateUserPosition,
   updateMapRegion,
@@ -28,12 +29,16 @@ const markerImg = require('../../assets/icons/flag2.png');
 class MapViews extends Component {
   constructor(props) {
     super(props);
-    
+    this.state = {
+      enablePolyline: false
+    };
     this.animation = new Animated.Value(-1);
     this.interpolations = null;
     this.animate.bind(this);
     this.watchId = null;
+    this.isAnimating = false;
     this.geolocationOptions = { enableHighAccuracy: true, distanceFilter: 1, timeout: 20000, maximumAge: 1000 };
+    // this.polyLineCoords = [{ latitude: 34.06365072138657, longitude: -118.448552464198 }, { latitude: 34.061292, longitude: -118.447139 }];
   }
 
   // Best place to fetch data, will fetch after initial render
@@ -45,19 +50,22 @@ class MapViews extends Component {
     firebase.database().ref(queryPath).once('value')
     .then( 
       snapshot => {
-        const markerPositions = snapshot.val().reduce((acc, curr, index) => {
+        const markers = snapshot.val().reduce((acc, curr, index) => {
+          // Need to set up check to see which badges user has collected
+          // Need to set up removal of collected badges.
           acc[index] = 
-            { 
+            { id: index,
               coordinates:
                 { 
                   latitude: curr[0], 
                   longitude: curr[1] 
-                } 
+                },
+              badge: this.props.availableBadges[index] 
             }; 
           return acc;
         }, []);
         
-        this.props.updateMarkers({ markerPositions });
+        this.props.updateMarkers({ markers });
       }
     )
     .catch(error => this.alertError(error.message));
@@ -66,6 +74,17 @@ class MapViews extends Component {
   componentWillUpdate(nextProps) {
     if (this.props.markerIndex !== nextProps.markerIndex && !nextProps.scroll) {
       this.animate(nextProps.markerIndex);
+    }
+    // Might need to do this.props.isANimating
+    if (nextProps.isHunting && !this.isAnimating) {
+      const midpoint = this.calcMidPoint(nextProps.userPosition, nextProps.selectedMarker);
+      let latitudeDelta = Math.abs(nextProps.userPosition.latitude - nextProps.selectedMarker.coordinates.latitude);
+      let longitudeDelta = Math.abs(nextProps.userPosition.longitude - nextProps.selectedMarker.coordinates.longitude);
+      latitudeDelta += (latitudeDelta / 3);
+      longitudeDelta += (longitudeDelta / 3);
+      
+      this.animateToRegion(midpoint, latitudeDelta, longitudeDelta);
+      this.setState({ enablePolyline: true });
     }
   }
 
@@ -82,7 +101,7 @@ class MapViews extends Component {
   }
 
   setInterpolation() {
-    this.interpolations = this.props.markerPositions.map((marker, index) => {
+    this.interpolations = this.props.markers.map((marker, index) => {
       const inputRange = [
         (index - 0.7),
         (index - 0.2),
@@ -117,7 +136,8 @@ class MapViews extends Component {
           latitudeDelta: LATITUDE_DELTA,
           longitudeDelta: LONGITUDE_DELTA
         };
-
+        console.log('my position is here')
+        console.log(myPosition);
       if (!isEqual(myPosition, myLastPosition)) {
         this.props.updateUserPosition({ userPosition: myPosition });
 
@@ -146,8 +166,22 @@ class MapViews extends Component {
     this.props.updateMarkerIndex({ markerIndex: index, scroll: true });
   }
 
+  calcMidPoint(current, marker) {
+    this.isAnimating = true;
+    const lat1 = current.latitude;
+    const lat2 = marker.coordinates.latitude;
+    const long1 = current.longitude;
+    const long2 = marker.coordinates.longitude;
+
+    return { latitude: (lat2 + lat1) / 2, longitude: (long2 + long1) / 2 };
+  }
+
   animate(index) {
-    this.animateToRegion(index);
+    const { coordinates } = this.props.markers[index];
+    const singleMarkerLatDelta = LATITUDE_DELTA / 8;
+    const singleMarkerLongDelta = LONGITUDE_DELTA / 8;
+
+    this.animateToRegion(coordinates, singleMarkerLatDelta, singleMarkerLongDelta);
 
     const initialValue = (index - 0.7);
 
@@ -162,50 +196,78 @@ class MapViews extends Component {
     ).start();
   }
 
-  animateToRegion(index) {
-    const { coordinates } = this.props.markerPositions[index];
+  animateToRegion(coordinates, latitudeDelta, longitudeDelta) {
     // Begin animation to region based on selected marker
     this.refs.map.animateToRegion(
       {
         ...coordinates,
-        latitudeDelta: LATITUDE_DELTA / 8, 
-        longitudeDelta: LONGITUDE_DELTA / 8
+        latitudeDelta,
+        longitudeDelta
       }
     );
   }
 
-  renderMarkers() {
+  initializeMarkers() {
     this.setInterpolation();
     
-    return this.props.markerPositions.map((location, index) => {
-      const scaleStyle = {
-        transform: [
-          {
-            scale: this.interpolations[index].scale,
-          },
-        ],
-      };
-
-      const opacityStyle = {
-        opacity: this.interpolations[index].opacity,
-      };
-
-      return (
-        <MapView.Marker 
-          key={index} 
-          coordinate={location.coordinates}
-          style={styles.markerWrap}
-          onPress={() => this.handleOnPress(index)}
-        >
-          <Animated.View style={[styles.ring, opacityStyle, scaleStyle]} />
-          <Animated.Image 
-              style={[styles.markerImage, scaleStyle]}
-              source={markerImg} 
-              resizeMode='contain'
-          />
-        </MapView.Marker>
-      );
+    return this.props.markers.map((location, index) => {
+      if (!this.props.isHunting) {
+        return this.renderMarkers(location, index);
+      } else if (this.props.isHunting && this.props.selectedMarker.id === index) {
+        return this.renderMarkers(location, index);
+      }
     });
+  }
+
+  renderModal() {
+    return <MapARNav />;
+  }
+
+  renderMarkers(location, index) {
+    const scaleStyle = {
+      transform: [
+        {
+          scale: this.interpolations[index].scale,
+        },
+      ],
+    };
+
+    const opacityStyle = {
+      opacity: this.interpolations[index].opacity,
+    };
+
+    return (
+      <MapView.Marker 
+        key={index} 
+        coordinate={location.coordinates}
+        style={styles.markerWrap}
+        onPress={() => this.handleOnPress(index)}
+      >
+        <Animated.View style={[styles.ring, opacityStyle, scaleStyle]} />
+        <Animated.Image 
+            style={[styles.markerImage, scaleStyle]}
+            source={markerImg} 
+            resizeMode='contain'
+        />
+      </MapView.Marker>
+    );
+  }
+
+  renderPolyline() {
+    const startingCoordinates = { latitude: this.props.userPosition.latitude, longitude: this.props.userPosition.longitude };
+    const endingCoordinates = { latitude: this.props.selectedMarker.coordinates.latitude, longitude: this.props.selectedMarker.coordinates.longitude }
+    const polyLineCoords = [startingCoordinates, endingCoordinates];
+    
+    console.log('polyline');
+    // console.log(polyLineCoords);
+    return (
+      <MapView.Polyline 
+        coordinates={polyLineCoords} 
+        strokeColor='#FEA2A4'
+        strokeWidth={3}
+        lineDashPattern={[5]} 
+      />
+    );
   }
 
   render() {
@@ -220,9 +282,10 @@ class MapViews extends Component {
           onRegionChange={this.onRegionChange.bind(this)}
           onRegionChangeComplete={this.onRegionChange.bind(this)}
         >
-          {this.props.markerPositions && this.renderMarkers()}
+          {this.props.markers && this.initializeMarkers()}
+          {this.state.enablePolyline && this.renderPolyline()}
         </MapView>
-        {this.props.markerPositions && <MarkerDetails />}
+        {this.props.markers && <MarkerDetails />}
       </View>
     );
   }
@@ -266,7 +329,7 @@ const styles = {
   }
 };
 
-const mapStateToProps = state => ({ ...state.map, ...state.auth.user });
+const mapStateToProps = state => ({ ...state.map, ...state.auth.user, ...state.badge });
 
 export default connect(mapStateToProps,
   {

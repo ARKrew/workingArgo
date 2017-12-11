@@ -1,6 +1,7 @@
 import { 
   CURRENT_DISPLAY_BADGE,
-  ARRAY_OF_COLLECTED_BADGES
+  ARRAY_OF_COLLECTED_BADGES,
+  AVAILABLE_BADGES
 } from './types';
   
 export const updateDisplayBadge = data => (
@@ -13,6 +14,13 @@ export const updateDisplayBadge = data => (
 export const updateProfileBadges = data => (
   {
     type: ARRAY_OF_COLLECTED_BADGES,
+    payload: data
+  }
+);
+
+export const updateAvailableBadges = data => (
+  {
+    type: AVAILABLE_BADGES,
     payload: data
   }
 );

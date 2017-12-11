@@ -2,16 +2,18 @@ import {
   USER_POSITION_CHANGE, 
   MAP_REGION_CHANGE, 
   UPDATE_MARKERS,
-  UPDATE_MARKER_INDEX
+  UPDATE_MARKER_INDEX,
+  INITIALIZE_HUNT
 } from '../actions/types';
 
 const INITIAL_STATE = {
   userPosition: null,
   mapRegion: null,
-  markerPositions: null,
+  markers: null,
   markerIndex: null,
-  scroll: false,
-  error: null
+  isHunting: null,
+  selectedMarker: null,
+  scroll: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -23,6 +25,8 @@ export default (state = INITIAL_STATE, action) => {
     case UPDATE_MARKERS:
       return { ...state, ...action.payload };
     case UPDATE_MARKER_INDEX:
+      return { ...state, ...action.payload };
+    case INITIALIZE_HUNT:
       return { ...state, ...action.payload };
     default: 
       return state;

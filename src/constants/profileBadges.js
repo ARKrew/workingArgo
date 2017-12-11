@@ -17,12 +17,12 @@ const profileBadges = [
     image: require('./../assets/icons/001-parrot.png')
   },
   {
-    fileName: '002-anchor.png',
-    image: require('./../assets/icons/002-anchor.png')
+    fileName: '002-pirate-hat.png',
+    image: require('./../assets/icons/002-pirate-hat.png')
   },
   {
-    fileName: '003-helm.png',
-    image: require('./../assets/icons/003-helm.png')
+    fileName: '003-anchor.png',
+    image: require('./../assets/icons/003-anchor.png')
   },
   {
     fileName: '004-ship.png',
@@ -33,20 +33,20 @@ const profileBadges = [
     image: require('./../assets/icons/005-dice.png')
   },
   {
-    fileName: '006-skull-1.png',
-    image: require('./../assets/icons/006-skull-1.png')
+    fileName: '006-coin.png',
+    image: require('./../assets/icons/006-coin.png')
   },
   {
-    fileName: '007-pipe.png',
-    image: require('./../assets/icons/007-pipe.png')
+    fileName: '007-kraken.png',
+    image: require('./../assets/icons/007-kraken.png')
   },
   {
-    fileName: '008-rum.png',
-    image: require('./../assets/icons/008-rum.png')
+    fileName: '008-sabers.png',
+    image: require('./../assets/icons/008-sabers.png')
   },
   {
-    fileName: '009-wooden-leg.png',
-    image: require('./../assets/icons/009-wooden-leg.png')
+    fileName: '009-pirate-1.png',
+    image: require('./../assets/icons/009-pirate-1.png')
   },
   {
     fileName: '010-hook-1.png',
@@ -61,8 +61,8 @@ const profileBadges = [
     image: require('./../assets/icons/012-eyepatch.png')
   },
   {
-    fileName: '013-pirate-hat.png',
-    image: require('./../assets/icons/013-pirate-hat.png')
+    fileName: '013-helm.png',
+    image: require('./../assets/icons/013-helm.png')
   },
   {
     fileName: '014-spyglass.png',
@@ -89,8 +89,8 @@ const profileBadges = [
     image: require('./../assets/icons/019-cannon.png')
   },
   {
-    fileName: '020-sabers.png',
-    image: require('./../assets/icons/020-sabers.png')
+    fileName: '020-rum.png',
+    image: require('./../assets/icons/020-rum.png')
   },
   {
     fileName: '021-hook.png',
@@ -117,8 +117,8 @@ const profileBadges = [
     image: require('./../assets/icons/026-signal.png')
   },
   {
-    fileName: '027-coin.png',
-    image: require('./../assets/icons/027-coin.png')
+    fileName: '027-skull-1.png',
+    image: require('./../assets/icons/027-skull-1.png')
   },
   {
     fileName: '028-pirate-3.png',
@@ -165,8 +165,8 @@ const profileBadges = [
     image: require('./../assets/icons/038-pirate-2.png')
   },
   {
-    fileName: '039-pirate-1.png',
-    image: require('./../assets/icons/039-pirate-1.png')
+    fileName: '039-wooden-leg.png',
+    image: require('./../assets/icons/039-wooden-leg.png')
   },
   {
     fileName: '040-pirate-flag.png',
@@ -201,8 +201,8 @@ const profileBadges = [
     image: require('./../assets/icons/047-island.png')
   },
   {
-    fileName: '048-kraken.png',
-    image: require('./../assets/icons/048-kraken.png')
+    fileName: '048-pipe.png',
+    image: require('./../assets/icons/048-pipe.png')
   },
   {
     fileName: '049-whale.png',
@@ -211,26 +211,6 @@ const profileBadges = [
   {
     fileName: '050-pirate.png',
     image: require('./../assets/icons/050-pirate.png')
-  },
-  {
-    fileName: 'flag2.png',
-    image: require('./../assets/icons/flag2.png')
-  },
-  {
-    fileName: 'helm.png',
-    image: require('./../assets/icons/helm.png')
-  },
-  {
-    fileName: 'scroll.png',
-    image: require('./../assets/icons/scroll.png')
-  },
-  {
-    fileName: 'skull.png',
-    image: require('./../assets/icons/skull.png')
-  },
-  {
-    fileName: 'treasure-map.png',
-    image: require('./../assets/icons/treasure-map.png')
   }
 ];
 

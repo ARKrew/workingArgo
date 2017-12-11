@@ -6,11 +6,11 @@ import MapViews from '../map/MapView';
 
 class Map extends Component {
   shouldComponentUpdate(nextProps) {
-    return nextProps.currentRoute === 1 ? true : false;
+    return nextProps.currentRoute === 1;
   }
 
   render() {
-    console.log('map')
+    console.log('map screen rendered');
     return (
       <View style={{ flex: 1 }}>
         <Header headerText={'Map'} />

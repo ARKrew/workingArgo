@@ -1,10 +1,13 @@
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
-import { TabNavigator } from 'react-navigation';
+import { TabNavigator, StackNavigator } from 'react-navigation';
 import Profile from './screens/Profile';
 import MoreNav from './screens/MoreScreens/MoreNav';
 import Map from './screens/Map';
-import ListNav from './screens/ListScreens/ListNav';
+import List from './screens/List';
+import DemoARPortal from './screens/ListScreens/DemoARPortal';
+import MainSceneAR from './screens/ListScreens/MainSceneAR';
+import TutorialAR from './screens/TutorialAR';
 
 const ProfileScreen = () => (
   <Profile />
@@ -12,10 +15,6 @@ const ProfileScreen = () => (
 
 const MapScreen = () => (
   <Map />
-);
-
-const ListScreen = () => (
-  <ListNav />
 );
 
 const MoreScreen = () => (
@@ -30,7 +29,7 @@ const RootsTab = TabNavigator({
       gesturesEnabled: false,
       tabBarIcon: () => (
       <Image
-        source={require('../assets/icons/006-skull-1.png')}
+        source={require('../assets/icons/027-skull-1.png')}
         style={[styles.icon]}
       />
     ),
@@ -50,7 +49,31 @@ const RootsTab = TabNavigator({
     }
   },
   List: {
-    screen: ListScreen,
+    screen: StackNavigator(
+      {
+        List: {
+          screen: List,
+        },
+        MainSceneAR: {
+          // screen: ARPortal
+          screen: MainSceneAR,
+          navigationOptions: {
+            tabBarVisible: false,
+          }
+        },
+        DemoARPortal: {
+          screen: DemoARPortal,
+        },
+        TutorialAR: {
+          screen: TutorialAR,
+        }
+      },
+      {
+        initialRouteName: 'List',
+        mode: 'modal',
+        headerMode: 'none'
+      }
+    ),
     navigationOptions: {
       header: null,
       gesturesEnabled: false,
@@ -69,7 +92,7 @@ const RootsTab = TabNavigator({
       gesturesEnabled: false,
       tabBarIcon: () => (
       <Image
-        source={require('../assets/icons/003-helm.png')}
+        source={require('../assets/icons/013-helm.png')}
         style={[styles.icon]}
       />
     ),
