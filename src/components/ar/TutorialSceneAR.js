@@ -101,6 +101,13 @@ class TutorialSceneAR extends Component {
   //   );
   // }
 
+  // {
+  //   const selectedBadge = profileBadges.filter((badge) => {
+  //     return (badge.fileName === action.payload.displayBadge);
+  //   });
+  //   return { ...state, displayBadge: selectedBadge[0] };
+  // }
+
   render() {
     if (this.props.ARstate.enterARTutorial) {
       return (
@@ -185,7 +192,7 @@ class TutorialSceneAR extends Component {
               {/* ===== Badge inside Portal ===== */}
               <Viro3DObject
               source={require('../../assets/models/coin/coin.obj')}
-              materials={['defaultBadge']}
+              materials={['tutorialBadge']}
               scale={[.1, .1, .1]}
               animation={{
                 name: 'rotate',
@@ -272,7 +279,7 @@ const styles = StyleSheet.create({
 
 // ===== 3d Model aterials =====
 ViroMaterials.createMaterials({
-  defaultBadge: {
+  tutorialBadge: {
     diffuseTexture: require('../../assets/icons/006-coin.png'),
   },
   flag: {

@@ -1,29 +1,15 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   Text,
   View,
   StyleSheet,
-  PixelRatio,
   TouchableHighlight,
   TouchableOpacity,
-  Actions,
   Image
 } from 'react-native';
 import { connect } from 'react-redux';
 import { ViroARSceneNavigator } from 'react-viro';
-import {
-  NavigationActions,
-  addNavigationHelpers
-} from 'react-navigation';
 import DemoARPortal from './DemoARPortal';
-// import { AppNavigator } from '../../../AppNavigator';
-import {
-  routerInitialState,
-  router,
-  ROUTES
-} from '../../../AppNavigator';
-import { Button } from '../../../components/common';
 import {
   listNavigate,
   enterAR,
@@ -85,14 +71,20 @@ const sharedProps = {
         );
       }
         return (
-          <TouchableOpacity >
-            <Text style={styles.profileButton}>
-              Congrats you picked up your first badge!
-              Now head to your Profile Page to see your new badge!
-            </Text>
-            <Button onPress={this.exitAR}>Profile Page</Button>
-            {this.renderDisplayBadge()}
-        </TouchableOpacity>
+          <View style={styles.container}>
+              <Text style={styles.badgeText}>
+                Congrats on your first badge!
+              </Text>
+              <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                {this.renderDisplayBadge()}
+              </View>
+              <Text style={styles.badgeText}>
+                Now head to your Profile Page to see your new badge!
+              </Text>
+              <TouchableHighlight>
+                <Text style={styles.profileButton} onPress={this.exitAR}>Profile Page</Text>
+              </TouchableHighlight>
+        </View>
         );
     }
 }
@@ -123,10 +115,25 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
   },
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#f37a81'
+  },
   profileButton: {
-    color: 'black',
+    top: 5,
     fontSize: 22,
-    marginTop: 35,
+    textAlign: 'center',
+    fontFamily: 'Lato-Bold',
+    color: '#C8243B',
+  },
+  badgeText: {
+    bottom: 10,
+    textAlign: 'center',
+    color: '#ffffff',
+    fontSize: 22,
     fontFamily: 'Lato-Regular'
   },
   badge: {

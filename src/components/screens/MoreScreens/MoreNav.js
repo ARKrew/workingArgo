@@ -17,6 +17,11 @@ const MoreNav = StackNavigator({
   {
     mode: 'modal',
     headerMode: 'none',
+    transitionConfig: () => ({
+     transitionSpec: {
+       duration: 500
+     }
+    })
   }
 );
 
