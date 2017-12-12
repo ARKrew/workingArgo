@@ -46,27 +46,27 @@ renderUserBadges() {
 
       return (
         <View>
-            <Header headerText={headerName} />
-            <View style={styles.userContainer}>
-              <Image
-                style={styles.userImage}
-                source={{ uri }}
-              />
+          <Header headerText={headerName} />
+          <View style={styles.userContainer}>
+            <Image
+              style={styles.userImage}
+              source={{ uri }}
+            />
             <Text style={styles.userText}>Member since: {joinDate}</Text>
-            </View>
-            <View>
+          </View>
+          <View>
             <Card>
               <CardSection>
                 <Text style={styles.badgesHeader}>Badges</Text>
               </CardSection>
             </Card>
-            </View>
-            <ScrollView>
-              <View style={styles.badgeContainer}>
-                {this.renderUserBadges()}
-              </View>
-            </ScrollView>
           </View>
+          <ScrollView>
+            <View style={styles.badgeContainer}>
+              {this.renderUserBadges()}
+            </View>
+          </ScrollView>
+        </View>
       );
   }
 }

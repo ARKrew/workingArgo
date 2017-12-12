@@ -253,6 +253,11 @@ class MapViews extends Component {
     );
   }
 
+  renderModal() {
+    console.log('render modal is appearing')
+    return <MapARNav navigation={this.props.navigation} />;
+  }
+
   renderPolyline() {
     const startingCoordinates = { latitude: this.props.userPosition.latitude, longitude: this.props.userPosition.longitude };
     const endingCoordinates = { latitude: this.props.selectedMarker.coordinates.latitude, longitude: this.props.selectedMarker.coordinates.longitude }
@@ -261,18 +266,20 @@ class MapViews extends Component {
     console.log('polyline');
     // console.log(polyLineCoords);
     return (
-      <MapView.Polyline 
-        coordinates={polyLineCoords} 
-        strokeColor='#FEA2A4'
-        strokeWidth={3}
-        lineDashPattern={[5]} 
-      />
+        <MapView.Polyline 
+          coordinates={polyLineCoords} 
+          strokeColor='#FEA2A4'
+          strokeWidth={3}
+          lineDashPattern={[5]} 
+        />
     );
   }
 
   render() {
     return (
       <View style={styles.container}>
+      {/* Need to update logic for this to incorporate notification from firebase */}
+      {this.isAnimating && !this.props.enterAR && this.renderModal()}
       {/* Alert the user if there was an issue */}
         <MapView
           showsUserLocation
@@ -329,7 +336,7 @@ const styles = {
   }
 };
 
-const mapStateToProps = state => ({ ...state.map, ...state.auth.user, ...state.badge });
+const mapStateToProps = state => ({ ...state.map, ...state.auth.user, ...state.badge, ...state.demoAR });
 
 export default connect(mapStateToProps,
   {

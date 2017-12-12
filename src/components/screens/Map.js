@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { Header } from '../common';
 import MapViews from '../map/MapView';
+import { NavigationActions } from 'react-navigation';
 
 class Map extends Component {
   shouldComponentUpdate(nextProps) {
@@ -11,10 +12,11 @@ class Map extends Component {
 
   render() {
     console.log('map screen rendered');
+    console.log(this.props);
     return (
       <View style={{ flex: 1 }}>
         <Header headerText={'Map'} />
-        <MapViews />
+        <MapViews navigation={this.props.dispatch} />
       </View>
     );
   }
