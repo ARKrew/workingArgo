@@ -47,6 +47,8 @@ class Login extends Component {
             this.authenticatedUser = true;
             this.firebaseRef.child(auth.uid).off('value');
             this.props.loginSuccess({ ...user, joinDate, displayName });
+            console.log('this will be the collected badges');
+            console.log(user);
             this.setInitialBadgeState(user.collectedBadges);
             this.getCurrentLocation(user);
           }
