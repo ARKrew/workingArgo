@@ -66,6 +66,9 @@ const RootsTab = TabNavigator({
         },
         TutorialAR: {
           screen: TutorialAR,
+          navigationOptions: {
+            tabBarVisible: false,
+          }
         }
       },
       {
