@@ -1481,9 +1481,8 @@
 				DEVELOPMENT_TEAM = XDHVBKZD9Y;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
+					/Users/Yamato/Documents/FacebookSDK,
 					"$(inherited)",
-					"$(PROJECT_DIR)",
-					/Users/ysraelkhernandez/Documents/FacebookSDK,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1512,9 +1511,8 @@
 				DEVELOPMENT_TEAM = XDHVBKZD9Y;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
+					/Users/Yamato/Documents/FacebookSDK,
 					"$(inherited)",
-					"$(PROJECT_DIR)",
-					/Users/ysraelkhernandez/Documents/FacebookSDK,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
