@@ -15,7 +15,8 @@ import {
   listNavigate,
   enterAR,
   updateDisplayBadge,
-  disableHunt
+  disableHunt,
+  indicateInsidePortal
 } from '../../../actions';
 
 const sharedProps = {
@@ -38,6 +39,7 @@ const sharedProps = {
 
     exitAR = () => {
       this.props.disableHunt({ isHunting: false, selectedMarker: null });
+      this.props.indicateInsidePortal({ inPortal: false });
       // Reset to list screen from MainSceneAR
       this.props.navigation.navigate('List');
       this.props.listNavigate();
@@ -145,5 +147,6 @@ export default connect(mapStateToProps, {
   listNavigate,
   enterAR,
   updateDisplayBadge,
-  disableHunt
+  disableHunt,
+  indicateInsidePortal
 })(MainSceneAR);
