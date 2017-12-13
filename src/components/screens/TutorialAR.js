@@ -28,7 +28,7 @@ import {
 import { Button } from '../../components/common';
 
 const sharedProps = {
-    apiKey:"D5FCCB74-1B13-4E50-BCE8-3DAE6B9ED443"
+    apiKey: 'D5FCCB74-1B13-4E50-BCE8-3DAE6B9ED443'
   };
 
   class TutorialAR extends Component {
