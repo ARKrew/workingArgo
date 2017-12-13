@@ -1,32 +1,25 @@
 'use strict';
 
+import firebase from 'firebase';
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { enterAR, clickedObj } from '../../../actions';
+import { enterAR, clickedObj, updateProfileBadges, disableHunt } from '../../../actions';
 import {
-  // ViroARSceneNavigator,
   ViroText,
   ViroARScene,
   ViroAmbientLight,
   Viro360Video,
-  // Viro360Image,
-  // ViroUtils,
   ViroPortal,
   ViroPortalScene,
   Viro3DObject,
   ViroSpinner,
-  // ViroBox,
   ViroMaterials,
   ViroAnimations,
   ViroNode,
   ViroParticleEmitter
 } from 'react-viro';
 import badgeMaterials from '../../../constants/badgeMaterials';
-
-// ==============================================================================
-// GLOBAL DECLARATIONS
-// ==============================================================================
 
 // For animations
 const itemAnimation = {
@@ -35,15 +28,10 @@ const itemAnimation = {
     loop: true
 };
 
-// ==============================================================================
-// AR COMPONENT -> MAIN SCENE
-// ==============================================================================
-
 class DemoARPortal extends Component {
+
   constructor() {
     super();
-
-    // Set initial state here
     this.state = {
       text: 'Initializing AR... DemoARPortal',
       isLoading: true,
@@ -57,21 +45,16 @@ class DemoARPortal extends Component {
 
     // Bind 'this' to functions
     this._onInitialized = this._onInitialized.bind(this);
-    // this._onTappedItem = this._onTappedItem.bind(this);
     this._onClickState = this._onClickState.bind(this);
     // this._routeToMap = this._routeToMap.bind(this);
-    this._onExit = this._onExit.bind(this);
-
-    this._onObjClicked = this._onObjClicked.bind(this);
+    this.updateBadge = this.updateBadge.bind(this);
+    // this._onExit = this._onExit.bind(this);
   }
-
-// ==============================================================================
-// HELPER FUNCTIONS
-// ==============================================================================
 
   componentWillUnmount() {
-    console.log("DEMOARPORTAL UNMOUNTED ASDFASDFLKAGSEJLAJWKELGKA");
+    console.log('DEMOARPORTAL UNMOUNTED ASDFASDFLKAGSEJLAJWKELGKA');
   }
+
 // ===== Text update when AR initialized =====
   _onInitialized() {
     this.setState({
@@ -82,12 +65,11 @@ class DemoARPortal extends Component {
   // ===== Animation when user collects item =====
   _onClickState(state, source) {
     if (state === 1) {
+      // Animates item after user collects
       this.setState({
         itemAnimation : itemAnimation
       });
-    //   this.setTimeout(
-    //     () => { console.log('I do not leak!'); },
-    //     500
+      // Allows animation to run after x amount of seconds
       setTimeout(() => {
         this.props.enterAR({
           enterAR: false,
@@ -97,35 +79,20 @@ class DemoARPortal extends Component {
         })
       );
     }, 2000);
-      // _routeToMap();
+    this.updateBadge();
     }
   }
 
-  _onExit() {
-    this.props.enterAR({
-          enterAR: false,
-        });
+  updateBadge() {
+    console.log(this.props.user, "AKLEGJAWLEF USER ID");
+    let uid = this.props.user.uid;
+    let collectedBadgesArray = [...this.props.badge.collectedBadges, this.props.currentBadge.fileName];
+    this.props.updateProfileBadges({
+      collectedBadges: collectedBadgesArray
+    });
+    const database = firebase.database();
+    firebase.database().ref(`collected_badges/${uid}`).set(collectedBadgesArray);
   }
-
-  _onObjClicked() {
-    this.props.clickedObj({
-          clickedObj: true,
-        });
-  }
-  // ===== Route to map =====
-  // _routeToMap() {
-  //   this.props.enterAR({
-  //     enterAR: false,
-  //   });
-  // }
-
-  // ===== Push to firebase =====
-  // _onTappedItem() {
-  //   return (
-  //     <ViroSceneNavigator {...this.state.sharedProps}
-  //       initialScene={{ scene: exitScene }} />
-  //   );
-  // }
 
   render() {
     if (this.props.ARstate.enterAR) {
@@ -153,7 +120,6 @@ class DemoARPortal extends Component {
 
         {/* ===== Pirate Flag ====== */}
         <Viro3DObject
-          // source={require('./portal_res/models/flag/pirate_flag.obj')}
           source={require('./../../../assets/models/flag/pirate_flag.obj')}
           materials={['flag']}
           position={[0.75, 0, -1.25]}
@@ -211,10 +177,8 @@ class DemoARPortal extends Component {
 
               {/* ===== Badge inside Portal ===== */}
               <Viro3DObject
-              // source={require('./portal_res/models/badge/coin.obj')}
               source={require('./../../../assets/models/coin/coin.obj')}
               materials={[this.props.currentBadge.fileName]}
-              // materials={['defaultBadge']}
               scale={[.1, .1, .1]}
               animation={{
                 name: 'rotate',
@@ -223,22 +187,6 @@ class DemoARPortal extends Component {
               }}
               type='OBJ'
               />
-
-              {/* ===== DAGGER ===== */}
-              {/* <Viro3DObject
-                source={require('./portal_res/res/dagger.obj')}
-                materials={['defaultBadge']}
-                position={[10, 2.5, -4]}
-                rotation={[90, 0, 0]}
-                scale={[.01, .01, .01]}
-                animation={{
-                  name: 'rotate',
-                  run: true,
-                  loop: true
-                }}
-                // onClick
-                type='OBJ'
-              /> */}
 
               {/* ===== Particle Effects on Badge ===== */}
               <ViroParticleEmitter
@@ -254,7 +202,6 @@ class DemoARPortal extends Component {
               fixedToEmitter={true}
               // ------ Image source of particle ------
               image={{
-                // source:require('./portal_res/models/particles/yellow_glow.png'),
                 source:require('./../../../assets/models/particles/yellow_glow.png'),
                 height:1,
                 width:1,
@@ -302,10 +249,6 @@ class DemoARPortal extends Component {
   }
 }
 
-// ==============================================================================
-// STYLING && ANIMATIONS
-// ==============================================================================
-
 const styles = StyleSheet.create({
   helloWorldTextStyle: {
     fontFamily: 'IM Fell English',
@@ -316,7 +259,7 @@ const styles = StyleSheet.create({
   },
 });
 
-// ===== 3d Model aterials =====
+// ===== 3d Model Materials =====
 ViroMaterials.createMaterials({
   flag: {
     diffuseTexture: require('./../../../assets/models/flag/flag_texture.png'),
@@ -354,12 +297,17 @@ ViroAnimations.registerAnimations({
   ],
 });
 
-// module.exports = DemoARPortal;
+const mapStateToProps = state => ({
+  ARstate: state.demoAR,
+  currentBadge: state.badge.displayBadge,
+  badge: state.badge,
+  user: state.auth.user
+ });
 
-const mapStateToProps = state => ({ ARstate: state.demoAR, currentBadge: state.badge.displayBadge });
-//
 export default connect(mapStateToProps,
   {
     enterAR,
-    clickedObj
+    clickedObj,
+    updateProfileBadges,
+    disableHunt
   })(DemoARPortal);

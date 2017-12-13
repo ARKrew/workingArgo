@@ -15,7 +15,8 @@ import { ViroARSceneNavigator } from 'react-viro';
 import {
   listNavigate,
   enterAR,
-  updateDisplayBadge
+  updateDisplayBadge,
+  disableHunt
 } from '../../../actions';
 
 const sharedProps = {
@@ -37,6 +38,7 @@ const sharedProps = {
     }
 
     exitAR = () => {
+      this.props.disableHunt({ isHunting: false, selectedMarker: null });
       // Reset to list screen from MainSceneAR
       this.props.navigation.navigate('List');
       this.props.listNavigate();
@@ -53,17 +55,13 @@ const sharedProps = {
     }
 
     render() {
-      console.log(this.screenProps + 'ellllooo yooo');
-    console.log(this.props.ARstate + 'ellllooo yooo');
-    console.log(this.props.navigation.dispatch + 'HIIIIIIIIIyooo');
-
     if (this.props.ARstate.enterAR === true) {
         return (
            <BadgeAR />
         );
       }
         return (
-          <ExitModal screenProps={{ rootsTab: this.props.navigation.dispatch }} />
+          <ExitModal disable={this.props.disableHunt({ isHunting: false, selectedMarker: null })} />
         );
     }
 }
@@ -134,5 +132,6 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   listNavigate,
   enterAR,
-  updateDisplayBadge
+  updateDisplayBadge,
+  disableHunt
 })(MainSceneAR);

@@ -12,7 +12,9 @@ import { ViroARSceneNavigator } from 'react-viro';
 import {
   listNavigate,
   enterAR,
-  updateDisplayBadge
+  clickedObj,
+  updateDisplayBadge,
+  disableHunt
 } from '../../actions';
 import DemoARPortal from './ListScreens/DemoARPortal';
 
@@ -36,6 +38,8 @@ const sharedProps = {
 
     onExit = () => {
       this.props.enterAR({ enterAR: false });
+      this.props.clickedObj({ clickedObj: false });
+      // this.props.disableHunt({ isHunting: false, selectedMarker: null });
     }
 
     exitAR = () => {
@@ -144,5 +148,7 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   listNavigate,
   enterAR,
-  updateDisplayBadge
+  clickedObj,
+  updateDisplayBadge,
+  disableHunt
 })(BadgeAR);

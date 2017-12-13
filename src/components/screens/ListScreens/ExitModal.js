@@ -17,7 +17,8 @@ import {
   listNavigate,
   clickedObj,
   enterAR,
-  updateDisplayBadge
+  updateDisplayBadge,
+  disableHunt
 } from '../../../actions';
 import { routerInitialState, router, ROUTES } from '../../../AppNavigator';
 
@@ -52,9 +53,9 @@ const sharedProps = {
       // const { navigation } = this.props;
       // Reset to list screen from MainSceneAR
       // navigation(navigateAction);
-
       // this.props.rootNavigation.navigation.dispatch('List');
       this.props.listNavigate();
+      this.props.disableHunt({ isHunting: false, selectedMarker: null });
     }
 
     renderDisplayBadge() {
@@ -82,7 +83,6 @@ const sharedProps = {
         <Text>Congrats on your first badge! Head to the Profile Page to view it!</Text>
         {this._renderButton('Profile Page', () => {
           this.setState({ visibleModal: false });
-
           })}
       </View>
     );
@@ -118,11 +118,7 @@ const sharedProps = {
       //       </TouchableHighlight>
       // </View>
     );
-   } return (
-        <View>
-          <Text>exited</Text>
-        </View>
-      );
+  } return null;
     }
 }
 
@@ -214,5 +210,6 @@ export default connect(mapStateToProps, {
   listNavigate,
   enterAR,
   clickedObj,
-  updateDisplayBadge
+  updateDisplayBadge,
+  disableHunt
 })(ExitModal);

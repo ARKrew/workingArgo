@@ -13,12 +13,12 @@ class List extends Component {
     return nextProps.currentRoute === 2;
   }
 
-  pressedDemo = () => {
-    this.props.enterAR({
-      enterAR: true,
-    });
-    this.props.navigation.navigate('MainSceneAR');
-  };
+  // pressedDemo = () => {
+  //   this.props.enterAR({
+  //     enterAR: true,
+  //   });
+  //   this.props.navigation.navigate('MainSceneAR');
+  // };
 
   pressedTutorial = () => {
     this.props.enterARTutorial({
@@ -44,9 +44,9 @@ class List extends Component {
   }
 }
 
-const mapStateToProps = state => ({ 
-  currentRoute: state.nav.routes[1].index, 
-  ARstate: state.demoAR 
+const mapStateToProps = state => ({
+  currentRoute: state.nav.routes[1].index,
+  ARstate: state.demoAR
 });
 
 export default connect(mapStateToProps, {

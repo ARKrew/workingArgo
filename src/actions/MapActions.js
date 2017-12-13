@@ -3,7 +3,9 @@ import {
   MAP_REGION_CHANGE,
   UPDATE_MARKERS,
   UPDATE_MARKER_INDEX,
-  INITIALIZE_HUNT
+  INITIALIZE_HUNT,
+  DISABLE_HUNT,
+  OPEN_PORTAL
 } from './types';
 
 export const updateUserPosition = data => (
@@ -39,4 +41,11 @@ export const initializeHunt = data => (
     type: INITIALIZE_HUNT,
     payload: data
   }
-)
+);
+
+export const disableHunt = data => (
+  {
+    type: DISABLE_HUNT,
+    payload: data
+  }
+);
