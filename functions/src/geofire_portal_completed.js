@@ -10,10 +10,10 @@ let currentLocation;
 module.exports = (event) => {
   // triggers when there is an update to current_location in the database, such
   // as when a person moves the map. 
-  event.geoFireMove = functions.database.ref('current_location').onUpdate(event => {
+  event.geoFirePortalCompleted = functions.database.ref('portals_completed').onUpdate(event => {
     // this grabs the user's uid
     uid = event.auth.variable ? event.auth.variable.uid : null;
-    console.log('move_uid', uid);
+    console.log('portal_completed_uid', uid);
 
     // grab current location from database
     admin.database().ref(`current_location/${uid}/currentLocation`).once('value', snapshot => {
@@ -72,36 +72,6 @@ module.exports = (event) => {
           }
         });
 
-        
-        // fires when a key (name) moves from a location inside of this query
-        // to one outside of it. 
-        const onKeyExitedRegistration = geoQuery.on('key_exited', (key, location, distance) => {
-          console.log('move key_exited: all portals completed', allPortalsCompleted);
-          // run through array of all portals completed and remove any if they match portals around current location
-          if (allPortalsCompleted.indexOf(key) === -1) {
-            locations.push({ key, location });
-            // signal client when near portal. distance <= 100 ft
-            if (distance <= 0.03) { 
-              openPortal = true;
-              portalKey = key;
-            }
-          }
-        });
-
-        // fires when a key which is already in this query moves to another location inside of it.
-        const onKeyMovedRegistration = geoQuery.on('key_moved', (key, location, distance) => {
-          console.log('move key_moved: all portals completed', allPortalsCompleted);
-          // run through array of all portals completed and remove any if they match portals around current location
-          if (allPortalsCompleted.indexOf(key) === -1) {
-            locations.push({ key, location });
-            // signal client when near portal. distance <= 100 ft
-            if (distance <= 0.03) { 
-              openPortal = true;
-              portalKey = key;
-            }
-          }
-        });    
-
         // 'ready' will fire again once each time updateCriteria() is called, after
         // all new data is loaded and all other new events have been fired. 
         const onReadyRegistration = geoQuery.on('ready', () => {
@@ -116,10 +86,6 @@ module.exports = (event) => {
           
           // Cancel the "key_entered" callback
           onKeyEnteredRegistration.cancel();
-          // Cancel the "key_exited" callback
-          onKeyExitedRegistration.cancel();
-          // Cancel the "key_moved" callback
-          onKeyMovedRegistration.cancel();
         });
       })
       .catch(err => console.log(err));
