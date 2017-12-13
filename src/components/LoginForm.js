@@ -30,6 +30,7 @@ class Login extends Component {
      showSpinner: true,
     };
     this.authenticatedUser = false;
+    this.fireBaseListener = null;
   }
 
   componentDidMount() {
@@ -53,6 +54,11 @@ class Login extends Component {
         this.setState({ showSpinner: false });
       }
     });
+  }
+
+  componentWillUnmount() {
+    // Clear firebase listener on unmount
+    this.fireBaseListener = undefined;
   }
 
   onPressLogin() {

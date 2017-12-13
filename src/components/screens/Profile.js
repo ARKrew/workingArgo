@@ -28,6 +28,7 @@ class Profile extends Component {
     this.state = {
       profileBadges: []
     };
+    this.badgeListener = null;
   }
 
   componentDidMount() {
@@ -36,7 +37,7 @@ class Profile extends Component {
 
   componentWillUnmount() {
     // Clear firebase listener on unmount
-    firebase.database().ref(`collected_badges/${this.props.uid}`).off();
+    firebase.database().ref('collected_badges').child(this.props.uid).off();
   }
 
   initFirebaseListener() {
