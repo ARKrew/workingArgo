@@ -13,8 +13,7 @@ class MarkerDetailItem extends Component {
     this.props.updateDisplayBadge({ displayBadge: this.props.marker.badge });
     // Need to disable ishunting when hunt is complete
     this.props.initializeHunt({ isHunting: true, selectedMarker: this.props.marker });
-    console.log('after click');
-    console.log(this.props);
+    // Add firebase command to tell which badge the user is currently looking for
   }
 
   render() {

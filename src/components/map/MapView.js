@@ -24,67 +24,48 @@ const screen = Dimensions.get('window');
 const ASPECT_RATIO = screen.width / screen.height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+const geolocationOptions = { enableHighAccuracy: true, distanceFilter: 1, timeout: 20000, maximumAge: 1000 };
 const markerImg = require('../../assets/icons/flag2.png');
 
 class MapViews extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      enablePolyline: false
+      enablePolyline: false,
+      enablePortal: false,
+      portalIsOpen: false
     };
     this.animation = new Animated.Value(-1);
     this.interpolations = null;
     this.animate.bind(this);
     this.watchId = null;
-    this.isAnimating = false;
-    this.geolocationOptions = { enableHighAccuracy: true, distanceFilter: 1, timeout: 20000, maximumAge: 1000 };
-    // this.polyLineCoords = [{ latitude: 34.06365072138657, longitude: -118.448552464198 }, { latitude: 34.061292, longitude: -118.447139 }];
   }
 
   // Best place to fetch data, will fetch after initial render
   componentDidMount() {
     // Begin tracking location
     this.watchLocation();
-    const queryPath = `location_config/${this.props.uid}/nearby_portal`;
+    // Set up firebase listeners
+    this.initFirebaseListeners();
+  } 
 
-    firebase.database().ref(queryPath).once('value')
-    .then( 
-      snapshot => {
-        const markers = snapshot.val().reduce((acc, curr, index) => {
-          // Need to set up check to see which badges user has collected
-          // Need to set up removal of collected badges.
-          acc[index] = 
-            { id: index,
-              coordinates:
-                { 
-                  latitude: curr[0], 
-                  longitude: curr[1] 
-                },
-              badge: this.props.availableBadges[index] 
-            }; 
-          return acc;
-        }, []);
-        
-        this.props.updateMarkers({ markers });
-      }
-    )
-    .catch(error => this.alertError(error.message));
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isHunting) {
+      this.animateToPolyline(nextProps);
+    }
+    if (!nextProps.isHunting && this.state.enablePortal && this.state.enablePolyline) {
+      this.setState(
+        { 
+          enablePolyline: false, 
+          enablePortal: false 
+        }
+      );
+    }
   }
 
   componentWillUpdate(nextProps) {
     if (this.props.markerIndex !== nextProps.markerIndex && !nextProps.scroll) {
       this.animate(nextProps.markerIndex);
-    }
-    // Might need to do this.props.isANimating
-    if (nextProps.isHunting && !this.isAnimating) {
-      const midpoint = this.calcMidPoint(nextProps.userPosition, nextProps.selectedMarker);
-      let latitudeDelta = Math.abs(nextProps.userPosition.latitude - nextProps.selectedMarker.coordinates.latitude);
-      let longitudeDelta = Math.abs(nextProps.userPosition.longitude - nextProps.selectedMarker.coordinates.longitude);
-      latitudeDelta += (latitudeDelta / 3);
-      longitudeDelta += (longitudeDelta / 3);
-      
-      this.animateToRegion(midpoint, latitudeDelta, longitudeDelta);
-      this.setState({ enablePolyline: true });
     }
   }
 
@@ -93,6 +74,7 @@ class MapViews extends Component {
     if (this.watchID) {
       navigator.geolocation.clearWatch(this.watchID);
     }
+    firebase.database().ref(`portal_open/${this.props.uid}/open_portal`).off();
   }
 
   // If user moves map around track where they're looking
@@ -136,8 +118,7 @@ class MapViews extends Component {
           latitudeDelta: LATITUDE_DELTA,
           longitudeDelta: LONGITUDE_DELTA
         };
-        console.log('my position is here')
-        console.log(myPosition);
+
       if (!isEqual(myPosition, myLastPosition)) {
         this.props.updateUserPosition({ userPosition: myPosition });
 
@@ -147,7 +128,69 @@ class MapViews extends Component {
       }
     },
     err => this.alertError(err.message),
-    this.geolocationOptions);
+    geolocationOptions);
+  }
+
+  initFirebaseListeners() {
+    const uid = this.props.uid;
+    const firebaseConfig = 
+      {
+        marker: `location_config/${uid}/nearby_portal`,
+        portal: `portal_open/${uid}/open_portal`
+      };
+    const error = 'error setting up firebase listeners';
+
+    Object.entries(firebaseConfig).forEach(([key, val]) => {
+      switch (key) {
+        case 'marker':
+          this.generateMarkerListeners(val);
+          break;
+        case 'portal':
+          this.enablePortalListener(val);
+          break;
+        default:
+          this.alertError(error);
+          break;
+      }
+    });
+  }
+
+  enablePortalListener(node) {
+    // Database.on does not retrun a promise, must use try catch block
+    try {
+      // firebase.database().ref(node).on('value', snapshot => {
+      firebase.database().ref('james_test/open').on('value', snapshot => {
+        if (snapshot.val() === true) {
+          this.setState({ enablePortal: true });
+        }
+      });
+    } catch (error) {
+      this.alertError(error.message);
+    }
+  }
+
+  generateMarkerListeners(node) {
+    // Database.on does not retrun a promise, must use try catch block
+    try {
+      firebase.database().ref(node).on('value', snapshot => {
+        const markers = snapshot.val().reduce((acc, curr, index) => {
+          acc[index] = 
+            { id: index,
+              coordinates:
+                { 
+                  latitude: curr[0], 
+                  longitude: curr[1] 
+                },
+              badge: this.props.availableBadges[index] 
+            }; 
+          return acc;
+        }, []);
+        
+        this.props.updateMarkers({ markers });
+        });
+    } catch (error) {
+      this.alertError(error.message);
+    }
   }
 
   alertError(err) {
@@ -167,7 +210,6 @@ class MapViews extends Component {
   }
 
   calcMidPoint(current, marker) {
-    this.isAnimating = true;
     const lat1 = current.latitude;
     const lat2 = marker.coordinates.latitude;
     const long1 = current.longitude;
@@ -207,6 +249,17 @@ class MapViews extends Component {
     );
   }
 
+  animateToPolyline(nextProps) {
+    const midpoint = this.calcMidPoint(nextProps.userPosition, nextProps.selectedMarker);
+    let latitudeDelta = Math.abs(nextProps.userPosition.latitude - nextProps.selectedMarker.coordinates.latitude);
+    let longitudeDelta = Math.abs(nextProps.userPosition.longitude - nextProps.selectedMarker.coordinates.longitude);
+    latitudeDelta += (latitudeDelta / 3);
+    longitudeDelta += (longitudeDelta / 3);
+    
+    this.animateToRegion(midpoint, latitudeDelta, longitudeDelta);
+    this.setState({ enablePolyline: true });
+  }
+
   initializeMarkers() {
     this.setInterpolation();
     
@@ -217,10 +270,6 @@ class MapViews extends Component {
         return this.renderMarkers(location, index);
       }
     });
-  }
-
-  renderModal() {
-    return <MapARNav />;
   }
 
   renderMarkers(location, index) {
@@ -254,17 +303,14 @@ class MapViews extends Component {
   }
 
   renderModal() {
-    console.log('render modal is appearing')
     return <MapARNav navigation={this.props.navigation} />;
   }
 
   renderPolyline() {
     const startingCoordinates = { latitude: this.props.userPosition.latitude, longitude: this.props.userPosition.longitude };
-    const endingCoordinates = { latitude: this.props.selectedMarker.coordinates.latitude, longitude: this.props.selectedMarker.coordinates.longitude }
+    const endingCoordinates = { latitude: this.props.selectedMarker.coordinates.latitude, longitude: this.props.selectedMarker.coordinates.longitude };
     const polyLineCoords = [startingCoordinates, endingCoordinates];
     
-    console.log('polyline');
-    // console.log(polyLineCoords);
     return (
         <MapView.Polyline 
           coordinates={polyLineCoords} 
@@ -277,21 +323,19 @@ class MapViews extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-      {/* Need to update logic for this to incorporate notification from firebase */}
-      {this.isAnimating && !this.props.enterAR && this.renderModal()}
-      {/* Alert the user if there was an issue */}
+      <View style={styles.container}>      
         <MapView
           showsUserLocation
           style={styles.map}
           ref='map'
           initialRegion={this.props.userPosition}
-          onRegionChange={this.onRegionChange.bind(this)}
+          // onRegionChange={this.onRegionChange.bind(this)}
           onRegionChangeComplete={this.onRegionChange.bind(this)}
         >
           {this.props.markers && this.initializeMarkers()}
           {this.state.enablePolyline && this.renderPolyline()}
         </MapView>
+        {this.state.enablePortal && this.props.isHunting && this.renderModal()}
         {this.props.markers && <MarkerDetails />}
       </View>
     );
@@ -336,12 +380,19 @@ const styles = {
   }
 };
 
-const mapStateToProps = state => ({ ...state.map, ...state.auth.user, ...state.badge, ...state.demoAR });
+const mapStateToProps = state => (
+  { 
+    ...state.map, 
+    ...state.auth.user, 
+    ...state.badge, 
+    ...state.demoAR 
+  }
+);
 
 export default connect(mapStateToProps,
   {
     updateUserPosition,
     updateMapRegion,
     updateMarkers,
-    updateMarkerIndex
+    updateMarkerIndex,
   })(MapViews);

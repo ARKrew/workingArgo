@@ -3,7 +3,9 @@ import {
   MAP_REGION_CHANGE, 
   UPDATE_MARKERS,
   UPDATE_MARKER_INDEX,
-  INITIALIZE_HUNT
+  INITIALIZE_HUNT,
+  DISABLE_HUNT,
+  OPEN_PORTAL
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -13,7 +15,8 @@ const INITIAL_STATE = {
   markerIndex: null,
   isHunting: null,
   selectedMarker: null,
-  scroll: false
+  scroll: false,
+  enablePortal: null,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -27,6 +30,8 @@ export default (state = INITIAL_STATE, action) => {
     case UPDATE_MARKER_INDEX:
       return { ...state, ...action.payload };
     case INITIALIZE_HUNT:
+      return { ...state, ...action.payload };
+    case DISABLE_HUNT:
       return { ...state, ...action.payload };
     default: 
       return state;
