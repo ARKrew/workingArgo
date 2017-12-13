@@ -12,7 +12,6 @@
 #import <ViroReact/VRTBundleURLProvider.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-#import <Firebase/Firebase.h>
 
 @implementation AppDelegate
 
@@ -48,7 +47,6 @@
     self.window.rootViewController = rootViewController;
     [self.window makeKeyAndVisible];
   }
-  [FIRApp configure];
   return YES;
 }
   
