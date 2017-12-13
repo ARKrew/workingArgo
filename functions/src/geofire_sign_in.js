@@ -10,11 +10,11 @@ const GeoFire = require('geofire');
 let fbLocation;
 let uid;
 let currentLocation;
+let allPortalsCompleted = [];
 
 module.exports = (event) => {
   // triggers when there is an update to users in the database.
-  event.geoFireNewUser = functions.database.ref('users').onUpdate(event => {
-   
+  event.geoFireSignIn = functions.database.ref('users').onUpdate(event => {
     // this grabs the user's uid
     uid = event.auth.variable ? event.auth.variable.uid : null;
     console.log('new_uid', `${uid}`);
@@ -26,6 +26,17 @@ module.exports = (event) => {
       // console.log('snapshot of current location', currentLocation);
     }).catch(err => console.log(err))
 
+    .then(() => {
+      // place in array all portals completed to be x-checked below
+      admin.database().ref(`portals_completed/${uid}`).once('value', snapshot => { 
+        snapshot.forEach((child) => {
+          let singlePortalCompleted = child.key;
+          allPortalsCompleted.push(singlePortalCompleted);
+          // console.log('sign-in: single value', child.key);
+        });
+        // console.log('sign-in: all value of portals completed', allPortalsCompleted);
+      }).catch(err => console.log(err));
+    })
     .then(() => {
       // grab all portal locations within the database
       admin.database().ref('/portal_coordinates_all').once('value', snapshot => { 
@@ -50,10 +61,11 @@ module.exports = (event) => {
             center: currentLocation,
             radius: 2
             // note: radius scale is km
+            // 2 km = 1.2 mi
           });
           
           // gathers fbLocations that are x distance from the center
-          const locations = [];
+          let locations = [];
           let openPortal = '';
           let portalKey = '';
 
@@ -61,21 +73,27 @@ module.exports = (event) => {
           // when a key is written to GeoFire for the first time and it falls within this
           // query.
           const onKeyEnteredRegistration = geoQuery.on('key_entered', (key, location, distance) => {
-            
-            // distance <= 100 ft
-            if (distance <= 0.03) { 
-              openPortal = true;
-              portalKey = key;
+            // run through array of all portals completed and remove any if they match portals around current location
+            console.log('sign-in: all portals completed', allPortalsCompleted);
+            if (allPortalsCompleted.indexOf(key) === -1) {
+              locations.push(location);
+              // signal client when near portal. distance <= 100 ft.
+              if (distance <= 0.03) { 
+                openPortal = true;
+                portalKey = key;
+              }
             }
-        
-            locations.push(location);
+
+            // clear array
+            // allPortalsCompleted = [];
+
           });
 
           // fires once when this query's initial state has been loaded from the server.
           // this will be used the most
           const onReadyRegistration = geoQuery.on('ready', () => {
             console.log('New - GeoQuery has loaded and fired all other events for initial data');
-            
+             
             // console.log('near portals, inside ready', locations);
             
             // push nearby locations into the database. template literal baby!
@@ -87,12 +105,13 @@ module.exports = (event) => {
 
             // Cancel the "key_entered" callback
             onKeyEnteredRegistration.cancel();
+
           });
 
           // ---------- comment out below when not needed ----------
           // -------------- use when removing portals --------------
           // -------------------------------------------------------
-          // geoFire.remove('-L-mB9hllJhPtzg8QM7D').then(() => {
+          // geoFire.remove('L-yrgYNhOUs8_fRSKFl').then(() => {
           //   console.log('Provided key has been removed from GeoFire');
           // }, (error) => {
           //   console.log('Error: ' + error);
@@ -102,6 +121,8 @@ module.exports = (event) => {
 
         })
         .catch(err => console.log(err));
+        // clear array
+        allPortalsCompleted = [];
       });
     });
   });

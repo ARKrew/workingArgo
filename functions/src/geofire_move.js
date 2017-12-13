@@ -22,8 +22,9 @@ module.exports = (event) => {
       // console.log('snapshot of current location', currentLocation);
     }).catch(err => console.log(err))
     .then(() => {
-      // this only returns the 1st key if there are many
+      // place in array all portals completed to be x-checked below.
       admin.database().ref(`portals_completed/${uid}`).once('value', snapshot => { 
+        allPortalsCompleted = [];
         snapshot.forEach((child) => {
           let singlePortalCompleted = child.key;
           allPortalsCompleted.push(singlePortalCompleted);
@@ -55,48 +56,61 @@ module.exports = (event) => {
       // to one inside of it or when a key is written to GeoFire for the
       // first time and it falls within this query.
       const onKeyEnteredRegistration = geoQuery.on('key_entered', (key, location, distance) => { 
+        console.log('move key_entered: all portals completed', allPortalsCompleted);
         // run through array of all portals completed and remove any if they match portals around current location
         if (allPortalsCompleted.indexOf(key) === -1) {
           locations.push(location);
+          // signal client when near portal. distance <= 100 ft.
+          if (distance <= 0.03) { 
+            openPortal = true;
+            portalKey = key;
+          }
         }
         // console.log('locations', locations);
 
-        // signal client when near portal. distance <= 100 ft
-        if (distance <= 0.03) { 
-          openPortal = true;
-          portalKey = key;
-        }
+        // clear array
+        // allPortalsCompleted = [];
+
       });
+
       
       // fires when a key (name) moves from a location inside of this query
       // to one outside of it. 
       const onKeyExitedRegistration = geoQuery.on('key_exited', (key, location, distance) => {
+        console.log('move key_exited: all portals completed', allPortalsCompleted);
         // run through array of all portals completed and remove any if they match portals around current location
         if (allPortalsCompleted.indexOf(key) === -1) {
           locations.push(location);
+          // signal client when near portal. distance <= 100 ft
+          if (distance <= 0.03) { 
+            openPortal = true;
+            portalKey = key;
+          }
         }
         // console.log('locations', locations);
 
-        // signal client when near portal. distance <= 100 ft
-        if (distance <= 0.03) { 
-          openPortal = true;
-          portalKey = key;
-        }
+        // clear array
+        // allPortalsCompleted = [];
+
       });
 
       // fires when a key which is already in this query moves to another location inside of it.
       const onKeyMovedRegistration = geoQuery.on('key_moved', (key, location, distance) => {
+        console.log('move key_moved: all portals completed', allPortalsCompleted);
         // run through array of all portals completed and remove any if they match portals around current location
         if (allPortalsCompleted.indexOf(key) === -1) {
           locations.push(location);
+          // signal client when near portal. distance <= 100 ft
+          if (distance <= 0.03) { 
+            openPortal = true;
+            portalKey = key;
+          }
         }
         // console.log('locations', locations);
+        
+        // clear array
+        // allPortalsCompleted = [];
 
-        // signal client when near portal. distance <= 100 ft
-        if (distance <= 0.03) { 
-          openPortal = true;
-          portalKey = key;
-        }
       });    
 
       // 'ready' will fire again once each time updateCriteria() is called, after
@@ -119,7 +133,7 @@ module.exports = (event) => {
         onKeyMovedRegistration.cancel();
 
         // clear array
-        allPortalsCompleted = [];
+        // allPortalsCompleted = [];
       });
     })
     .catch(err => console.log(err));
