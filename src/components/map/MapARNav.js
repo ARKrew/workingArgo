@@ -4,7 +4,7 @@ import Modal from 'react-native-modal';
 import { connect } from 'react-redux';
 import firebase from 'firebase';
 import { NavigationActions } from 'react-navigation';
-import { enterAR, disableHunt } from '../../actions';
+import { enterAR, disableHunt, indicateInsidePortal } from '../../actions';
 
 const navigateAction = NavigationActions.navigate({
   routeName: 'MainSceneAR',
@@ -44,8 +44,8 @@ class MapARNav extends Component {
           enterAR: true,
         });
 
-        // firebase.database().ref(`portal_open/${uid}`).set({ open_portal: '', portal_key: '' });
-        firebase.database().ref('james_test').set({ open: '' });
+        this.props.indicateInsidePortal({ inPortal: true });
+        
         navigation(navigateAction);
         })}
     </View>
@@ -101,4 +101,4 @@ const styles = {
 
 const mapStateToProps = state => state;
 
-export default connect(mapStateToProps, { enterAR, disableHunt })(MapARNav);
+export default connect(mapStateToProps, { enterAR, disableHunt, indicateInsidePortal })(MapARNav);
