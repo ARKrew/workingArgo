@@ -37,7 +37,6 @@ class MapARNav extends Component {
       <Text>Portal is Ready!</Text>
       {this._renderButton('Open Portal', () => {
         const { navigation } = this.props;
-        const { uid } = this.props.auth.user;
 
         this.setState({ visibleModal: false });
         this.props.enterAR({
@@ -45,7 +44,7 @@ class MapARNav extends Component {
         });
 
         this.props.indicateInsidePortal({ inPortal: true });
-        
+
         navigation(navigateAction);
         })}
     </View>
