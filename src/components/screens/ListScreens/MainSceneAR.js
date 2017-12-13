@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import DemoARPortal from './DemoARPortal';
 import BadgeAR from '../BadgeAR';
+import ExitModal from './ExitModal';
 import {
   Text,
   View,
@@ -23,8 +24,8 @@ const sharedProps = {
 
   class MainSceneAR extends Component {
 
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
       this.state = {
         sharedProps: sharedProps,
       };
@@ -52,26 +53,17 @@ const sharedProps = {
     }
 
     render() {
+      console.log(this.screenProps + 'ellllooo yooo');
+    console.log(this.props.ARstate + 'ellllooo yooo');
+    console.log(this.props.navigation.dispatch + 'HIIIIIIIIIyooo');
+
     if (this.props.ARstate.enterAR === true) {
         return (
            <BadgeAR />
         );
       }
         return (
-          <View style={styles.container}>
-              <Text style={styles.badgeText}>
-                Congrats on your first badge!
-              </Text>
-              <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                {this.renderDisplayBadge()}
-              </View>
-              <Text style={styles.badgeText}>
-                Now head to your Profile Page to see your new badge!
-              </Text>
-              <TouchableHighlight>
-                <Text style={styles.profileButton} onPress={this.exitAR}>Profile Page</Text>
-              </TouchableHighlight>
-        </View>
+          <ExitModal screenProps={{ rootsTab: this.props.navigation.dispatch }} />
         );
     }
 }

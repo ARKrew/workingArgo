@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { enterAR } from '../../../actions';
+import { enterAR, clickedObj } from '../../../actions';
 import {
   // ViroARSceneNavigator,
   ViroText,
@@ -61,6 +61,8 @@ class DemoARPortal extends Component {
     this._onClickState = this._onClickState.bind(this);
     // this._routeToMap = this._routeToMap.bind(this);
     this._onExit = this._onExit.bind(this);
+
+    this._onObjClicked = this._onObjClicked.bind(this);
   }
 
 // ==============================================================================
@@ -89,7 +91,11 @@ class DemoARPortal extends Component {
       setTimeout(() => {
         this.props.enterAR({
           enterAR: false,
-        });
+        },
+        this.props.clickedObj({
+          clickedObj: true,
+        })
+      );
     }, 2000);
       // _routeToMap();
     }
@@ -98,6 +104,12 @@ class DemoARPortal extends Component {
   _onExit() {
     this.props.enterAR({
           enterAR: false,
+        });
+  }
+
+  _onObjClicked() {
+    this.props.clickedObj({
+          clickedObj: true,
         });
   }
   // ===== Route to map =====
@@ -349,4 +361,5 @@ const mapStateToProps = state => ({ ARstate: state.demoAR, currentBadge: state.b
 export default connect(mapStateToProps,
   {
     enterAR,
+    clickedObj
   })(DemoARPortal);
