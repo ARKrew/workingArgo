@@ -24,6 +24,10 @@ target 'workingArgo' do
   
     pod 'react-native-maps', path: '../node_modules/react-native-maps'
     pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+    pod 'Firebase/Core'
+    pod 'Firebase/Performance'
+    pod 'Fabric', '~> 1.7.2'
+    pod 'Crashlytics', '~> 3.9.3'
 
   end
   
