@@ -39,12 +39,13 @@ const sharedProps = {
     }
 
     exitAR = () => {
+      // Update firebase
       const completedPortal = {};
       const key = this.props.map.selectedMarker.firebaseKey;
 
       completedPortal[key] = true;
       firebase.database().ref(`portals_completed/${this.props.user.uid}`).update(completedPortal);
-      
+      // Reset map state
       this.props.disableHunt({ isHunting: false, selectedMarker: null });
       this.props.indicateInsidePortal({ inPortal: false });
       // Reset to list screen from MainSceneAR
