@@ -118,7 +118,6 @@ class DemoARPortal extends Component {
 
         {/* ===== Pirate Flag ====== */}
         <Viro3DObject
-          // source={require('./portal_res/models/flag/pirate_flag.obj')}
           source={require('./../../../assets/models/flag/pirate_flag.obj')}
           materials={['flag']}
           position={[0.75, 0, -1.25]}
@@ -300,7 +299,7 @@ const mapStateToProps = state => ({
   ARstate: state.demoAR, 
   currentBadge: state.badge.displayBadge,
   badge: state.badge,
-  user: state.auth
+  user: state.auth.user
  });
 
 export default connect(mapStateToProps,
