@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Image
 } from 'react-native';
+import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { ViroARSceneNavigator } from 'react-viro';
 import {
@@ -38,6 +39,12 @@ const sharedProps = {
     }
 
     exitAR = () => {
+      const completedPortal = {};
+      const key = this.props.map.selectedMarker.firebaseKey;
+
+      completedPortal[key] = true;
+      firebase.database().ref(`portals_completed/${this.props.user.uid}`).update(completedPortal);
+      
       this.props.disableHunt({ isHunting: false, selectedMarker: null });
       this.props.indicateInsidePortal({ inPortal: false });
       // Reset to list screen from MainSceneAR
@@ -139,7 +146,9 @@ const mapStateToProps = state => {
     ARstate: state.demoAR,
     navState: state.nav,
     currentRoute: state.nav.routes[1].index,
-    badge: state.badge
+    badge: state.badge,
+    map: state.map,
+    user: state.auth.user
   };
 };
 
