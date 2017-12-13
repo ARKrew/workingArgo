@@ -89,7 +89,7 @@ class DemoARPortal extends Component {
     
     this.props.updateProfileBadges({ collectedBadges });
     
-    firebase.database().ref(`collected_badges/${uid}`).set({ ...collectedBadgesArray });
+    firebase.database().ref(`collected_badges/${uid}`).set({ ...collectedBadges });
   }
 
   render() {

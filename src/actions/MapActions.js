@@ -5,7 +5,7 @@ import {
   UPDATE_MARKER_INDEX,
   INITIALIZE_HUNT,
   DISABLE_HUNT,
-  OPEN_PORTAL
+  INSIDE_PORTAL
 } from './types';
 
 export const updateUserPosition = data => (
@@ -46,6 +46,13 @@ export const initializeHunt = data => (
 export const disableHunt = data => (
   {
     type: DISABLE_HUNT,
+    payload: data
+  }
+);
+
+export const indicateInsidePortal = data => (
+  {
+    type: INSIDE_PORTAL,
     payload: data
   }
 );
