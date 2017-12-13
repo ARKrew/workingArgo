@@ -30,7 +30,6 @@ class Login extends Component {
      showSpinner: true,
     };
     this.authenticatedUser = false;
-    this.setInitialBadgeState.bind(this);
   }
 
   componentDidMount() {
@@ -47,9 +46,6 @@ class Login extends Component {
             this.authenticatedUser = true;
             this.firebaseRef.child(auth.uid).off('value');
             this.props.loginSuccess({ ...user, joinDate, displayName });
-            console.log('this will be the collected badges');
-            console.log(user);
-            this.setInitialBadgeState(user.collectedBadges);
             this.getCurrentLocation(user);
           }
         });
@@ -61,7 +57,8 @@ class Login extends Component {
 
   onPressLogin() {
     this.setState({ showSpinner: true });
-        LoginManager.logInWithReadPermissions([
+      LoginManager
+        .logInWithReadPermissions([
           'public_profile',
           'user_birthday',
           'email',
@@ -99,17 +96,6 @@ class Login extends Component {
         { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
       ).catch(err => console.log(err)); // needed?
     }
-  }
-
-  setInitialBadgeState(badges) {
-    // Need to set up collected badges from firebase
-    const collectedBadges = badges || [];
-
-    this.props.updateProfileBadges({ collectedBadges });
-
-    const availableBadges = this.props.badges.availableBadges.filter(badge => collectedBadges.indexOf(badge.fileName) === -1);
-    
-    this.props.updateAvailableBadges({ availableBadges });
   }
 
   handleCallBack(result) {

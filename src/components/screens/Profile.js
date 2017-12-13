@@ -1,34 +1,58 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
+import firebase from 'firebase';
 import { Card, CardSection, Header } from '../common';
-import { updateProfileBadges } from '../../actions';
+import { updateProfileBadges, updateAvailableBadges } from '../../actions';
+import profileBadges from '../../constants/profileBadges';
+import profileBadgesGreyScale from '../../constants/profileBadgesGreyScale';
 
 class Profile extends Component {
 
 constructor(props) {
     super(props);
+    this.state = {
+      profileBadges: []
+    };
 }
 
-// TODO: Pass in user info from firebase to update badges
-componentWillMount() {
-    const profileBadges = this.props.userBadges.greyBadges.reduce((acc, curr, index) => {
-      acc[index] = this.props.userBadges.collectedBadges.indexOf(curr.fileName) === -1 ? curr : this.props.userBadges.colorBadges[index];
-      return acc;
-    }, 
-  []);
-  this.props.updateProfileBadges({ profileBadges });
+componentDidMount() {
+  this.initFirebaseListener();
 }
 
-// shouldComponentUpdate(nextProps) {
-//   console.log('this is the current route');
-//   console.log(nextProps.currentRoute);
-//   return nextProps.currentRoute === 0 ? true : false;
-// }
+componentWillUnmount() {
+  // Clear firebase listener on unmount
+  firebase.database().ref(`collected_badges/${this.props.uid}`).off();
+}
+
+initFirebaseListener() {
+  firebase.database().ref(`collected_badges/${this.props.uid}`).on('value', snapshot => {
+    const collectedBadges = snapshot.val();
+
+    const availableBadges = this.props.userBadges.availableBadges.filter(
+      badge => collectedBadges.indexOf(badge.fileName) === -1
+    );
+    
+    this.props.updateAvailableBadges({ availableBadges });
+
+    this.props.updateProfileBadges({ collectedBadges });
+
+    this.calcDisplaybadges(collectedBadges);
+  });
+}
+
+calcDisplaybadges(collectedBadges) {
+  const badges = profileBadgesGreyScale.reduce((acc, curr, index) => {
+    acc[index] = collectedBadges.indexOf(curr.fileName) === -1 ? curr : profileBadges[index];
+    return acc;
+  }, []);
+
+  this.setState({ profileBadges: badges });
+}
 
 // Displays badges collected by user
 renderUserBadges() {
-  return this.props.userBadges.profileBadges.map((badge) => {
+  return this.state.profileBadges.map((badge) => {
     return (
       <Image
         style={styles.badge}
@@ -39,36 +63,36 @@ renderUserBadges() {
   });
 }
 
-  render() {
-    const headerName = this.props.displayName;
-    const joinDate = this.props.joinDate;
-    const uri = this.props.dp;
+render() {
+  const headerName = this.props.displayName;
+  const joinDate = this.props.joinDate;
+  const uri = this.props.dp;
 
-      return (
-        <View>
-          <Header headerText={headerName} />
-          <View style={styles.userContainer}>
-            <Image
-              style={styles.userImage}
-              source={{ uri }}
-            />
-            <Text style={styles.userText}>Member since: {joinDate}</Text>
-          </View>
-          <View>
-            <Card>
-              <CardSection>
-                <Text style={styles.badgesHeader}>Badges</Text>
-              </CardSection>
-            </Card>
-          </View>
-          <ScrollView>
-            <View style={styles.badgeContainer}>
-              {this.renderUserBadges()}
-            </View>
-          </ScrollView>
+  return (
+    <View>
+      <Header headerText={headerName} />
+      <View style={styles.userContainer}>
+        <Image
+          style={styles.userImage}
+          source={{ uri }}
+        />
+        <Text style={styles.userText}>Member since: {joinDate}</Text>
+      </View>
+      <View>
+        <Card>
+          <CardSection>
+            <Text style={styles.badgesHeader}>Badges</Text>
+          </CardSection>
+        </Card>
+      </View>
+      <ScrollView>
+        <View style={styles.badgeContainer}>
+          {this.renderUserBadges()}
         </View>
-      );
-  }
+      </ScrollView>
+    </View>
+  );
+}
 }
 
 const styles = StyleSheet.create({
@@ -114,5 +138,6 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  updateProfileBadges
+  updateProfileBadges,
+  updateAvailableBadges
 })(Profile);

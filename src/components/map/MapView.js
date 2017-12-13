@@ -69,12 +69,14 @@ class MapViews extends Component {
     }
   }
 
-  // Clear watch when component unmounts
   componentWillUnmount() {
+    // Clear watch when component unmounts
     if (this.watchID) {
       navigator.geolocation.clearWatch(this.watchID);
     }
+    // Clear firebase listeners when component unmounts
     firebase.database().ref(`portal_open/${this.props.uid}/open_portal`).off();
+    firebase.database().ref('james_test').off();
   }
 
   // If user moves map around track where they're looking
@@ -330,7 +332,7 @@ class MapViews extends Component {
           ref='map'
           initialRegion={this.props.userPosition}
           // onRegionChange={this.onRegionChange.bind(this)}
-          onRegionChangeComplete={this.onRegionChange.bind(this)}
+          // onRegionChangeComplete={this.onRegionChange.bind(this)}
         >
           {this.props.markers && this.initializeMarkers()}
           {this.state.enablePolyline && this.renderPolyline()}
