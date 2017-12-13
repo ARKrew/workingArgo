@@ -4,7 +4,7 @@ import {
   AVAILABLE_BADGES
 } from '../actions/types';
 
-import profileBadges from '../constants/profileBadges';
+import { profileBadges } from '../constants';
 // import profileBadgesGreyScale from '../constants/profileBadgesGreyScale';
 
 const INITIAL_STATE = {

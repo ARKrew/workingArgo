@@ -1,98 +1,112 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
+import { 
+  View, 
+  Text, 
+  Image, 
+  StyleSheet, 
+  ScrollView 
+} from 'react-native';
 import firebase from 'firebase';
-import { Card, CardSection, Header } from '../common';
-import { updateProfileBadges, updateAvailableBadges } from '../../actions';
-import profileBadges from '../../constants/profileBadges';
-import profileBadgesGreyScale from '../../constants/profileBadgesGreyScale';
+import { 
+  Card, 
+  CardSection, 
+  Header 
+} from '../common';
+import { 
+  updateProfileBadges, 
+  updateAvailableBadges 
+} from '../../actions';
+import {
+  profileBadges as colorBadges,
+  profileBadgesGreyScale as greyBadges
+ } from '../../constants';
 
 class Profile extends Component {
-
-constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       profileBadges: []
     };
-}
+  }
 
-componentDidMount() {
-  this.initFirebaseListener();
-}
+  componentDidMount() {
+    this.initFirebaseListener();
+  }
 
-componentWillUnmount() {
-  // Clear firebase listener on unmount
-  firebase.database().ref(`collected_badges/${this.props.uid}`).off();
-}
+  componentWillUnmount() {
+    // Clear firebase listener on unmount
+    firebase.database().ref(`collected_badges/${this.props.uid}`).off();
+  }
 
-initFirebaseListener() {
-  firebase.database().ref(`collected_badges/${this.props.uid}`).on('value', snapshot => {
-    const collectedBadges = snapshot.val();
+  initFirebaseListener() {
+    firebase.database().ref(`collected_badges/${this.props.uid}`).on('value', snapshot => {
+      const collectedBadges = snapshot.val() || [];
 
-    const availableBadges = this.props.userBadges.availableBadges.filter(
-      badge => collectedBadges.indexOf(badge.fileName) === -1
-    );
-    
-    this.props.updateAvailableBadges({ availableBadges });
+      const availableBadges = this.props.userBadges.availableBadges.filter(
+        badge => collectedBadges.indexOf(badge.fileName) === -1
+      );
+      
+      this.props.updateAvailableBadges({ availableBadges });
 
-    this.props.updateProfileBadges({ collectedBadges });
+      this.props.updateProfileBadges({ collectedBadges });
 
-    this.calcDisplaybadges(collectedBadges);
-  });
-}
+      this.calcDisplaybadges(collectedBadges);
+    });
+  }
 
-calcDisplaybadges(collectedBadges) {
-  const badges = profileBadgesGreyScale.reduce((acc, curr, index) => {
-    acc[index] = collectedBadges.indexOf(curr.fileName) === -1 ? curr : profileBadges[index];
-    return acc;
-  }, []);
+  calcDisplaybadges(collectedBadges) {
+    const profileBadges = greyBadges.reduce((acc, curr, index) => {
+      acc[index] = collectedBadges.indexOf(curr.fileName) === -1 ? curr : colorBadges[index];
+      return acc;
+    }, []);
 
-  this.setState({ profileBadges: badges });
-}
+    this.setState({ profileBadges });
+  }
 
 // Displays badges collected by user
-renderUserBadges() {
-  return this.state.profileBadges.map((badge) => {
-    return (
-      <Image
-        style={styles.badge}
-        key={badge.fileName}
-        source={badge.image}
-      />
-    );
-  });
-}
-
-render() {
-  const headerName = this.props.displayName;
-  const joinDate = this.props.joinDate;
-  const uri = this.props.dp;
-
-  return (
-    <View>
-      <Header headerText={headerName} />
-      <View style={styles.userContainer}>
+  renderUserBadges() {
+    return this.state.profileBadges.map((badge) => {
+      return (
         <Image
-          style={styles.userImage}
-          source={{ uri }}
+          style={styles.badge}
+          key={badge.fileName}
+          source={badge.image}
         />
-        <Text style={styles.userText}>Member since: {joinDate}</Text>
-      </View>
+      );
+    });
+  }
+
+  render() {
+    const headerName = this.props.displayName;
+    const joinDate = this.props.joinDate;
+    const uri = this.props.dp;
+
+    return (
       <View>
-        <Card>
-          <CardSection>
-            <Text style={styles.badgesHeader}>Badges</Text>
-          </CardSection>
-        </Card>
-      </View>
-      <ScrollView>
-        <View style={styles.badgeContainer}>
-          {this.renderUserBadges()}
+        <Header headerText={headerName} />
+        <View style={styles.userContainer}>
+          <Image
+            style={styles.userImage}
+            source={{ uri }}
+          />
+          <Text style={styles.userText}>Member since: {joinDate}</Text>
         </View>
-      </ScrollView>
-    </View>
-  );
-}
+        <View>
+          <Card>
+            <CardSection>
+              <Text style={styles.badgesHeader}>Badges</Text>
+            </CardSection>
+          </Card>
+        </View>
+        <ScrollView>
+          <View style={styles.badgeContainer}>
+            {this.renderUserBadges()}
+          </View>
+        </ScrollView>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

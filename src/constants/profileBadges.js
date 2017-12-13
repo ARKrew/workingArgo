@@ -11,7 +11,7 @@
 //   );
 // });
 
-const profileBadges = [
+export const profileBadges = [
   {
     fileName: '001-parrot.png',
     image: require('./../assets/icons/001-parrot.png')
@@ -213,5 +213,3 @@ const profileBadges = [
     image: require('./../assets/icons/050-pirate.png')
   }
 ];
-
-export default profileBadges;

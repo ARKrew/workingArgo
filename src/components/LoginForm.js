@@ -85,7 +85,7 @@ class Login extends Component {
 
             if (currentLocation.length > 0) {
               firebase.database().ref('current_location').child(uid)
-              .update({ currentLocation });
+                .update({ currentLocation });
             } else {
               const errorMessage = 'Could not get Current Location';
 
@@ -106,30 +106,29 @@ class Login extends Component {
 
       this.alertError(errorMessage);
     } else {
-          AccessToken.getCurrentAccessToken().then(
-          data => {
-            const token = data.accessToken;
-            const accessURL = `https://graph.facebook.com/v2.8/me?fields=id,first_name,last_name&access_token=${token}`;
+      AccessToken.getCurrentAccessToken().then(
+        data => {
+          const token = data.accessToken;
+          const accessURL = `https://graph.facebook.com/v2.8/me?fields=id,first_name,last_name&access_token=${token}`;
 
-            fetch(accessURL)
+          fetch(accessURL)
             .then(response => response.json())
             .then(json => {
               const imageSize = 120;
               const facebookID = json.id;
               const fbImage = `https://graph.facebook.com/${facebookID}/picture?height=${imageSize}`;
 
-             this.authenticate(data.accessToken)
-              .then(res => {
-                const { uid } = res;
+              this.authenticate(data.accessToken)
+                .then(res => {
+                  const { uid } = res;
 
-                that.createUser(uid, json, token, fbImage);
-              });
+                  that.createUser(uid, json, token, fbImage);
+                });
             })
-            .catch(err => this.alertError(err.message)
-            );
-          }
-        );
-      }
+            .catch(err => this.alertError(err.message));
+        }
+      );
+    }
   }
   
   alertError(errorMessage) {
@@ -167,29 +166,31 @@ class Login extends Component {
       <ActivityIndicator animating={this.state.showSpinner} />
       </View> :
       <View style={{ flex: 1, backgroundColor: '#f37a81' }}>
-          <View style={styles.container}>
-            <ImageBackground
-              style={{ flex: 1, justifyContent: 'center' }}
-              source={pirateShipGIF}
-            >
+        <View style={styles.container}>
+          <ImageBackground
+            style={{ flex: 1, justifyContent: 'center' }}
+            source={pirateShipGIF}
+          >
             <Text style={styles.titleFont}>
               ARgo
             </Text>
-              <TouchableHighlight
-                style={styles.container2}
-                onPress={this.onPressLogin.bind(this)}
-                underlayColor='transparent'
-              >
-                <View style={styles.FBLoginButton}>
-                  <Image style={styles.FBLogo} source={FBLogo} />
-                  <Text 
-                    style={styles.FBLoginButtonText}
-                    numberOfLines={1}
-                  >Continue with Facebook</Text>
-                </View>
-              </TouchableHighlight>
-              </ImageBackground>
-          </View>
+            <TouchableHighlight
+              style={styles.container2}
+              onPress={this.onPressLogin.bind(this)}
+              underlayColor='transparent'
+            >
+              <View style={styles.FBLoginButton}>
+                <Image style={styles.FBLogo} source={FBLogo} />
+                <Text 
+                  style={styles.FBLoginButtonText}
+                  numberOfLines={1}
+                >
+                  Continue with Facebook
+                </Text>
+              </View>
+            </TouchableHighlight>
+          </ImageBackground>
+        </View>
       </View>
     );
   }

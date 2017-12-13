@@ -175,7 +175,9 @@ class MapViews extends Component {
     // Database.on does not retrun a promise, must use try catch block
     try {
       firebase.database().ref(node).on('value', snapshot => {
-        const markers = snapshot.val().reduce((acc, curr, index) => {
+        // In case there are no markers from firebase, display empty array
+        const dbMarkers = snapshot.val() || [];
+        const markers = dbMarkers.reduce((acc, curr, index) => {
           acc[index] = 
             { id: index,
               coordinates:

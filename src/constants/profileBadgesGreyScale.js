@@ -1,4 +1,4 @@
-const profileBadgesGreyScale = [
+export const profileBadgesGreyScale = [
   {
     fileName: '001-parrot.png',
     image: require('./../assets/icons_greyscale/001-parrot.png')
@@ -200,5 +200,3 @@ const profileBadgesGreyScale = [
     image: require('./../assets/icons_greyscale/050-pirate.png')
   }
 ];
-
-export default profileBadgesGreyScale;
