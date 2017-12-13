@@ -69,12 +69,14 @@ class MapViews extends Component {
     }
   }
 
-  // Clear watch when component unmounts
   componentWillUnmount() {
+    // Clear watch when component unmounts
     if (this.watchID) {
       navigator.geolocation.clearWatch(this.watchID);
     }
+    // Clear firebase listeners when component unmounts
     firebase.database().ref(`portal_open/${this.props.uid}/open_portal`).off();
+    firebase.database().ref('james_test').off();
   }
 
   // If user moves map around track where they're looking
@@ -173,7 +175,9 @@ class MapViews extends Component {
     // Database.on does not retrun a promise, must use try catch block
     try {
       firebase.database().ref(node).on('value', snapshot => {
-        const markers = snapshot.val().reduce((acc, curr, index) => {
+        // In case there are no markers from firebase, display empty array
+        const dbMarkers = snapshot.val() || [];
+        const markers = dbMarkers.reduce((acc, curr, index) => {
           acc[index] = 
             { id: index,
               coordinates:
@@ -330,7 +334,7 @@ class MapViews extends Component {
           ref='map'
           initialRegion={this.props.userPosition}
           // onRegionChange={this.onRegionChange.bind(this)}
-          onRegionChangeComplete={this.onRegionChange.bind(this)}
+          // onRegionChangeComplete={this.onRegionChange.bind(this)}
         >
           {this.props.markers && this.initializeMarkers()}
           {this.state.enablePolyline && this.renderPolyline()}
