@@ -75,8 +75,8 @@ class MapViews extends Component {
       navigator.geolocation.clearWatch(this.watchID);
     }
     // Clear firebase listeners when component unmounts
-    firebase.database().ref(`portal_open/${this.props.uid}/open_portal`).off();
-    firebase.database().ref('james_test').off();
+    firebase.database().ref('james_test').child('open').off();
+    firebase.database().ref('location_config').child(this.props.uid).child('nearby_portal').off();
   }
 
   // If user moves map around track where they're looking
@@ -298,9 +298,9 @@ class MapViews extends Component {
       >
         <Animated.View style={[styles.ring, opacityStyle, scaleStyle]} />
         <Animated.Image 
-            style={[styles.markerImage, scaleStyle]}
-            source={markerImg} 
-            resizeMode='contain'
+          style={[styles.markerImage, scaleStyle]}
+          source={markerImg} 
+          resizeMode='contain'
         />
       </MapView.Marker>
     );

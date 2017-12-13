@@ -84,14 +84,14 @@ class DemoARPortal extends Component {
   }
 
   updateBadge() {
-    console.log(this.props.user, "AKLEGJAWLEF USER ID");
-    let uid = this.props.user.uid;
-    let collectedBadgesArray = [...this.props.badge.collectedBadges, this.props.currentBadge.fileName];
-    this.props.updateProfileBadges({
-      collectedBadges: collectedBadgesArray
-    });
-    const database = firebase.database();
-    firebase.database().ref(`collected_badges/${uid}`).set(collectedBadgesArray);
+    const uid = this.props.user.uid;
+    const collectedBadgesArray = this.props.badge.collectedBadges;
+    const currentBadge = this.props.currentBadge.fileName;
+    const collectedBadges = collectedBadgesArray.indexOf(currentBadge) === -1 ? [...collectedBadgesArray, currentBadge] : collectedBadgesArray;
+    
+    this.props.updateProfileBadges({ collectedBadges });
+    
+    firebase.database().ref(`collected_badges/${uid}`).set({ ...collectedBadgesArray });
   }
 
   render() {
