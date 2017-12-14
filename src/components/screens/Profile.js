@@ -57,11 +57,9 @@ class Profile extends Component {
   }
 
   calcDisplaybadges(collectedBadges) {
-    const profileBadges = greyBadges.reduce((acc, curr, index) => {
-      acc[index] = collectedBadges.indexOf(curr.fileName) === -1 ? curr : colorBadges[index];
-      return acc;
-    }, []);
-
+    const profileBadges = greyBadges.map((curr, index) => (
+      collectedBadges.indexOf(curr.fileName) === -1 ? curr : colorBadges[index]
+    ));
     this.setState({ profileBadges });
   }
 
