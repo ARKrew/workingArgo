@@ -58,7 +58,7 @@ class DemoARPortal extends Component {
 // Text update when AR initialized
   _onInitialized() {
     this.setState({
-      text : 'DemoARPortal finished loading'
+      text : `${this.props.currentBadge.title}!`
     });
   }
 
@@ -113,7 +113,7 @@ class DemoARPortal extends Component {
             width={2}
             height={2}
             scale={[.5, .5, .5]}
-            position={[0, 0.5, -1]}
+            position={[0, 0.7, -1]}
             style={styles.helloWorldTextStyle}
           />
 
