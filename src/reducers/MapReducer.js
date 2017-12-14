@@ -5,7 +5,7 @@ import {
   UPDATE_MARKER_INDEX,
   INITIALIZE_HUNT,
   DISABLE_HUNT,
-  OPEN_PORTAL
+  INSIDE_PORTAL
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -17,6 +17,7 @@ const INITIAL_STATE = {
   selectedMarker: null,
   scroll: false,
   enablePortal: null,
+  inPortal: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -32,6 +33,8 @@ export default (state = INITIAL_STATE, action) => {
     case INITIALIZE_HUNT:
       return { ...state, ...action.payload };
     case DISABLE_HUNT:
+      return { ...state, ...action.payload };
+    case INSIDE_PORTAL: 
       return { ...state, ...action.payload };
     default: 
       return state;

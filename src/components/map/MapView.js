@@ -33,7 +33,7 @@ class MapViews extends Component {
     this.state = {
       enablePolyline: false,
       enablePortal: false,
-      portalIsOpen: false
+      portalKey: null
     };
     this.animation = new Animated.Value(-1);
     this.interpolations = null;
@@ -53,11 +53,12 @@ class MapViews extends Component {
     if (nextProps.isHunting) {
       this.animateToPolyline(nextProps);
     }
-    if (!nextProps.isHunting && this.state.enablePortal && this.state.enablePolyline) {
+    if (!nextProps.isHunting && this.state.enablePortal && this.state.enablePolyline && this.state.portalKey) {
       this.setState(
         { 
           enablePolyline: false, 
-          enablePortal: false 
+          enablePortal: false,
+          portalKey: null 
         }
       );
     }
@@ -75,7 +76,8 @@ class MapViews extends Component {
       navigator.geolocation.clearWatch(this.watchID);
     }
     // Clear firebase listeners when component unmounts
-    firebase.database().ref('james_test').child('open').off();
+    // firebase.database().ref('james_test').child('open').off();
+    firebase.database().ref('portal_open').child(this.props.uid).off();
     firebase.database().ref('location_config').child(this.props.uid).child('nearby_portal').off();
   }
 
@@ -138,7 +140,7 @@ class MapViews extends Component {
     const firebaseConfig = 
       {
         marker: `location_config/${uid}/nearby_portal`,
-        portal: `portal_open/${uid}/open_portal`
+        portal: `portal_open/${uid}`
       };
     const error = 'error setting up firebase listeners';
 
@@ -160,10 +162,13 @@ class MapViews extends Component {
   enablePortalListener(node) {
     // Database.on does not retrun a promise, must use try catch block
     try {
-      // firebase.database().ref(node).on('value', snapshot => {
-      firebase.database().ref('james_test/open').on('value', snapshot => {
-        if (snapshot.val() === true) {
-          this.setState({ enablePortal: true });
+      firebase.database().ref(node).on('value', snapshot => {
+      // firebase.database().ref('james_test/open').on('value', snapshot => {
+        // Check that selected marker key matches
+        const portal = snapshot.val();
+
+        if (portal.open_portal === true && portal.portal_key) {
+          this.setState({ enablePortal: true, portalKey: portal.portal_key });
         }
       });
     } catch (error) {
@@ -179,11 +184,13 @@ class MapViews extends Component {
         const dbMarkers = snapshot.val() || [];
         const markers = dbMarkers.reduce((acc, curr, index) => {
           acc[index] = 
-            { id: index,
+            { 
+              id: index,
+              firebaseKey: curr.key,
               coordinates:
                 { 
-                  latitude: curr[0], 
-                  longitude: curr[1] 
+                  latitude: curr.location[0], 
+                  longitude: curr.location[1] 
                 },
               badge: this.props.availableBadges[index] 
             }; 
@@ -339,7 +346,13 @@ class MapViews extends Component {
           {this.props.markers && this.initializeMarkers()}
           {this.state.enablePolyline && this.renderPolyline()}
         </MapView>
-        {this.state.enablePortal && this.props.isHunting && this.renderModal()}
+        {
+          !this.props.inPortal &&
+          this.props.isHunting && 
+          this.state.enablePortal && 
+          this.state.portalKey === this.props.selectedMarker.firebaseKey &&  
+          this.renderModal()
+        }
         {this.props.markers && <MarkerDetails />}
       </View>
     );
