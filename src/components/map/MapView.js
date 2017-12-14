@@ -3,7 +3,7 @@ import {
   View, 
   Dimensions, 
   Alert,
-  Animated 
+  Animated
 } from 'react-native';
 import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
@@ -11,11 +11,13 @@ import isEqual from 'lodash/isEqual';
 import firebase from 'firebase';
 import MarkerDetails from './MarkerDetails';
 import MapARNav from './MapARNav';
+import BackButton from './BackButton';
 import {
   updateUserPosition,
   updateMapRegion,
   updateMarkers,
-  updateMarkerIndex
+  updateMarkerIndex,
+  disableHunt
 } from '../../actions';
 
 // Grab screen dimensions
@@ -48,25 +50,33 @@ class MapViews extends Component {
     // Set up firebase listeners
     this.initFirebaseListeners();
   } 
-
+  // Use when state change is needed based on incoming props
+  // Primarily used to set state prior to render
   componentWillReceiveProps(nextProps) {
-    if (nextProps.isHunting) {
-      this.animateToPolyline(nextProps);
+    if (nextProps.isHunting && !this.props.isHunting && !this.state.enablePolyline) {
+      this.setState({ enablePolyline: true });
     }
-    if (!nextProps.isHunting && this.state.enablePortal && this.state.enablePolyline && this.state.portalKey) {
+
+    if (!nextProps.isHunting && this.props.isHunting && this.state.enablePolyline && this.state.enablePortal) {
       this.setState(
-        { 
-          enablePolyline: false, 
+        {
           enablePortal: false,
-          portalKey: null 
+          enablePolyline: false,
+          portalKey: null
         }
       );
     }
   }
-
-  componentWillUpdate(nextProps) {
+  // Use when need to update based on incoming state changes
+  componentWillUpdate(nextProps, nextState) {
     if (this.props.markerIndex !== nextProps.markerIndex && !nextProps.scroll) {
       this.animate(nextProps.markerIndex);
+    }
+    if (nextProps.isHunting && !this.props.isHunting) {
+      this.animateToPolyline(nextProps);
+    }
+    if (!nextState.enablePolyline && this.state.enablePolyline && nextProps.isHunting) {
+      this.props.disableHunt({ isHunting: false, selectedMarker: null });
     }
   }
 
@@ -84,6 +94,10 @@ class MapViews extends Component {
   // If user moves map around track where they're looking
   onRegionChange(mapRegion) {
     this.props.updateMapRegion({ mapRegion });
+  }
+
+  onBackPress() {
+    this.setState({ enablePolyline: false });
   }
 
   setInterpolation() {
@@ -182,23 +196,21 @@ class MapViews extends Component {
       firebase.database().ref(node).on('value', snapshot => {
         // In case there are no markers from firebase, display empty array
         const dbMarkers = snapshot.val() || [];
-        const markers = dbMarkers.reduce((acc, curr, index) => {
-          acc[index] = 
-            { 
-              id: index,
-              firebaseKey: curr.key,
-              coordinates:
-                { 
-                  latitude: curr.location[0], 
-                  longitude: curr.location[1] 
-                },
-              badge: this.props.availableBadges[index] 
-            }; 
-          return acc;
-        }, []);
+        const markers = dbMarkers.map((curr, index) => (
+          { 
+            id: index,
+            firebaseKey: curr.key,
+            coordinates:
+              { 
+                latitude: curr.location[0], 
+                longitude: curr.location[1] 
+              },
+            badge: this.props.availableBadges[index] 
+          }
+        ));
         
         this.props.updateMarkers({ markers });
-        });
+      });
     } catch (error) {
       this.alertError(error.message);
     }
@@ -268,7 +280,6 @@ class MapViews extends Component {
     longitudeDelta += (longitudeDelta / 3);
     
     this.animateToRegion(midpoint, latitudeDelta, longitudeDelta);
-    this.setState({ enablePolyline: true });
   }
 
   initializeMarkers() {
@@ -331,10 +342,11 @@ class MapViews extends Component {
         />
     );
   }
-
+  
   render() {
     return (
       <View style={styles.container}>      
+        {this.props.isHunting && <BackButton onPress={this.onBackPress.bind(this)} />}
         <MapView
           showsUserLocation
           style={styles.map}
@@ -346,6 +358,7 @@ class MapViews extends Component {
           {this.props.markers && this.initializeMarkers()}
           {this.state.enablePolyline && this.renderPolyline()}
         </MapView>
+        
         {
           !this.props.inPortal &&
           this.props.isHunting && 
@@ -370,7 +383,8 @@ const styles = {
     top: 0,
     left: 0,
     right: 0,
-    bottom: 0
+    bottom: 0,
+    zIndex: -1
   },
   ring: {
     width: 32,
@@ -412,4 +426,5 @@ export default connect(mapStateToProps,
     updateMapRegion,
     updateMarkers,
     updateMarkerIndex,
+    disableHunt
   })(MapViews);
