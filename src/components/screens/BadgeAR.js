@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NavigationActions } from 'react-navigation';
 import {
   Text,
   View,
@@ -12,7 +13,10 @@ import { ViroARSceneNavigator } from 'react-viro';
 import {
   listNavigate,
   enterAR,
-  updateDisplayBadge
+  clickedObj,
+  updateDisplayBadge,
+  disableHunt,
+  indicateInsidePortal
 } from '../../actions';
 import DemoARPortal from './ListScreens/DemoARPortal';
 
@@ -27,20 +31,26 @@ const sharedProps = {
       this.state = {
         sharedProps: sharedProps,
       };
-      this.onExit.bind(this);
+      this.goBack.bind(this);
     }
 
     componentWillUnmount() {
       console.log("BadgeAR UNMOUNTED ASDFASDFLKAGSEJLAJWKELGKA");
     }
 
-    onExit = () => {
-      this.props.enterAR({ enterAR: false });
-    }
+    // onExit = () => {
+    //   this.props.enterAR({ enterAR: false });
+    //   this.props.clickedObj({ clickedObj: false });
+    //   // this.props.disableHunt({ isHunting: false, selectedMarker: null });
+    // }
 
-    exitAR = () => {
-      // Reset to list screen from BadgeAR
-      this.props.navigation.navigate('List');
+    goBack = () => {
+      this.props.enterAR({ enterAR: false });
+      this.props.clickedObj({ clickedObj: false });
+      // Reset map state
+      this.props.disableHunt({ isHunting: false, selectedMarker: null });
+      this.props.indicateInsidePortal({ inPortal: false });
+      // Reset to Profile 
       this.props.listNavigate();
     }
 
@@ -64,7 +74,7 @@ const sharedProps = {
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
                   style={styles.buttons}
-                  onPress={this.onExit}
+                  onPress={this.goBack}
                   underlayColor={'#00000000'} >
                   <Image
                     style={styles.buttonImage}
@@ -88,7 +98,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     position: 'absolute',
     left: 10,
-    bottom: 0,
+    bottom: 50,
     alignItems: 'flex-start',
     height: 10,
     width: 10
@@ -144,5 +154,8 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   listNavigate,
   enterAR,
-  updateDisplayBadge
+  clickedObj,
+  updateDisplayBadge,
+  disableHunt,
+  indicateInsidePortal
 })(BadgeAR);
