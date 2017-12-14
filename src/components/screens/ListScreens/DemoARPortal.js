@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
+import { enterAR, clickedObj, updateProfileBadges, disableHunt } from '../../../actions';
 import {
   ViroText,
   ViroARScene,
@@ -20,10 +21,6 @@ import {
   ViroBox
 } from 'react-viro';
 import badgeMaterials from '../../../constants/badgeMaterials';
-import { 
-  enterAR,
-  updateProfileBadges 
-} from '../../../actions';
 
 // For animations
 const itemAnimation = {
@@ -33,7 +30,7 @@ const itemAnimation = {
 };
 
 class DemoARPortal extends Component {
-  
+
   constructor() {
     super();
     this.state = {
@@ -50,6 +47,7 @@ class DemoARPortal extends Component {
     // Bind 'this' to functions
     this._onInitialized = this._onInitialized.bind(this);
     this._onClickState = this._onClickState.bind(this);
+    // this._routeToMap = this._routeToMap.bind(this);
     this.updateBadge = this.updateBadge.bind(this);
   }
 
@@ -75,7 +73,11 @@ class DemoARPortal extends Component {
       setTimeout(() => {
         this.props.enterAR({
           enterAR: false,
-        });
+        },
+        this.props.clickedObj({
+          clickedObj: true,
+        })
+      );
     }, 2000);
     this.updateBadge();
     }
@@ -134,14 +136,14 @@ class DemoARPortal extends Component {
           <ViroPortalScene
             passable={true}
             dragType='FixedDistance'
-            onDrag={() => {}} 
+            onDrag={() => {}}
           >
 
             {/* ===== Positioning of Portal ===== */}
             <ViroPortal position={[0, 0, -1.3]} scale={[0.15, 0.15, 0.15]}>
 
               {/* ===== Portal Door ===== */}
-              <Viro3DObject 
+              <Viro3DObject
                 source={require('./../../../assets/models/portal_ship/portal_ship.vrx')}
                 resources={[require('./../../../assets/models/portal_ship/portal_ship_diffuse.png'),
                             require('./../../../assets/models/portal_ship/portal_ship_normal.png'),
@@ -176,7 +178,7 @@ class DemoARPortal extends Component {
               {/* ===== Badge inside Portal ===== */}
               <ViroBox
               materials={[this.props.currentBadge.fileName]}
-              scale={[0.3, 0.3, 0]} 
+              scale={[0.3, 0.3, 0]}
               animation={{
                 name: 'rotate',
                 run: true,
@@ -303,8 +305,8 @@ ViroAnimations.registerAnimations({
   ],
 });
 
-const mapStateToProps = state => ({ 
-  ARstate: state.demoAR, 
+const mapStateToProps = state => ({
+  ARstate: state.demoAR,
   currentBadge: state.badge.displayBadge,
   badge: state.badge,
   user: state.auth.user
@@ -313,5 +315,7 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps,
   {
     enterAR,
-    updateProfileBadges
+    clickedObj,
+    updateProfileBadges,
+    disableHunt
   })(DemoARPortal);

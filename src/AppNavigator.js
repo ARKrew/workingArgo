@@ -14,7 +14,7 @@ export const ROUTES = {
   map: 'Map',
   profile: 'Profile',
   DemoARPortal: 'DemoARPortal',
-  MainSceneAR: 'MainSceneAR'
+  MainSceneAR: 'MainSceneAR',
 };
 
 export const AppNavigator = StackNavigator(
@@ -25,7 +25,7 @@ export const AppNavigator = StackNavigator(
     [ROUTES.map]: { screen: Map },
     [ROUTES.profile]: { screen: Profile },
     [ROUTES.MainSceneAR]: { screen: MainSceneAR },
-    [ROUTES.DemoARPortal]: { screen: DemoARPortal }
+    [ROUTES.DemoARPortal]: { screen: DemoARPortal },
 }, {
     cardStyle: {
         backgroundColor: '#fff'
