@@ -13,8 +13,6 @@
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* workingArgoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* workingArgoTests.m */; };
-		052E2CFA1FDEFC9400B180C6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 052E2CD51FDEFC9400B180C6 /* GoogleService-Info.plist */; };
-		052E2CFB1FDEFC9400B180C6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 052E2CD51FDEFC9400B180C6 /* GoogleService-Info.plist */; };
 		0D10F671D01E45E89FAD3FD9 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 79F57B78F37E4A19A03BAE30 /* FontAwesome.ttf */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
@@ -348,7 +346,6 @@
 		00E356EE1AD99517003FC87E /* workingArgoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = workingArgoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* workingArgoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = workingArgoTests.m; sourceTree = "<group>"; };
-		052E2CD51FDEFC9400B180C6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		079855AD84B34CC3BFAEF08A /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		106356D3307F519570208024 /* libPods-workingArgo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-workingArgo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
@@ -540,7 +537,6 @@
 		13B07FAE1A68108700A75B9A /* workingArgo */ = {
 			isa = PBXGroup;
 			children = (
-				052E2CD51FDEFC9400B180C6 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -757,7 +753,6 @@
 				C94282A2857E02AF76AC2443 /* [CP] Copy Pods Resources */,
 				DBD689A1AE3E7DAFCB896A8B /* Execute Ngrok */,
 				90D78C9A4ECA2019E57B0563 /* Copy ngrok endpoint */,
-				052E2D231FDF157200B180C6 /* Run Script (Firebase Crashlytics) */,
 			);
 			buildRules = (
 			);
@@ -1172,7 +1167,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				052E2CFB1FDEFC9400B180C6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1182,7 +1176,6 @@
 			files = (
 				F9ACFAD91FD8D3CC00326514 /* Lato-Black.ttf in Resources */,
 				F9ACFADA1FD8D3CC00326514 /* Lato-BlackItalic.ttf in Resources */,
-				052E2CFA1FDEFC9400B180C6 /* GoogleService-Info.plist in Resources */,
 				F9ACFADB1FD8D3CC00326514 /* Lato-Bold.ttf in Resources */,
 				F9ACFADC1FD8D3CC00326514 /* Lato-BoldItalic.ttf in Resources */,
 				F9ACFADD1FD8D3CC00326514 /* Lato-Hairline.ttf in Resources */,
@@ -1239,20 +1232,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
-		};
-		052E2D231FDF157200B180C6 /* Run Script (Firebase Crashlytics) */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script (Firebase Crashlytics)";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\"\n";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1324,22 +1303,9 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-workingArgo/Pods-workingArgo-resources.sh",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Feather.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1481,8 +1447,9 @@
 				DEVELOPMENT_TEAM = XDHVBKZD9Y;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"/Users/$(USER)/Documents/FacebookSDK",
 					"$(inherited)",
+					"$(PROJECT_DIR)",
+					/Users/emilytu/Documents/FacebookSDK,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1511,12 +1478,9 @@
 				DEVELOPMENT_TEAM = XDHVBKZD9Y;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-<<<<<<< HEAD
-					/Users/emilytu/Documents/FacebookSDK,
-=======
-					"/Users/$(USER)/Documents/FacebookSDK",
->>>>>>> 101ce5eeaf74df0df1d717f7097ae820d6164d4f
 					"$(inherited)",
+					"$(PROJECT_DIR)",
+					/Users/ysraelkhernandez/Documents/FacebookSDK,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
