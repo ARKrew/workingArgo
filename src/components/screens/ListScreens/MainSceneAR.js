@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import DemoARPortal from './DemoARPortal';
+import Modal from 'react-native-modal';
 import BadgeAR from '../BadgeAR';
-import ExitModal from './ExitModal';
 import {
   Text,
   View,
@@ -18,7 +18,8 @@ import {
   enterAR,
   updateDisplayBadge,
   disableHunt,
-  indicateInsidePortal
+  indicateInsidePortal,
+  clickedObj
 } from '../../../actions';
 
 const sharedProps = {
@@ -31,6 +32,7 @@ const sharedProps = {
       super(props);
       this.state = {
         sharedProps: sharedProps,
+        visibleModal: true,
       };
       this.onExit.bind(this);
     }
@@ -64,15 +66,53 @@ const sharedProps = {
       );
     }
 
+    _renderButton = (text, onPress) => {
+      return (
+        <TouchableOpacity onPress={this.exitAR}>
+          <View style={styles.button}>
+            <Text>Profile Page</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    }
+
+    _renderModalContent = () => (
+      <View style={styles.modalContent}>
+        <Text>Congrats on your first badge! Head to the Profile Page to view it!</Text>
+        {this._renderButton('Profile Page', () => {
+          this.setState({ visibleModal: false });
+          })}
+      </View>
+    );
+
     render() {
-    if (this.props.ARstate.enterAR === true) {
-        return (
-           <BadgeAR />
-        );
+      const isEnterAR = this.props.ARstate.enterAR;
+      const isClickedObj = this.props.ARstate.clickedObj
+
+      // Enter enterAR is true, open the portal
+      if (isEnterAR) {
+        return <BadgeAR />;
+        // When enterAR is false, you are unmounting the portal
+      } else {
+        // If you click on the badge show the Exit modal and route you back to the Profile page
+        if (isClickedObj) {
+          return (
+            <Modal
+              isVisible={this.state.visibleModal}
+              backdropOpacity={0.3}
+              animationIn={'zoomInDown'}
+              animationOut={'zoomOutUp'}
+              animationInTiming={1000}
+              animationOutTiming={1000}
+              backdropTransitionInTiming={1000}
+              backdropTransitionOutTiming={1000}
+              useNativeDriver
+            >
+              {this._renderModalContent()}
+            </Modal>
+          );
+        } return null;
       }
-        return (
-          <ExitModal disable={this.props.disableHunt({ isHunting: false, selectedMarker: null })} />
-        );
     }
 }
 
@@ -127,6 +167,27 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     margin: 5
+  },
+  button: {
+    backgroundColor: 'lightblue',
+    padding: 12,
+    margin: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
+  bottomModal: {
+    justifyContent: 'flex-end',
+    margin: 0,
   }
 });
 
@@ -146,5 +207,6 @@ export default connect(mapStateToProps, {
   enterAR,
   updateDisplayBadge,
   disableHunt,
+  clickedObj,
   indicateInsidePortal
 })(MainSceneAR);
