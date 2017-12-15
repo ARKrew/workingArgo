@@ -2,301 +2,301 @@ export const profileBadges = [
   {
     fileName: '001-parrot.png',
     image: require('./../assets/icons/001-parrot.png'),
-    title: 'Blackbeard\'s Parrot',
-    description: 'Get 1 free BOGO bowl at Chipotle.'
+    title: 'Pollywood',
+    description: 'Polly want a cracker.'
   },
   {
     fileName: '002-pirate-hat.png',
     image: require('./../assets/icons/002-pirate-hat.png'),
-    title: 'Captain Morgan\'s Legendary Hat',
-    description: 'Get 1 free BOGO bowl at Chipotle.'
+    title: 'Wear Me',
+    description: 'Hatters gonna hat.'
   },
   {
     fileName: '003-anchor.png',
     image: require('./../assets/icons/003-anchor.png'),
-    title: 'Flying Dutchman\'s Anchor',
-    description: 'Get a free alcoholic shot (21+ only).'
+    title: 'Anchors Aweigh',
+    description: 'Don\'t forget to flush after dropping anchor.'
   },
   {
     fileName: '004-ship.png',
     image: require('./../assets/icons/004-ship.png'),
-    title: 'The Argo',
-    description: 'Legendary ship used by Jason and the Argonauts to find the Golden Fleece.'
+    title: 'Ship Happens',
+    description: 'Don\'t give into pier pressure.'
   },
   {
     fileName: '005-dice.png',
     image: require('./../assets/icons/005-dice.png'),
-    title: 'Poseidon\'s Dice',
-    description: 'Throwing dice used by Hades, Poseidon and Zeus in order to split the Universe between them'
+    title: 'Pair o\' Dice',
+    description: 'Roll with me.'
   },
   {
     fileName: '006-coin.png',
     image: require('./../assets/icons/006-coin.png'),
-    title: 'Shorty\'s Dubloon',
-    description: 'Coin from the legendary treasure of Galantis'
+    title: 'My So Coiny',
+    description: 'A penny for your thoughts?'
   },
   {
     fileName: '007-kraken.png',
     image: require('./../assets/icons/007-kraken.png'),
-    title: 'Unleash the Kraken',
-    description: 'Banish the Kraken from terrorizing the open seas.'
+    title: 'Kraken Me Up',
+    description: 'What\'s Kraken?'
   },
   {
     fileName: '008-sabers.png',
     image: require('./../assets/icons/008-sabers.png'),
-    title: 'The World\'s Greatest Swords',
-    description: 'Legendary sabers from the greatest swordsman to ever walk this planet'
+    title: 'Sword Fight',
+    description: 'I sword of know what\'s going on.'
   },
   {
     fileName: '009-pirate-1.png',
     image: require('./../assets/icons/009-pirate-1.png'),
-    title: 'Spirit of BlackBeard',
-    description: 'Past and the present and intertwined in this world. Lay blackbird\'s spirit to rest!'
+    title: 'Arr Me Matey',
+    description: 'A pirates life for me.'
   },
   {
     fileName: '010-hook-1.png',
     image: require('./../assets/icons/010-hook-1.png'),
-    title: 'Barrie\'s Captain Hook',
-    description: 'Get a free alcoholic shot (21+ only) at Barney\'s.'
+    title: 'Playing Hooky',
+    description: 'I\'m hooked on a feeling.'
   },
   {
     fileName: '011-sailor.png',
     image: require('./../assets/icons/011-sailor.png'),
-    title: '',
-    description: ''
+    title: 'Tanks a Lot',
+    description: 'Two tickets to the gun show.'
   },
   {
     fileName: '012-eyepatch.png',
     image: require('./../assets/icons/012-eyepatch.png'),
-    title: '',
-    description: ''
+    title: 'Eye Candy',
+    description: 'Eye for an eye.'
   },
   {
     fileName: '013-helm.png',
     image: require('./../assets/icons/013-helm.png'),
-    title: '',
-    description: ''
+    title: 'Oh Helm No!',
+    description: 'Look at me, I\'m the captain now.'
   },
   {
     fileName: '014-spyglass.png',
     image: require('./../assets/icons/014-spyglass.png'),
-    title: '',
-    description: ''
+    title: 'Just Looking',
+    description: 'I see you, seeing me.'
   },
   {
     fileName: '015-musket.png',
     image: require('./../assets/icons/015-musket.png'),
-    title: '',
-    description: ''
+    title: 'Bang Bang',
+    description: 'Ready, aim, fire.'
   },
   {
     fileName: '016-bomb.png',
     image: require('./../assets/icons/016-bomb.png'),
-    title: '',
-    description: ''
+    title: 'Explosive',
+    description: 'You da bomb.'
   },
   {
     fileName: '017-skull.png',
     image: require('./../assets/icons/017-skull.png'),
-    title: '',
-    description: ''
+    title: 'Jolly Roger',
+    description: 'Bone-jour.'
   },
   {
     fileName: '018-round-shot.png',
     image: require('./../assets/icons/018-round-shot.png'),
-    title: '',
-    description: ''
+    title: 'Cannonball!!!!',
+    description: 'Black balls are better than blue ones.'
   },
   {
     fileName: '019-cannon.png',
     image: require('./../assets/icons/019-cannon.png'),
-    title: '',
-    description: ''
+    title: 'Kaboom',
+    description: 'Fire in the hole!'
   },
   {
     fileName: '020-rum.png',
     image: require('./../assets/icons/020-rum.png'),
-    title: '',
-    description: ''
+    title: 'Red Rum',
+    description: 'Pa rum pum pum pum.'
   },
   {
     fileName: '021-hook.png',
     image: require('./../assets/icons/021-hook.png'),
-    title: '',
-    description: ''
+    title: 'Casual Hookups',
+    description: 'Hook, line and sinker.'
   },
   {
     fileName: '022-paddles.png',
     image: require('./../assets/icons/022-paddles.png'),
-    title: '',
-    description: ''
+    title: 'This Oar That',
+    description: 'Thank you sir, may I have another?'
   },
   {
     fileName: '023-chains.png',
     image: require('./../assets/icons/023-chains.png'),
-    title: '',
-    description: ''
+    title: 'Chain Reaction',
+    description: 'Clink, clank.'
   },
   {
     fileName: '024-gallows.png',
     image: require('./../assets/icons/024-gallows.png'),
-    title: '',
-    description: ''
+    title: 'Noosey Loosey',
+    description: 'Dead men tell no tales.'
   },
   {
     fileName: '025-torch.png',
     image: require('./../assets/icons/025-torch.png'),
-    title: '',
-    description: ''
+    title: 'Flame On',
+    description: 'C\'mon baby light my fire.'
   },
   {
     fileName: '026-signal.png',
     image: require('./../assets/icons/026-signal.png'),
-    title: '',
-    description: ''
+    title: 'Sign Post',
+    description: 'Sign of the times.'
   },
   {
     fileName: '027-skull-1.png',
     image: require('./../assets/icons/027-skull-1.png'),
-    title: '',
-    description: ''
+    title: 'Skullpture',
+    description: 'Does this hat make me look silly?'
   },
   {
     fileName: '028-pirate-3.png',
     image: require('./../assets/icons/028-pirate-3.png'),
-    title: '',
-    description: ''
+    title: 'Skeleton Sam',
+    description: 'What time is it? Time to bone.'
   },
   {
     fileName: '029-key.png',
     image: require('./../assets/icons/029-key.png'),
-    title: '',
-    description: ''
+    title: 'Do Key',
+    description: 'Keys to the city.'
   },
   {
     fileName: '030-scroll.png',
     image: require('./../assets/icons/030-scroll.png'),
-    title: '',
-    description: ''
+    title: 'Hear Ye, Hear Ye',
+    description: 'Reading is fun...with pictures.'
   },
   {
     fileName: '031-money-bag.png',
     image: require('./../assets/icons/031-money-bag.png'),
-    title: '',
-    description: ''
+    title: 'Brown Sack',
+    description: 'Sack it to me.'
   },
   {
     fileName: '032-mug.png',
     image: require('./../assets/icons/032-mug.png'),
-    title: '',
-    description: ''
+    title: 'C.U.P.',
+    description: 'Fill \'er up.'
   },
   {
     fileName: '033-boat.png',
     image: require('./../assets/icons/033-boat.png'),
-    title: '',
-    description: ''
+    title: 'Aboat Time',
+    description: 'Row, row, row your boat.'
   },
   {
     fileName: '034-chest.png',
     image: require('./../assets/icons/034-chest.png'),
-    title: '',
-    description: ''
+    title: 'Chesty',
+    description: 'Stop looking at my chest.'
   },
   {
     fileName: '035-barrel.png',
     image: require('./../assets/icons/035-barrel.png'),
-    title: '',
-    description: ''
+    title: 'Bung Hole',
+    description: 'Barrel full of monkeys.'
   },
   {
     fileName: '036-lifebuoy.png',
     image: require('./../assets/icons/036-lifebuoy.png'),
-    title: '',
-    description: ''
+    title: 'Life Preserver',
+    description: 'Throw me a lifeline.'
   },
   {
     fileName: '037-porthole.png',
     image: require('./../assets/icons/037-porthole.png'),
-    title: '',
-    description: ''
+    title: 'Looking Out',
+    description: 'What\'s out there?'
   },
   {
     fileName: '038-pirate-2.png',
     image: require('./../assets/icons/038-pirate-2.png'),
-    title: '',
-    description: ''
+    title: 'Dr. Drape',
+    description: 'Here lives a pirate.'
   },
   {
     fileName: '039-wooden-leg.png',
     image: require('./../assets/icons/039-wooden-leg.png'),
-    title: '',
-    description: ''
+    title: 'Peg Leg',
+    description: 'My woodie.'
   },
   {
     fileName: '040-pirate-flag.png',
     image: require('./../assets/icons/040-pirate-flag.png'),
-    title: '',
-    description: ''
+    title: 'Black Flag',
+    description: 'Show your colors.'
   },
   {
     fileName: '041-ship-in-a-bottle.png',
     image: require('./../assets/icons/041-ship-in-a-bottle.png'),
-    title: '',
-    description: ''
+    title: 'Holy Ship',
+    description: 'What is this, a ship for ants?'
   },
   {
     fileName: '042-treasure-map.png',
     image: require('./../assets/icons/042-treasure-map.png'),
-    title: '',
-    description: ''
+    title: 'Treasure Map',
+    description: 'X marks the spot.'
   },
   {
     fileName: '043-compass-1.png',
     image: require('./../assets/icons/043-compass-1.png'),
-    title: '',
-    description: ''
+    title: 'The Way',
+    description: 'Path to uncharted territory.'
   },
   {
     fileName: '044-compass.png',
     image: require('./../assets/icons/044-compass.png'),
-    title: '',
-    description: ''
+    title: 'Directions',
+    description: 'Let me find the way.'
   },
   {
     fileName: '045-message.png',
     image: require('./../assets/icons/045-message.png'),
-    title: '',
-    description: ''
+    title: 'Read Me',
+    description: 'Message in a bottle.'
   },
   {
     fileName: '046-lighthouse.png',
     image: require('./../assets/icons/046-lighthouse.png'),
-    title: '',
-    description: ''
+    title: 'Watchtower',
+    description: 'Let me light the way.'
   },
   {
     fileName: '047-island.png',
     image: require('./../assets/icons/047-island.png'),
-    title: '',
-    description: ''
+    title: 'Fantasy Island',
+    description: 'Land Ho!'
   },
   {
     fileName: '048-pipe.png',
     image: require('./../assets/icons/048-pipe.png'),
-    title: '',
-    description: ''
+    title: 'Pipe Dream',
+    description: 'Pack me a bowl matey!'
   },
   {
     fileName: '049-whale.png',
     image: require('./../assets/icons/049-whale.png'),
-    title: '',
-    description: ''
+    title: 'Whalecome',
+    description: 'A whale of a time.'
   },
   {
     fileName: '050-pirate.png',
     image: require('./../assets/icons/050-pirate.png'),
-    title: '',
-    description: ''
+    title: 'Cap\'n Crunch',
+    description: 'Prepare to be boarded.'
   }
 ];
