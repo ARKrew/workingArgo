@@ -13,7 +13,7 @@ class MarkerDetailItem extends Component {
   }
 
   render() {
-    const { header, marker } = this.props;
+    const { marker } = this.props;
 
     return (
       <Card>

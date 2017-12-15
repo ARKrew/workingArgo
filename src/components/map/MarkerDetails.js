@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Animated, Dimensions, ScrollView, View, Easing, PanResponder } from 'react-native';
 import { connect } from 'react-redux';
-import { updateMarkerIndex } from '../../actions';
+import { updateMarkerIndex, updateGesture } from '../../actions';
 import MarkerDetailItem from './MarkerDetailItem';
 
 const screen = Dimensions.get('window');
@@ -20,8 +20,10 @@ class MarkerDetails extends Component {
       onPanResponderMove: (event, gesture) => {
         if (gesture.dy < -10) {
           this.animate(height, 1000, Easing.bounce);
+          this.props.updateGesture({ gestureEnabled: false });
         } else if (gesture.dy > 10) {
           this.animate(0, 1000, Easing.bounce);
+          this.props.updateGesture({ gestureEnabled: false });
         }
       },
     });
@@ -108,6 +110,7 @@ const styles = {
     right: 0,
     height: initialHeight,
     paddingVertical: 10,
+    zIndex: 2
   },
   endPadding: {
     paddingLeft: 0,
@@ -135,4 +138,4 @@ const styles = {
 
 const mapStateToProps = state => state.map;
 
-export default connect(mapStateToProps, { updateMarkerIndex })(MarkerDetails);
+export default connect(mapStateToProps, { updateMarkerIndex, updateGesture })(MarkerDetails);

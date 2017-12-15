@@ -6,6 +6,7 @@ import {
   INITIALIZE_HUNT,
   DISABLE_HUNT,
   INSIDE_PORTAL,
+  UPDATE_GESTURE,
   LOGOUT
 } from '../actions/types';
 
@@ -18,6 +19,7 @@ const INITIAL_STATE = {
   selectedMarker: null,
   scroll: false,
   enablePortal: null,
+  gestureEnabled: null,
   inPortal: false
 };
 
@@ -36,6 +38,8 @@ export default (state = INITIAL_STATE, action) => {
     case DISABLE_HUNT:
       return { ...state, ...action.payload };
     case INSIDE_PORTAL: 
+      return { ...state, ...action.payload };
+    case UPDATE_GESTURE:
       return { ...state, ...action.payload };
     case LOGOUT:
       return INITIAL_STATE;
