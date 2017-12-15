@@ -19,11 +19,12 @@ class MarkerDetailItem extends Component {
       <Card>
         <CardSection>
           <View style={styles.container}>
-            <Text style={styles.header}>{`${header}`}</Text>
+            <Text style={styles.header}>{marker.badge.title}</Text>
+            <Text style={styles.description}>{marker.badge.description}</Text>
           </View>
         </CardSection>
         <CardSection>
-          <View style={styles.container}>
+          <View style={styles.badgeContainer}>
             <Image style={styles.image} source={marker.badge.image} />
           </View>
         </CardSection>
@@ -46,15 +47,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  badgeContainer: {
+    flex: 1,
+    paddingBottom: 45,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   header: {
     fontFamily: 'IM Fell English',
-    fontSize: 24,
+    fontSize: 30,
+    paddingTop: 15,
+    paddingBottom: 30,
     color: '#FEA2A4',
-    backgroundColor: 'transparent',
+  },
+  description: {
+    fontFamily: 'Lato-Regular',
+    fontSize: 20,
+    paddingBottom: 10,
+    color: '#000000',
   },
   image: {
-    height: 50,
-    width: 50,
+    height: 100,
+    width: 100,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -62,10 +76,11 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     backgroundColor: '#FEA2A4',
     fontFamily: 'Lato-Regular',
-    fontSize: 18,
+    fontSize: 20,
     textAlign: 'center',
     paddingTop: 5,
-    paddingBottom: 5
+    paddingBottom: 5,
+    marginBottom: 15
   }
 });
 

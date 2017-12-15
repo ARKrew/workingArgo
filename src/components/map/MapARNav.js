@@ -26,7 +26,7 @@ class MapARNav extends Component {
     return (
       <TouchableOpacity onPress={onPress}>
         <View style={styles.button}>
-          <Text>{text}</Text>
+          <Text style={{ color: '#FFFFFF' }}>{text}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -76,7 +76,7 @@ const styles = {
     alignItems: 'center',
   },
   button: {
-    backgroundColor: 'lightblue',
+    backgroundColor: '#C8243B',
     padding: 12,
     margin: 16,
     justifyContent: 'center',
