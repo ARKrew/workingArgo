@@ -8,11 +8,6 @@ import { Header, Button, CardSection } from '../common';
 import { enterAR, enterARTutorial } from '../../actions';
 
 class List extends Component {
-
-  shouldComponentUpdate(nextProps) {
-    return nextProps.currentRoute === 2;
-  }
-
   pressedDemo = () => {
     this.props.enterAR({
       enterAR: true,

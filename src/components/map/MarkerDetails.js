@@ -68,6 +68,17 @@ class MarkerDetails extends Component {
     ).start();
   }
 
+  renderDetails() {
+    return this.props.markers.map((marker, index) => (
+      <View key={index} style={styles.card} {...this.panResponder.panHandlers}>
+        <MarkerDetailItem
+          header={index}
+          marker={marker}
+        />
+      </View>
+    ));
+  }
+
   render() {
     return (
       <Animated.View style={[styles.wrapper, { height: this.animation }]}>
@@ -80,16 +91,7 @@ class MarkerDetails extends Component {
           showsHorizontalScrollIndicator={false}
           style={[{ flex: 1 }, { width }]}
         >
-        {this.props.markers && this.props.markers.map((marker, index) => {
-          return (
-            <View key={index} style={styles.card} {...this.panResponder.panHandlers}>
-              <MarkerDetailItem
-                header={index}
-                marker={marker}
-              />
-            </View>
-          );
-        })}
+        {this.props.markers && this.renderDetails()}
         </ScrollView>
       </Animated.View>
     ); 

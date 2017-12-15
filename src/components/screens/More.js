@@ -4,14 +4,9 @@ import { ScrollView, View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import Communications from "react-native-communications";
 import { CardSection, Button, Header } from '../common';
-import { logOut } from '../../actions/AuthActions';
+import { logOut, resetMap } from '../../actions';
 
 class More extends Component {
-
-  shouldComponentUpdate(nextProps) {
-    return nextProps.currentRoute === 3;
-  }
-
   pressedTerms = () => {
     this.props.navigation.navigate('TermsOfService');
   };
@@ -38,6 +33,7 @@ class More extends Component {
       try {
           await firebase.auth().signOut();
           this.props.logOut();
+          this.props.resetMap();
       } catch (e) {
           console.log(e);
       }
@@ -87,4 +83,4 @@ const styles = {
 
 const mapStateToProps = state => ({ currentRoute: state.nav.routes[1].index, logged: state.auth.loggedIn });
 
-export default connect(mapStateToProps, { logOut })(More);
+export default connect(mapStateToProps, { logOut, resetMap })(More);
