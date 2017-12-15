@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
   helloWorldTextStyle: {
     fontFamily: 'IM Fell English',
     fontSize: 30,
-    color: '#ffffff',
+    color: '#C8243B',
     textAlignVertical: 'center',
     textAlign: 'center'
   },
