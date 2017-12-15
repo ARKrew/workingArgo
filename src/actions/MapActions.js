@@ -5,7 +5,8 @@ import {
   UPDATE_MARKER_INDEX,
   INITIALIZE_HUNT,
   DISABLE_HUNT,
-  INSIDE_PORTAL
+  INSIDE_PORTAL,
+  RESET_MAP
 } from './types';
 
 export const updateUserPosition = data => (
@@ -56,3 +57,10 @@ export const indicateInsidePortal = data => (
     payload: data
   }
 );
+
+export const resetMap = () => (
+  {
+    type: RESET_MAP
+  }
+);
+

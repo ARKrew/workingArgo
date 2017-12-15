@@ -5,10 +5,6 @@ import { updateDisplayBadge, initializeHunt } from '../../actions';
 import { Card, CardSection, Header, Button } from '../common';
 
 class MarkerDetailItem extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   handleOnPress() {
     this.props.updateDisplayBadge({ displayBadge: this.props.marker.badge });
     // Need to disable ishunting when hunt is complete
