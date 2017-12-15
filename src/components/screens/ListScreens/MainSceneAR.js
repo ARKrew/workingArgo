@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import DemoARPortal from './DemoARPortal';
 import Modal from 'react-native-modal';
 import BadgeAR from '../BadgeAR';
 import {
@@ -70,7 +69,7 @@ const sharedProps = {
       return (
         <TouchableOpacity onPress={this.exitAR}>
           <View style={styles.button}>
-            <Text>Profile Page</Text>
+            <Text style={styles.buttonText}>Profile Page</Text>
           </View>
         </TouchableOpacity>
       );
@@ -78,7 +77,12 @@ const sharedProps = {
 
     _renderModalContent = () => (
       <View style={styles.modalContent}>
-        <Text>Congrats on your first badge! Head to the Profile Page to view it!</Text>
+        {this.renderDisplayBadge()}
+        <Text style={styles.modalText}>
+          Congrats you've collected
+          {'\n'}
+          <Text style={styles.modalTextBadge}>{this.props.currentBadge.title}</Text>! 
+        </Text>
         {this._renderButton('Profile Page', () => {
           this.setState({ visibleModal: false });
           })}
@@ -87,7 +91,7 @@ const sharedProps = {
 
     render() {
       const isEnterAR = this.props.ARstate.enterAR;
-      const isClickedObj = this.props.ARstate.clickedObj
+      const isClickedObj = this.props.ARstate.clickedObj;
 
       // Enter enterAR is true, open the portal
       if (isEnterAR) {
@@ -98,6 +102,7 @@ const sharedProps = {
         if (isClickedObj) {
           return (
             <Modal
+              style={{ backgroundColor: '#f37a81' }}
               isVisible={this.state.visibleModal}
               backdropOpacity={0.3}
               animationIn={'zoomInDown'}
@@ -169,13 +174,17 @@ const styles = StyleSheet.create({
     margin: 5
   },
   button: {
-    backgroundColor: 'lightblue',
+    backgroundColor: '#C8243B',
     padding: 12,
     margin: 16,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 4,
     borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
+  buttonText: {
+    color: '#FFFFFF', 
+    fontFamily: 'Lato-Regular'
   },
   modalContent: {
     backgroundColor: 'white',
@@ -184,6 +193,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 4,
     borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
+  modalText: {
+    textAlignVertical: 'center', 
+    textAlign: 'center', 
+    fontFamily: 'Lato-Regular'
+  },
+  modalTextBadge: {
+    color: '#C8243B', 
+    fontWeight: 'bold', 
+    fontFamily: 'Lato-Regular'
   },
   bottomModal: {
     justifyContent: 'flex-end',
@@ -197,6 +216,7 @@ const mapStateToProps = state => {
     navState: state.nav,
     currentRoute: state.nav.routes[1].index,
     badge: state.badge,
+    currentBadge: state.badge.displayBadge,
     map: state.map,
     user: state.auth.user
   };

@@ -48,7 +48,7 @@ const badgeMaterials = ViroMaterials.createMaterials({
   '015-musket.png': {
     diffuseTexture: require('./../assets/icons/015-musket.png')
   },
-  '16-bomb.png': {
+  '016-bomb.png': {
     diffuseTexture: require('./../assets/icons/016-bomb.png')
   },
   '017-skull.png': {

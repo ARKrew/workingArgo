@@ -6,7 +6,6 @@ const INITIAL = {
 };
 
 export default (state = INITIAL, action) => {
-    console.log(action);
     switch (action.type) {
         case LOGIN:
             return { loggedIn: true, user: action.payload };

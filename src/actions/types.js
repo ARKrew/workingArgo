@@ -14,3 +14,4 @@ export const INITIALIZE_HUNT = 'INITIALIZE_HUNT';
 export const DISABLE_HUNT = 'DISABLE_HUNT';
 export const CLICKED_OBJ = 'CLICKED_OBJ';
 export const INSIDE_PORTAL = 'INSIDE_PORTAL';
+export const RESET_MAP = 'RESET_MAP';

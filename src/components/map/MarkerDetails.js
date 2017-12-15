@@ -22,7 +22,7 @@ class MarkerDetails extends Component {
           this.animate(height, 1000, Easing.bounce);
         } else if (gesture.dy > 10) {
           this.animate(0, 1000, Easing.bounce);
-        }    
+        }
       },
     });
     this.panResponder = panResponder;
@@ -31,7 +31,7 @@ class MarkerDetails extends Component {
   componentWillUpdate(nextProps) {
     if (nextProps.scroll) {
       this.animate(initialHeight, 1000);
-    } 
+    }
     if (this.props.markerIndex !== nextProps.markerIndex && nextProps.scroll) {
       const scrollPosition = nextProps.markerIndex * width;
 
@@ -68,6 +68,17 @@ class MarkerDetails extends Component {
     ).start();
   }
 
+  renderDetails() {
+    return this.props.markers.map((marker, index) => (
+      <View key={index} style={styles.card} {...this.panResponder.panHandlers}>
+        <MarkerDetailItem
+          header={index}
+          marker={marker}
+        />
+      </View>
+    ));
+  }
+
   render() {
     return (
       <Animated.View style={[styles.wrapper, { height: this.animation }]}>
@@ -80,23 +91,14 @@ class MarkerDetails extends Component {
           showsHorizontalScrollIndicator={false}
           style={[{ flex: 1 }, { width }]}
         >
-        {this.props.markers && this.props.markers.map((marker, index) => {
-          return (
-            <View key={index} style={styles.card} {...this.panResponder.panHandlers}>
-              <MarkerDetailItem
-                header={index}
-                marker={marker}
-              />
-            </View>
-          );
-        })}
+        {this.props.markers && this.renderDetails()}
         </ScrollView>
       </Animated.View>
-    ); 
-  }   
+    );
+  }
 }
 
-const styles = { 
+const styles = {
   scrollView: {
     position: 'absolute',
     bottom: 0,

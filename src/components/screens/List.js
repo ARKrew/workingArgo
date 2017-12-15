@@ -8,11 +8,6 @@ import { Header, Button, CardSection } from '../common';
 import { enterAR, enterARTutorial } from '../../actions';
 
 class List extends Component {
-
-  shouldComponentUpdate(nextProps) {
-    return nextProps.currentRoute === 2;
-  }
-
   // pressedDemo = () => {
   //   this.props.enterAR({
   //     enterAR: true,
@@ -32,7 +27,7 @@ class List extends Component {
     console.log(this.props);
     return (
       <View>
-        <Header headerText={'List'} />
+        <Header headerText={'Tutorial'} />
         <CardSection>
           <Button onPress={this.pressedDemo}>Demo AR Portal</Button>
         </CardSection>
