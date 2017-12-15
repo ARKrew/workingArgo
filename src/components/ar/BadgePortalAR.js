@@ -51,6 +51,7 @@ class DemoARPortal extends Component {
 
     // Bind 'this' to functions
     this._onInitialized = this._onInitialized.bind(this);
+    this._getRandomPosition = this._getRandomPosition.bind(this);
     this._onClickState = this._onClickState.bind(this);
     this.updateBadge = this.updateBadge.bind(this);
   }
@@ -60,6 +61,18 @@ class DemoARPortal extends Component {
     this.setState({
       text : `${this.props.currentBadge.title}!`
     });
+  }
+
+  _getRandomPosition() {
+    const min_x = -2,
+        max_x = 2,
+        // y = Math.random() * (max - min) + min,
+        min_z = -2,
+        max_z = 0,
+        x = Math.random() *(max_x - min_x) + min_x,
+        y = 0,
+        z = Math.random() * (max_z - min_z) + min_z;
+    return [x, y, z];
   }
 
   // Animation when user collects item
@@ -92,6 +105,7 @@ class DemoARPortal extends Component {
     // Push collected badges array into firebase
     firebase.database().ref(`collected_badges/${uid}`).set({ ...collectedBadges });
   }
+  
 
   render() {
     if (this.props.ARstate.enterAR) {
@@ -169,6 +183,7 @@ class DemoARPortal extends Component {
             {/* Collectible Badge inside Portal */}
             <ViroNode
               position={[0, 0, -2]}
+              // position={this._getRandomPosition()}
               animation={this.state.itemAnimation}
               onClickState={this._onClickState}
             >
