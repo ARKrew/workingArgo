@@ -26,7 +26,7 @@ class MapARNav extends Component {
     return (
       <TouchableOpacity onPress={onPress}>
         <View style={styles.button}>
-          <Text>{text}</Text>
+          <Text style={{ color: '#FFFFFF' }}>{text}</Text>
         </View>
       </TouchableOpacity>
     );

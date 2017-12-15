@@ -51,7 +51,7 @@ const sharedProps = {
       // Reset map state
       this.props.disableHunt({ isHunting: false, selectedMarker: null });
       this.props.indicateInsidePortal({ inPortal: false });
-      // Reset to Profile 
+      // Reset to Profile
       this.props.listNavigate();
     }
 
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     position: 'absolute',
     left: 10,
-    bottom: 50,
+    top: 10,
     alignItems: 'flex-start',
     height: 10,
     width: 10

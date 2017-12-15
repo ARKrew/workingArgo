@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { 
-  View, 
-  Dimensions, 
+import {
+  View,
+  Dimensions,
   Alert,
   Animated
 } from 'react-native';
@@ -49,7 +49,7 @@ class MapViews extends Component {
     this.watchLocation();
     // Set up firebase listeners
     this.initFirebaseListeners();
-  } 
+  }
   // Use when state change is needed based on incoming props
   // Primarily used to set state prior to render
   componentWillReceiveProps(nextProps) {
@@ -151,7 +151,7 @@ class MapViews extends Component {
 
   initFirebaseListeners() {
     const uid = this.props.uid;
-    const firebaseConfig = 
+    const firebaseConfig =
       {
         marker: `location_config/${uid}/nearby_portal`,
         portal: `portal_open/${uid}`
@@ -197,18 +197,18 @@ class MapViews extends Component {
         // In case there are no markers from firebase, display empty array
         const dbMarkers = snapshot.val() || [];
         const markers = dbMarkers.map((curr, index) => (
-          { 
+          {
             id: index,
             firebaseKey: curr.key,
             coordinates:
-              { 
-                latitude: curr.location[0], 
-                longitude: curr.location[1] 
+              {
+                latitude: curr.location[0],
+                longitude: curr.location[1]
               },
             badge: this.props.availableBadges[index] 
           }
         ));
-        
+
         this.props.updateMarkers({ markers });
       });
     } catch (error) {
@@ -278,13 +278,13 @@ class MapViews extends Component {
     let longitudeDelta = Math.abs(nextProps.userPosition.longitude - nextProps.selectedMarker.coordinates.longitude);
     latitudeDelta += (latitudeDelta / 3);
     longitudeDelta += (longitudeDelta / 3);
-    
+
     this.animateToRegion(midpoint, latitudeDelta, longitudeDelta);
   }
 
   initializeMarkers() {
     this.setInterpolation();
-    
+
     return this.props.markers.map((location, index) => {
       if (!this.props.isHunting) {
         return this.renderMarkers(location, index);
@@ -308,16 +308,16 @@ class MapViews extends Component {
     };
 
     return (
-      <MapView.Marker 
-        key={index} 
+      <MapView.Marker
+        key={index}
         coordinate={location.coordinates}
         style={styles.markerWrap}
         onPress={() => this.handleOnPress(index)}
       >
         <Animated.View style={[styles.ring, opacityStyle, scaleStyle]} />
-        <Animated.Image 
+        <Animated.Image
           style={[styles.markerImage, scaleStyle]}
-          source={markerImg} 
+          source={markerImg}
           resizeMode='contain'
         />
       </MapView.Marker>
@@ -332,13 +332,13 @@ class MapViews extends Component {
     const startingCoordinates = { latitude: this.props.userPosition.latitude, longitude: this.props.userPosition.longitude };
     const endingCoordinates = { latitude: this.props.selectedMarker.coordinates.latitude, longitude: this.props.selectedMarker.coordinates.longitude };
     const polyLineCoords = [startingCoordinates, endingCoordinates];
-    
+
     return (
-        <MapView.Polyline 
-          coordinates={polyLineCoords} 
+        <MapView.Polyline
+          coordinates={polyLineCoords}
           strokeColor='#FEA2A4'
           strokeWidth={3}
-          lineDashPattern={[5]} 
+          lineDashPattern={[5]}
         />
     );
   }
@@ -346,10 +346,10 @@ class MapViews extends Component {
   renderMarkerDetails() {
     return <MarkerDetails />;
   }
-  
+
   render() {
     return (
-      <View style={styles.container}>      
+      <View style={styles.container}>
         {this.props.isHunting && <BackButton onPress={this.onBackPress.bind(this)} />}
         <MapView
           showsUserLocation
@@ -362,12 +362,12 @@ class MapViews extends Component {
           {this.props.markers && this.initializeMarkers()}
           {this.state.enablePolyline && this.renderPolyline()}
         </MapView>
-        
+
         {
           !this.props.inPortal &&
-          this.props.isHunting && 
-          this.state.enablePortal && 
-          this.state.portalKey === this.props.selectedMarker.firebaseKey &&  
+          this.props.isHunting &&
+          this.state.enablePortal &&
+          this.state.portalKey === this.props.selectedMarker.firebaseKey &&
           this.renderModal()
         }
         {this.props.markers && this.renderMarkerDetails()}
@@ -416,11 +416,11 @@ const styles = {
 };
 
 const mapStateToProps = state => (
-  { 
-    ...state.map, 
-    ...state.auth.user, 
-    ...state.badge, 
-    ...state.demoAR 
+  {
+    ...state.map,
+    ...state.auth.user,
+    ...state.badge,
+    ...state.demoAR
   }
 );
 
