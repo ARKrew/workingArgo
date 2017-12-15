@@ -2,7 +2,7 @@ import {
   ViroMaterials
 } from 'react-viro';
 
-const badgeMaterials = ViroMaterials.createMaterials({
+export const badgeMaterials = ViroMaterials.createMaterials({
   '001-parrot.png': {
     diffuseTexture: require('./../assets/icons/001-parrot.png')
   },
@@ -48,7 +48,7 @@ const badgeMaterials = ViroMaterials.createMaterials({
   '015-musket.png': {
     diffuseTexture: require('./../assets/icons/015-musket.png')
   },
-  '16-bomb.png': {
+  '016-bomb.png': {
     diffuseTexture: require('./../assets/icons/016-bomb.png')
   },
   '017-skull.png': {
@@ -155,4 +155,4 @@ const badgeMaterials = ViroMaterials.createMaterials({
   }
 });
 
-export default badgeMaterials;
+// export default badgeMaterials;

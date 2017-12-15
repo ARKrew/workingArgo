@@ -135,7 +135,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
-    alignItems: 'stretch'
+    alignItems: 'stretch',
+    paddingBottom: 300
   },
   badge: {
     width: 70,
