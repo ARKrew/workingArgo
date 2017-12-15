@@ -39,7 +39,7 @@ class DemoARPortal extends Component {
   constructor() {
     super();
     this.state = {
-      text: 'Initializing AR... DemoARPortal',
+      text: 'Initializing AR...',
       isLoading: true,
       isPortalRendered: false,
       itemAnimation: {
