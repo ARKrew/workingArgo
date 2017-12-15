@@ -41,16 +41,7 @@ const sharedProps = {
     }
 
     exitAR = () => {
-      // Update firebase
-      const completedPortal = {};
-      const key = this.props.map.selectedMarker.firebaseKey;
-
-      completedPortal[key] = true;
-      firebase.database().ref(`portals_completed/${this.props.user.uid}`).update(completedPortal);
-      // Reset map state
-      this.props.disableHunt({ isHunting: false, selectedMarker: null });
       this.props.indicateInsidePortal({ inPortal: false });
-      // Reset to list screen from TutorialAR
       this.props.navigation.navigate('List');
       this.props.listNavigate();
     }
@@ -59,7 +50,6 @@ const sharedProps = {
       return (
         <Image
         style={styles.badge}
-        // key={this.props.badge.displayBadge.fileName}
         source={require('../../assets/icons/006-coin.png')}
         />
       );
@@ -97,12 +87,9 @@ const sharedProps = {
       const isenterARTutorial = this.props.ARstate.enterARTutorial;
       const isClickedObj = this.props.ARstate.clickedObj;
 
-      // Enter enterARTutorial is true, open the portal
       if (isenterARTutorial) {
         return <TutorialNavAR />;
-        // When enterARTutorial is false, you are unmounting the portal
       } else {
-        // If you click on the badge show the Exit modal and route you back to the Profile page
         if (isClickedObj) {
           return (
             <Modal
