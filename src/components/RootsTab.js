@@ -5,7 +5,7 @@ import Profile from './screens/Profile';
 import MoreNav from './screens/MoreScreens/MoreNav';
 import Map from './screens/Map';
 import List from './screens/List';
-import DemoARPortal from './screens/ListScreens/DemoARPortal';
+// import DemoARPortal from './screens/ListScreens/DemoARPortal';
 import MainSceneAR from './screens/ListScreens/MainSceneAR';
 import TutorialAR from './screens/TutorialAR';
 
@@ -61,9 +61,9 @@ const RootsTab = TabNavigator({
             tabBarVisible: false,
           }
         },
-        DemoARPortal: {
-          screen: DemoARPortal,
-        },
+        // DemoARPortal: {
+        //   screen: DemoARPortal,
+        // },
         TutorialAR: {
           screen: TutorialAR,
           navigationOptions: {

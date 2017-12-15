@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DemoARPortal from './DemoARPortal';
+// import DemoARPortal from './DemoARPortal';
 import Modal from 'react-native-modal';
 import BadgeAR from '../BadgeAR';
 import {

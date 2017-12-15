@@ -18,7 +18,8 @@ import {
   disableHunt,
   indicateInsidePortal
 } from '../../actions';
-import DemoARPortal from './ListScreens/DemoARPortal';
+// import DemoARPortal from './ListScreens/DemoARPortal';
+import BadgePortalAR from '../ar/BadgePortalAR';
 
 const sharedProps = {
     apiKey: 'D5FCCB74-1B13-4E50-BCE8-3DAE6B9ED443'
@@ -70,7 +71,7 @@ const sharedProps = {
     if (this.props.ARstate.enterAR === true) {
         return (
           <View style={styles.outer} >
-            <ViroARSceneNavigator style={styles.arView} {...this.state.sharedProps} initialScene={{ scene: DemoARPortal }} />
+            <ViroARSceneNavigator style={styles.arView} {...this.state.sharedProps} initialScene={{ scene: BadgePortalAR }} />
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
                   style={styles.buttons}
