@@ -32,7 +32,7 @@ class List extends Component {
     console.log(this.props);
     return (
       <View>
-        <Header headerText={'List'} />
+        <Header headerText={'Tutorial'} />
         <CardSection>
           <Button onPress={this.pressedDemo}>Demo AR Portal</Button>
         </CardSection>
