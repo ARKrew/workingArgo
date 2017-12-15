@@ -25,7 +25,7 @@ import {
   updateProfileBadges, 
   disableHunt 
 } from '../../actions';
-import badgeMaterials from '../../constants/badgeMaterials';
+import { badgeMaterials } from '../../constants';
 
 // For animations
 const itemAnimation = {
@@ -130,6 +130,11 @@ class DemoARPortal extends Component {
             position={[0, 0.6, -1]}
             style={styles.helloWorldTextStyle}
           />
+    
+          <ViroNode
+            dragType='FixedDistance'
+            onDrag={() => {}}
+          >
 
           {/* Pirate Flag */}
           <Viro3DObject
@@ -149,8 +154,8 @@ class DemoARPortal extends Component {
 */}
           <ViroPortalScene
             passable={true}
-            dragType='FixedDistance'
-            onDrag={() => {}}
+            // dragType='FixedDistance'
+            // onDrag={() => {}}
           >
 
             {/* Positioning of Portal */}
@@ -251,6 +256,7 @@ class DemoARPortal extends Component {
 
             </ViroNode>
           </ViroPortalScene>
+          </ViroNode>
         </ViroARScene>
       );
     }
