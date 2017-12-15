@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
-import { Header } from '../../common';
+import { Header, CardSection } from '../../common';
 import ViroMedia from '../../../assets/images/viro.png';
 import FireBase from '../../../assets/images/firebase.png';
 import RN from '../../../assets/images/react-logo.png';
@@ -19,11 +19,11 @@ const About = () => {
         </Text>
         <View style={styles.imageContainer}>
           <Image style={styles.imageStyle} source={FireBase} />
-          <Image style={styles.imageStyle} source={ViroMedia} />          
+          <Image style={styles.imageStyle} source={ViroMedia} />
           <Image style={styles.imageStyle} source={RN} />
         </View>
         <Text style={styles.imageFooter}>
-          Powered by: 
+          Powered by:
         </Text>
       </ScrollView>
     </View>
@@ -32,7 +32,7 @@ const About = () => {
 
 const styles = StyleSheet.create({
   containerView: {
-    paddingBottom: 165
+    paddingBottom: 165,
   },
   titleFont: {
     backgroundColor: 'transparent',
@@ -41,15 +41,18 @@ const styles = StyleSheet.create({
     fontSize: 45,
     textAlign: 'center',
     margin: 20,
-    color: '#f37a81',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#f37a81'
   },
   textFont: {
-    fontSize: 14,
-    paddingLeft: 8,
-    paddingRight: 8,
-    paddingTop: 8,
+    fontSize: 18,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 20,
     paddingBottom: 25,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontFamily: 'Lato-Regular'
   },
   imageStyle: {
     height: 70,
