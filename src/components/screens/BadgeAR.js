@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     position: 'absolute',
     left: 10,
-    top: 10,
+    top: 20,
     alignItems: 'flex-start',
     height: 10,
     width: 10
