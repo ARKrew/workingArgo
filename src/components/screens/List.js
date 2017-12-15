@@ -8,13 +8,6 @@ import { Header, Button, CardSection } from '../common';
 import { enterAR, enterARTutorial } from '../../actions';
 
 class List extends Component {
-  // pressedDemo = () => {
-  //   this.props.enterAR({
-  //     enterAR: true,
-  //   });
-  //   this.props.navigation.navigate('MainSceneAR');
-  // };
-
   pressedTutorial = () => {
     this.props.enterARTutorial({
       enterARTutorial: true,
@@ -29,9 +22,6 @@ class List extends Component {
       <View>
         <Header headerText={'Tutorial'} />
         <ScrollView style={styles.scrollStyle}>
-          <CardSection>
-            <Button onPress={this.pressedDemo}>Demo AR Portal</Button>
-          </CardSection>
           <CardSection>
             <Button onPress={this.pressedTutorial}>Tutorial AR</Button>
           </CardSection>
