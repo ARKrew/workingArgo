@@ -3,7 +3,6 @@ import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { Header } from '../common';
 import MapViews from '../map/MapView';
-import { NavigationActions } from 'react-navigation';
 
 class Map extends Component {
   renderMap() {
@@ -14,12 +13,12 @@ class Map extends Component {
     return (
       <View style={{ flex: 1 }}>
         <Header headerText={'Map'} />
-        {this.props.loggedIn && this.renderMap()}
+        {this.props.loggedIn && !this.props.enterAR && this.renderMap()}
       </View>
     );
   }
 }
 
-const mapStateToProps = state => ({ ...state.auth, currentRoute: state.nav.routes[1].index });
+const mapStateToProps = state => ({ ...state.auth, ...state.demoAR, currentRoute: state.nav.routes[1].index });
 
 export default connect(mapStateToProps)(Map);

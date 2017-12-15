@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { 
-  View, 
-  Dimensions, 
+import {
+  View,
+  Dimensions,
   Alert,
   Animated
 } from 'react-native';
@@ -14,7 +14,6 @@ import MapARNav from './MapARNav';
 import BackButton from './BackButton';
 import {
   updateUserPosition,
-  updateMapRegion,
   updateMarkers,
   updateMarkerIndex,
   disableHunt
@@ -26,7 +25,13 @@ const screen = Dimensions.get('window');
 const ASPECT_RATIO = screen.width / screen.height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-const geolocationOptions = { enableHighAccuracy: true, distanceFilter: 1, timeout: 20000, maximumAge: 1000 };
+const geolocationOptions = 
+  { 
+    enableHighAccuracy: true, 
+    distanceFilter: 1, 
+    timeout: 20000, 
+    maximumAge: 1000 
+  };
 const markerImg = require('../../assets/icons/flag2.png');
 
 class MapViews extends Component {
@@ -49,7 +54,7 @@ class MapViews extends Component {
     this.watchLocation();
     // Set up firebase listeners
     this.initFirebaseListeners();
-  } 
+  }
   // Use when state change is needed based on incoming props
   // Primarily used to set state prior to render
   componentWillReceiveProps(nextProps) {
@@ -72,9 +77,11 @@ class MapViews extends Component {
     if (this.props.markerIndex !== nextProps.markerIndex && !nextProps.scroll) {
       this.animate(nextProps.markerIndex);
     }
+
     if (nextProps.isHunting && !this.props.isHunting) {
       this.animateToPolyline(nextProps);
     }
+
     if (!nextState.enablePolyline && this.state.enablePolyline && nextProps.isHunting) {
       this.props.disableHunt({ isHunting: false, selectedMarker: null });
     }
@@ -89,11 +96,6 @@ class MapViews extends Component {
     // firebase.database().ref('james_test').child('open').off();
     firebase.database().ref('portal_open').child(this.props.uid).off();
     firebase.database().ref('location_config').child(this.props.uid).child('nearby_portal').off();
-  }
-
-  // If user moves map around track where they're looking
-  onRegionChange(mapRegion) {
-    this.props.updateMapRegion({ mapRegion });
   }
 
   onBackPress() {
@@ -151,7 +153,7 @@ class MapViews extends Component {
 
   initFirebaseListeners() {
     const uid = this.props.uid;
-    const firebaseConfig = 
+    const firebaseConfig =
       {
         marker: `location_config/${uid}/nearby_portal`,
         portal: `portal_open/${uid}`
@@ -197,18 +199,18 @@ class MapViews extends Component {
         // In case there are no markers from firebase, display empty array
         const dbMarkers = snapshot.val() || [];
         const markers = dbMarkers.map((curr, index) => (
-          { 
+          {
             id: index,
             firebaseKey: curr.key,
             coordinates:
-              { 
-                latitude: curr.location[0], 
-                longitude: curr.location[1] 
+              {
+                latitude: curr.location[0],
+                longitude: curr.location[1]
               },
             badge: this.props.availableBadges[index] 
           }
         ));
-        
+
         this.props.updateMarkers({ markers });
       });
     } catch (error) {
@@ -278,13 +280,13 @@ class MapViews extends Component {
     let longitudeDelta = Math.abs(nextProps.userPosition.longitude - nextProps.selectedMarker.coordinates.longitude);
     latitudeDelta += (latitudeDelta / 3);
     longitudeDelta += (longitudeDelta / 3);
-    
+
     this.animateToRegion(midpoint, latitudeDelta, longitudeDelta);
   }
 
   initializeMarkers() {
     this.setInterpolation();
-    
+
     return this.props.markers.map((location, index) => {
       if (!this.props.isHunting) {
         return this.renderMarkers(location, index);
@@ -308,16 +310,16 @@ class MapViews extends Component {
     };
 
     return (
-      <MapView.Marker 
-        key={index} 
+      <MapView.Marker
+        key={index}
         coordinate={location.coordinates}
         style={styles.markerWrap}
         onPress={() => this.handleOnPress(index)}
       >
         <Animated.View style={[styles.ring, opacityStyle, scaleStyle]} />
-        <Animated.Image 
+        <Animated.Image
           style={[styles.markerImage, scaleStyle]}
-          source={markerImg} 
+          source={markerImg}
           resizeMode='contain'
         />
       </MapView.Marker>
@@ -332,24 +334,24 @@ class MapViews extends Component {
     const startingCoordinates = { latitude: this.props.userPosition.latitude, longitude: this.props.userPosition.longitude };
     const endingCoordinates = { latitude: this.props.selectedMarker.coordinates.latitude, longitude: this.props.selectedMarker.coordinates.longitude };
     const polyLineCoords = [startingCoordinates, endingCoordinates];
-    
+
     return (
-        <MapView.Polyline 
-          coordinates={polyLineCoords} 
-          strokeColor='#FEA2A4'
-          strokeWidth={3}
-          lineDashPattern={[5]} 
-        />
+      <MapView.Polyline 
+        coordinates={polyLineCoords} 
+        strokeColor='#FEA2A4'
+        strokeWidth={3}
+        lineDashPattern={[5]} 
+      />
     );
   }
 
   renderMarkerDetails() {
     return <MarkerDetails />;
   }
-  
+
   render() {
     return (
-      <View style={styles.container}>      
+      <View style={styles.container}>
         {this.props.isHunting && <BackButton onPress={this.onBackPress.bind(this)} />}
         <MapView
           showsUserLocation
@@ -362,12 +364,12 @@ class MapViews extends Component {
           {this.props.markers && this.initializeMarkers()}
           {this.state.enablePolyline && this.renderPolyline()}
         </MapView>
-        
+
         {
           !this.props.inPortal &&
-          this.props.isHunting && 
-          this.state.enablePortal && 
-          this.state.portalKey === this.props.selectedMarker.firebaseKey &&  
+          this.props.isHunting &&
+          this.state.enablePortal &&
+          this.state.portalKey === this.props.selectedMarker.firebaseKey &&
           this.renderModal()
         }
         {this.props.markers && this.renderMarkerDetails()}
@@ -420,14 +422,12 @@ const mapStateToProps = state => (
     ...state.map, 
     ...state.auth.user, 
     ...state.badge, 
-    ...state.demoAR 
   }
 );
 
 export default connect(mapStateToProps,
   {
     updateUserPosition,
-    updateMapRegion,
     updateMarkers,
     updateMarkerIndex,
     disableHunt

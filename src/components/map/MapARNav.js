@@ -22,20 +22,20 @@ class MapARNav extends Component {
     };
   }
 
-  _renderButton = (text, onPress) => {
+  renderButton = (text, onPress) => {
     return (
       <TouchableOpacity onPress={onPress}>
         <View style={styles.button}>
-          <Text>{text}</Text>
+          <Text style={{ color: '#FFFFFF' }}>{text}</Text>
         </View>
       </TouchableOpacity>
     );
   }
 
-  _renderModalContent = () => (
+  renderModalContent = () => (
     <View style={styles.modalContent}>
       <Text>Portal is Ready!</Text>
-      {this._renderButton('Open Portal', () => {
+      {this.renderButton('Open Portal', () => {
         const { navigation } = this.props;
 
         this.setState({ visibleModal: false });
@@ -46,7 +46,7 @@ class MapARNav extends Component {
         this.props.indicateInsidePortal({ inPortal: true });
 
         navigation(navigateAction);
-        })}
+      })}
     </View>
   );
 
@@ -63,7 +63,7 @@ class MapARNav extends Component {
         backdropTransitionOutTiming={1000}
         useNativeDriver
       >
-        {this._renderModalContent()}
+        {this.renderModalContent()}
       </Modal>
     );
   }
@@ -100,4 +100,10 @@ const styles = {
 
 const mapStateToProps = state => state;
 
-export default connect(mapStateToProps, { enterAR, disableHunt, indicateInsidePortal })(MapARNav);
+export default connect(mapStateToProps, 
+  { 
+    enterAR, 
+    disableHunt, 
+    indicateInsidePortal 
+  }
+)(MapARNav);
