@@ -342,6 +342,10 @@ class MapViews extends Component {
         />
     );
   }
+
+  renderMarkerDetails() {
+    return <MarkerDetails />;
+  }
   
   render() {
     return (
@@ -366,7 +370,7 @@ class MapViews extends Component {
           this.state.portalKey === this.props.selectedMarker.firebaseKey &&  
           this.renderModal()
         }
-        {this.props.markers && <MarkerDetails />}
+        {this.props.markers && this.renderMarkerDetails()}
       </View>
     );
   }

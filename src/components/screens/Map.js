@@ -6,22 +6,20 @@ import MapViews from '../map/MapView';
 import { NavigationActions } from 'react-navigation';
 
 class Map extends Component {
-  shouldComponentUpdate(nextProps) {
-    return nextProps.currentRoute === 1;
+  renderMap() {
+    return <MapViews navigation={this.props.dispatch} />;
   }
 
   render() {
-    console.log('map screen rendered');
-    console.log(this.props);
     return (
       <View style={{ flex: 1 }}>
         <Header headerText={'Map'} />
-        <MapViews navigation={this.props.dispatch} />
+        {this.props.loggedIn && this.renderMap()}
       </View>
     );
   }
 }
 
-const mapStateToProps = state => ({ currentRoute: state.nav.routes[1].index });
+const mapStateToProps = state => ({ ...state.auth, currentRoute: state.nav.routes[1].index });
 
 export default connect(mapStateToProps)(Map);

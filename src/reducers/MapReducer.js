@@ -5,7 +5,8 @@ import {
   UPDATE_MARKER_INDEX,
   INITIALIZE_HUNT,
   DISABLE_HUNT,
-  INSIDE_PORTAL
+  INSIDE_PORTAL,
+  RESET_MAP
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -36,6 +37,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, ...action.payload };
     case INSIDE_PORTAL: 
       return { ...state, ...action.payload };
+    case RESET_MAP:
+      return INITIAL_STATE;
     default: 
       return state;
   }
