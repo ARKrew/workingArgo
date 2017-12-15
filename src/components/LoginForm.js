@@ -11,10 +11,10 @@ import {
 } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
-import { 
-  loginSuccess, 
-  updateAvailableBadges, 
-  updateProfileBadges 
+import {
+  loginSuccess,
+  updateAvailableBadges,
+  updateProfileBadges
 } from '../actions';
 
 const FBSDK = require('react-native-fbsdk');
@@ -136,7 +136,7 @@ class Login extends Component {
       );
     }
   }
-  
+
   alertError(errorMessage) {
     Alert.alert(
       'Error Occurred',
@@ -187,7 +187,7 @@ class Login extends Component {
             >
               <View style={styles.FBLoginButton}>
                 <Image style={styles.FBLogo} source={FBLogo} />
-                <Text 
+                <Text
                   style={styles.FBLoginButtonText}
                   numberOfLines={1}
                 >
@@ -195,6 +195,11 @@ class Login extends Component {
                 </Text>
               </View>
             </TouchableHighlight>
+
+            <Text
+              style={styles.designer}
+              numberOfLines={1}
+            >Designed by Fabien Rousseau</Text>
           </ImageBackground>
         </View>
       </View>
@@ -221,7 +226,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     fontSize: 45,
     textAlign: 'center',
-    paddingTop: 375,
+    paddingTop: 570,
     margin: 20,
     color: '#FFFFFF'
   },
@@ -262,6 +267,13 @@ const styles = StyleSheet.create({
     width: 14,
     left: 7,
     top: 7,
+  },
+  designer: {
+    fontFamily: 'Lato-Regular',
+    fontSize: 10,
+    textAlign: 'center',
+    bottom: -70,
+    color: '#C8243B'
   }
 });
 
@@ -273,9 +285,9 @@ const mapStateToProps = state => (
   }
 );
 
-export default connect(mapStateToProps, 
-  { 
-    loginSuccess, 
-    updateAvailableBadges, 
-    updateProfileBadges 
+export default connect(mapStateToProps,
+  {
+    loginSuccess,
+    updateAvailableBadges,
+    updateProfileBadges
   })(Login);
