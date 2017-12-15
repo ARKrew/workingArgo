@@ -18,7 +18,7 @@ class More extends Component {
   pressedContact = () => {
     Communications.email(
     ['arkrewucla@gmail.com'],
-    ['lowkeendonovan@gmail.com', 'lugraciecy@gmail.com'],
+    null,
     null,
     'ARgo User',
     'Talk to us!'
