@@ -32,7 +32,7 @@ export const profileBadges = [
   {
     fileName: '006-coin.png',
     image: require('./../assets/icons/006-coin.png'),
-    title: 'My So Coiny',
+    title: 'Me So Coiny',
     description: 'A penny for your thoughts?'
   },
   {
