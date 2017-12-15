@@ -76,7 +76,7 @@ const styles = {
     alignItems: 'center',
   },
   button: {
-    backgroundColor: 'lightblue',
+    backgroundColor: '#C8243B',
     padding: 12,
     margin: 16,
     justifyContent: 'center',
