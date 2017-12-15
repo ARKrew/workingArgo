@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { NavigationActions } from 'react-navigation';
 import {
+  Text,
   View,
   StyleSheet,
+  TouchableHighlight,
   TouchableOpacity,
   Image
 } from 'react-native';
@@ -9,48 +12,80 @@ import { connect } from 'react-redux';
 import { ViroARSceneNavigator } from 'react-viro';
 import {
   listNavigate,
-  enterAR,
-  updateDisplayBadge
+  enterARTutorial,
+  clickedObj,
+  updateDisplayBadge,
+  disableHunt,
+  indicateInsidePortal
 } from '../../actions';
-import TutorialSceneAR from './TutorialSceneAR';
+// import DemoARPortal from './ListScreens/DemoARPortal';
+import TutorialSceneAR from '../ar/TutorialSceneAR';
 
 const sharedProps = {
     apiKey: 'D5FCCB74-1B13-4E50-BCE8-3DAE6B9ED443'
   };
 
-class TutorialNavAR extends Component {
+  class TutorialNavAR extends Component {
 
-  constructor() {
-    super();
-    this.state = {
-      sharedProps: sharedProps,
-    };
-    this.onExit.bind(this);
-  }
+    constructor() {
+      super();
+      this.state = {
+        sharedProps: sharedProps,
+      };
+      this.goBack.bind(this);
+    }
 
-  onExit = () => {
-    this.props.enterAR({ enterAR: false });
-  }
+    componentWillUnmount() {
+      console.log("TutorialNavAR UNMOUNTED ASDFASDFLKAGSEJLAJWKELGKA");
+    }
 
-  render() {
-    if (this.props.ARstate.enterAR === true) {
+    // onExit = () => {
+    //   this.props.enterARTutorial({ enterARTutorial: false });
+    //   this.props.clickedObj({ clickedObj: false });
+    //   // this.props.disableHunt({ isHunting: false, selectedMarker: null });
+    // }
+
+    goBack = () => {
+      this.props.enterARTutorial({ enterARTutorial: false });
+      this.props.clickedObj({ clickedObj: false });
+      // Reset map state
+      this.props.disableHunt({ isHunting: false, selectedMarker: null });
+      this.props.indicateInsidePortal({ inPortal: false });
+      // Reset to Profile 
+      this.props.listNavigate();
+    }
+
+    renderDisplayBadge() {
       return (
-        <View style={styles.outer} >
-          <ViroARSceneNavigator style={styles.arView} {...this.state.sharedProps} initialScene={{ scene: TutorialSceneAR }} />
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={styles.buttons}
-                onPress={this.onExit}
-                underlayColor={'#00000000'} >
-                <Image
-                  style={styles.buttonImage}
-                  source={require('../../assets/models/button/icon_arrow.png')} />
-              </TouchableOpacity>
-            </View>
-        </View>
+        <Image
+        style={styles.badge}
+        key={this.props.badge.displayBadge.fileName}
+        source={this.props.badge.displayBadge.image}
+        />
       );
     }
-    return null;
+
+    // Replace this function with the contents of _getDemoSceneARNavigator() or _getTutorialNavARNavigator()
+    // if you are building a specific type of experience.
+    render() {
+    if (this.props.ARstate.enterARTutorial === true) {
+        return (
+          <View style={styles.outer} >
+            <ViroARSceneNavigator style={styles.arView} {...this.state.sharedProps} initialScene={{ scene: TutorialSceneAR }} />
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={styles.buttons}
+                  onPress={this.goBack}
+                  underlayColor={'#00000000'} >
+                  <Image
+                    style={styles.buttonImage}
+                    source={require('../../assets/models/button/icon_arrow.png')} />
+                </TouchableOpacity>
+              </View>
+          </View>
+        );
+      }
+      return null;
   }
 }
 
@@ -64,7 +99,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     position: 'absolute',
     left: 10,
-    bottom: 0,
+    bottom: 50,
     alignItems: 'flex-start',
     height: 10,
     width: 10
@@ -119,6 +154,9 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
   listNavigate,
-  enterAR,
-  updateDisplayBadge
+  enterARTutorial,
+  clickedObj,
+  updateDisplayBadge,
+  disableHunt,
+  indicateInsidePortal
 })(TutorialNavAR);
