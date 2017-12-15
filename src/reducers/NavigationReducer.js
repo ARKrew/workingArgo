@@ -19,7 +19,12 @@ export default (state = routerInitialState, action) => {
             break;
         case LIST_NAV:
             nextState = router.getStateForAction(
-                NavigationActions.navigate({ routeName: ROUTES.profile }),
+                NavigationActions.reset({
+                  index: 0,
+                  actions: [
+                    NavigationActions.navigate({ routeName: 'List' })
+                  ]
+                }),
                 state
             );
             break;

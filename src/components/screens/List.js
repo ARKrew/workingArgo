@@ -8,12 +8,12 @@ import { Header, Button, CardSection } from '../common';
 import { enterAR, enterARTutorial } from '../../actions';
 
 class List extends Component {
-  pressedDemo = () => {
-    this.props.enterAR({
-      enterAR: true,
-    });
-    this.props.navigation.navigate('MainSceneAR');
-  };
+  // pressedDemo = () => {
+  //   this.props.enterAR({
+  //     enterAR: true,
+  //   });
+  //   this.props.navigation.navigate('MainSceneAR');
+  // };
 
   pressedTutorial = () => {
     this.props.enterARTutorial({
@@ -27,7 +27,7 @@ class List extends Component {
     console.log(this.props);
     return (
       <View>
-        <Header headerText={'List'} />
+        <Header headerText={'Tutorial'} />
         <CardSection>
           <Button onPress={this.pressedDemo}>Demo AR Portal</Button>
         </CardSection>
@@ -39,9 +39,9 @@ class List extends Component {
   }
 }
 
-const mapStateToProps = state => ({ 
-  currentRoute: state.nav.routes[1].index, 
-  ARstate: state.demoAR 
+const mapStateToProps = state => ({
+  currentRoute: state.nav.routes[1].index,
+  ARstate: state.demoAR
 });
 
 export default connect(mapStateToProps, {
