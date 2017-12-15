@@ -48,7 +48,7 @@ const RootsTab = TabNavigator({
     ),
     }
   },
-  List: {
+  Tutorial: {
     screen: StackNavigator(
       {
         List: {
