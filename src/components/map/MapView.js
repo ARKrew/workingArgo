@@ -12,11 +12,13 @@ import firebase from 'firebase';
 import MarkerDetails from './MarkerDetails';
 import MapARNav from './MapARNav';
 import BackButton from './BackButton';
+import Gesture from './Gesture';
 import {
   updateUserPosition,
   updateMarkers,
   updateMarkerIndex,
-  disableHunt
+  disableHunt,
+  updateGesture
 } from '../../actions';
 
 // Grab screen dimensions
@@ -232,6 +234,7 @@ class MapViews extends Component {
   handleOnPress(index) {
     this.animate(index);
     this.props.updateMarkerIndex({ markerIndex: index, scroll: true });
+    this.props.updateGesture({ gestureEnabled: true });
   }
 
   calcMidPoint(current, marker) {
@@ -349,6 +352,10 @@ class MapViews extends Component {
     return <MarkerDetails />;
   }
 
+  renderGesture() {
+    return <Gesture />;
+  }
+  
   render() {
     return (
       <View style={styles.container}>
@@ -358,8 +365,6 @@ class MapViews extends Component {
           style={styles.map}
           ref='map'
           initialRegion={this.props.userPosition}
-          // onRegionChange={this.onRegionChange.bind(this)}
-          // onRegionChangeComplete={this.onRegionChange.bind(this)}
         >
           {this.props.markers && this.initializeMarkers()}
           {this.state.enablePolyline && this.renderPolyline()}
@@ -373,6 +378,7 @@ class MapViews extends Component {
           this.renderModal()
         }
         {this.props.markers && this.renderMarkerDetails()}
+        {this.props.gestureEnabled && this.renderGesture()}
       </View>
     );
   }
@@ -430,5 +436,6 @@ export default connect(mapStateToProps,
     updateUserPosition,
     updateMarkers,
     updateMarkerIndex,
-    disableHunt
+    disableHunt,
+    updateGesture
   })(MapViews);

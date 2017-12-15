@@ -6,7 +6,7 @@ import {
   INITIALIZE_HUNT,
   DISABLE_HUNT,
   INSIDE_PORTAL,
-  RESET_MAP
+  UPDATE_GESTURE
 } from './types';
 
 export const updateUserPosition = data => (
@@ -57,3 +57,10 @@ export const indicateInsidePortal = data => (
     payload: data
   }
 );
+
+export const updateGesture = data => (
+  {
+    type: UPDATE_GESTURE,
+    payload: data
+  }
+)
