@@ -17,14 +17,14 @@ const About = () => {
           badges with their friends. ARgo believes that life is about
           acquiring new experiences and we want to help.
         </Text>
+        <Text style={styles.imageFooter}>
+          Powered by:
+        </Text>
         <View style={styles.imageContainer}>
           <Image style={styles.imageStyle} source={FireBase} />
           <Image style={styles.imageStyle} source={ViroMedia} />
           <Image style={styles.imageStyle} source={RN} />
         </View>
-        <Text style={styles.imageFooter}>
-          Powered by:
-        </Text>
       </ScrollView>
     </View>
   );
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
   },
   imageFooter: {
     fontSize: 6,
+    paddingBottom: 5,
     color: 'grey',
     textAlign: 'center'
   }
