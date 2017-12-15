@@ -1,5 +1,6 @@
 # workingArgo
 Mobile AR Game | iOS
+![ARgo Launchpage](ios/workingArgo/Images.xcassets/LaunchImage.launchimage/Default320x480.png)
 
 ARgo is a mobile application that uses location intelligence and augmented reality to immerse users in a new experience. Users have the ability to enter into new worlds through AR portals and collect badges with their friends. ARgo believes that life is about acquiring new experiences and we want to help.
 
@@ -18,12 +19,12 @@ These instructions will get you a copy of the project up and running on your loc
 * Viro Command Line Interface
 
 ### Installing
-## Set Up Directions
+### Set Up Directions
 In the command line, type 'npm install' to download node packages. Go to package.json file to view dependencies.
 - Go to node modules -> react-navigation package -> src -> views -> TabView -> TabView.js
 - On line 202 add ` && tabBarVisible` to conditional statement.
 
-## Deployment
+### Deployment
 
 Download (insert link to app store to download)
 
@@ -33,14 +34,15 @@ Download (insert link to app store to download)
 * [ViroMedia](https://viromedia.com/) - Augmented Reality
 * [Firebase](https://firebase.google.com/) - Database
 * [ReactNavigation](https://reactnavigation.org/) - Routing/Navigation
+* [Redux](https://redux.js.org/)
 
-## Contributing
+### Contributing
 
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
-## Directory structure
+### Directory structure
 ```none
-.
+src
 ├── actions
 ├── assets
 │   ├── fonts
@@ -64,7 +66,7 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 ```
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License.
 
 ## Developers
 - James Tu | [GitHub] (https://github.com/jmsjtu)
@@ -74,6 +76,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 - Shinsuke "Mike" Yamato | [GitHub](https://github.com/mikeyamato)
 
 ## Acknowledgments
-* Omar Patel, Keith To, Paige Pittman, and UCLA.
+* Omar Patel and the UCLA staff
 
 -------------
