@@ -15,7 +15,7 @@ const TermsOfService = () => {
                 </Text>
               <Text style={styles.titleStyle}>Content</Text>
                 <Text>
-                  Our Service allows you to post, link, store, share and otherwise make available certain information, text, graphics, videos, or other material ("Content"). You are responsible for the …
+                  Our Service allows you to post, link, store, share and otherwise make available certain information, text, graphics, videos, or other material ("Content"). 
                 </Text>
               <Text style={styles.titleStyle}>Links To Other Web Sites</Text>
                 <Text>
