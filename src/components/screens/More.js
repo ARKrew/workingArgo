@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
-import { ScrollView, View, StyleSheet } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { connect } from 'react-redux';
-import Communications from "react-native-communications";
+import Communications from 'react-native-communications';
 import { CardSection, Button, Header } from '../common';
 import { logOut, resetMap } from '../../actions';
 
@@ -30,10 +30,9 @@ class More extends Component {
   }
 
   pressedLogOut = async () => {
-      try {
-          await firebase.auth().signOut();
-          this.props.logOut();
-          this.props.resetMap();
+    try {
+      await firebase.auth().signOut();
+        this.props.logOut();
       } catch (e) {
           console.log(e);
       }
@@ -81,6 +80,11 @@ const styles = {
   }
 };
 
-const mapStateToProps = state => ({ currentRoute: state.nav.routes[1].index, logged: state.auth.loggedIn });
+const mapStateToProps = state => (
+  { 
+    currentRoute: state.nav.routes[1].index, 
+    logged: state.auth.loggedIn 
+  }
+);
 
 export default connect(mapStateToProps, { logOut, resetMap })(More);

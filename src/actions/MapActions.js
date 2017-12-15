@@ -57,10 +57,3 @@ export const indicateInsidePortal = data => (
     payload: data
   }
 );
-
-export const resetMap = () => (
-  {
-    type: RESET_MAP
-  }
-);
-
