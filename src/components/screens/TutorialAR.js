@@ -59,8 +59,8 @@ const sharedProps = {
       return (
         <Image
         style={styles.badge}
-        key={this.props.badge.displayBadge.fileName}
-        source={this.props.badge.displayBadge.image}
+        // key={this.props.badge.displayBadge.fileName}
+        source={require('../../assets/icons/006-coin.png')}
         />
       );
     }
@@ -79,9 +79,13 @@ const sharedProps = {
       <View style={styles.modalContent}>
         {this.renderDisplayBadge()}
         <Text style={styles.modalText}>
-          Congrats you've collected
+          Congrats! You've completed training.
           {'\n'}
-          <Text style={styles.modalTextBadge}>{this.props.currentBadge.title}</Text>! 
+          Captain {this.props.user.last_name}...
+          {'\n'}
+          {/* <Text style={styles.modalTextBadge}>{this.props.currentBadge.title}</Text>! 
+          {'\n'} */}
+          Travel the world and seek fortune!
         </Text>
         {this._renderButton('Profile Page', () => {
           this.setState({ visibleModal: false });
