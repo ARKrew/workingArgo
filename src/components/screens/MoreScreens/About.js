@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
-import { Header, CardSection } from '../../common';
+import { Header } from '../../common';
 import ViroMedia from '../../../assets/images/viro.png';
 import FireBase from '../../../assets/images/firebase.png';
 import RN from '../../../assets/images/react-logo.png';
