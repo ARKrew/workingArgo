@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { updateDisplayBadge, initializeHunt } from '../../actions';
-import { Card, CardSection, Header, Button } from '../common';
+import { Card, CardSection } from '../common';
 
 class MarkerDetailItem extends Component {
   handleOnPress() {

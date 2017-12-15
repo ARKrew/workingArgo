@@ -14,7 +14,6 @@ import MapARNav from './MapARNav';
 import BackButton from './BackButton';
 import {
   updateUserPosition,
-  updateMapRegion,
   updateMarkers,
   updateMarkerIndex,
   disableHunt
@@ -26,7 +25,13 @@ const screen = Dimensions.get('window');
 const ASPECT_RATIO = screen.width / screen.height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-const geolocationOptions = { enableHighAccuracy: true, distanceFilter: 1, timeout: 20000, maximumAge: 1000 };
+const geolocationOptions = 
+  { 
+    enableHighAccuracy: true, 
+    distanceFilter: 1, 
+    timeout: 20000, 
+    maximumAge: 1000 
+  };
 const markerImg = require('../../assets/icons/flag2.png');
 
 class MapViews extends Component {
@@ -72,9 +77,11 @@ class MapViews extends Component {
     if (this.props.markerIndex !== nextProps.markerIndex && !nextProps.scroll) {
       this.animate(nextProps.markerIndex);
     }
+
     if (nextProps.isHunting && !this.props.isHunting) {
       this.animateToPolyline(nextProps);
     }
+
     if (!nextState.enablePolyline && this.state.enablePolyline && nextProps.isHunting) {
       this.props.disableHunt({ isHunting: false, selectedMarker: null });
     }
@@ -89,11 +96,6 @@ class MapViews extends Component {
     // firebase.database().ref('james_test').child('open').off();
     firebase.database().ref('portal_open').child(this.props.uid).off();
     firebase.database().ref('location_config').child(this.props.uid).child('nearby_portal').off();
-  }
-
-  // If user moves map around track where they're looking
-  onRegionChange(mapRegion) {
-    this.props.updateMapRegion({ mapRegion });
   }
 
   onBackPress() {
@@ -334,12 +336,12 @@ class MapViews extends Component {
     const polyLineCoords = [startingCoordinates, endingCoordinates];
 
     return (
-        <MapView.Polyline
-          coordinates={polyLineCoords}
-          strokeColor='#FEA2A4'
-          strokeWidth={3}
-          lineDashPattern={[5]}
-        />
+      <MapView.Polyline 
+        coordinates={polyLineCoords} 
+        strokeColor='#FEA2A4'
+        strokeWidth={3}
+        lineDashPattern={[5]} 
+      />
     );
   }
 
@@ -416,18 +418,16 @@ const styles = {
 };
 
 const mapStateToProps = state => (
-  {
-    ...state.map,
-    ...state.auth.user,
-    ...state.badge,
-    ...state.demoAR
+  { 
+    ...state.map, 
+    ...state.auth.user, 
+    ...state.badge, 
   }
 );
 
 export default connect(mapStateToProps,
   {
     updateUserPosition,
-    updateMapRegion,
     updateMarkers,
     updateMarkerIndex,
     disableHunt
