@@ -25,6 +25,10 @@ class More extends Component {
     );
   }
 
+  pressedFAQs = () => {
+    this.props.navigation.navigate('FAQs');
+  };
+
   pressedDevelopment = () => {
     Communications.web('https://github.com/ARKrew/workingArgo');
   }
@@ -56,6 +60,11 @@ class More extends Component {
           <CardSection>
             <Button onPress={this.pressedContact}>
               Contact
+            </Button>
+          </CardSection>
+          <CardSection>
+            <Button onPress={this.pressedFAQs}>
+              FAQs
             </Button>
           </CardSection>
           <CardSection>

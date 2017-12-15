@@ -2,6 +2,7 @@ import { StackNavigator } from 'react-navigation';
 import More from '../More';
 import TermsOfService from './TermsOfService';
 import About from './About';
+import FAQs from './FAQs';
 
 const MoreNav = StackNavigator({
   More: {
@@ -12,6 +13,9 @@ const MoreNav = StackNavigator({
   },
   About: {
     screen: About,
+  },
+  FAQs: {
+    screen: FAQs,
   }
   }, 
   {
