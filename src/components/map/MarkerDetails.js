@@ -32,11 +32,13 @@ class MarkerDetails extends Component {
     if (nextProps.scroll) {
       this.animate(initialHeight, 1000);
     }
+
     if (this.props.markerIndex !== nextProps.markerIndex && nextProps.scroll) {
       const scrollPosition = nextProps.markerIndex * width;
 
       this.scrollToPosition(scrollPosition, nextProps.markerIndex);
     }
+    
     if (nextProps.isHunting) {
       this.animate(0, 200);
     }
