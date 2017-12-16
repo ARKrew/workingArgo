@@ -25,9 +25,9 @@ In the command line, type 'npm install' to download node packages. Go to package
 - Go to node modules -> react-navigation package -> src -> views -> TabView -> TabView.js
 - On line 202 add ` && tabBarVisible` to conditional statement.
 
-### Deployment
+### Download
 
-Download (insert link to app store to download)
+TBD
 
 ## Built With
 
