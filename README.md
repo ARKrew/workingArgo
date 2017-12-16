@@ -1,4 +1,4 @@
-# workingArgo
+# ARgo
 Mobile AR Game | iOS
 
 ARgo is a mobile application that uses location intelligence and augmented reality to immerse users in a new experience. Users have the ability to enter into new worlds through AR portals and collect badges with their friends. ARgo believes that life is about acquiring new experiences and we want to help.
