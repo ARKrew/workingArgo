@@ -3,7 +3,7 @@ Mobile AR Game | iOS
 
 ARgo is a mobile application that uses location intelligence and augmented reality to immerse users in a new experience. Users have the ability to enter into new worlds through AR portals and collect badges with their friends. ARgo believes that life is about acquiring new experiences and we want to help.
 
-![ARgo Launchpage](ios/workingArgo/Images.xcassets/LaunchImage.launchimage/Default320x480.png)
+![ARgo Launchpage](src/assets/images/livedemo-argo.gif)
 
 ## Getting Started
 
@@ -32,15 +32,14 @@ Download (insert link to app store to download)
 ## Built With
 
 * [React-Native](https://facebook.github.io/react-native/docs/getting-started.html) - Framework
-* [Redux](https://redux.js.org/) - State Container
-* [ReactNavigation](https://reactnavigation.org/) - Routing/Navigation
 * [ViroMedia](https://viromedia.com/) - Augmented Reality
-* [React Native Maps](https://github.com/react-community/react-native-maps) - Map
 * [Firebase](https://firebase.google.com/) - Database
+* [ReactNavigation](https://reactnavigation.org/) - Routing/Navigation
+* [Redux](https://redux.js.org/)
 
 ### Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](https://github.com/ARKrew/workingArgo/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ### Directory structure
 ```none
@@ -48,7 +47,7 @@ src
 ├── actions
 ├── assets
 │   ├── fonts
-│   ├── icons	
+│   ├── icons
 │   ├── icons_greyscale
 │   ├── images
 │   ├── models
@@ -68,7 +67,7 @@ src
 ```
 
 ## License
-This project is licensed under the MIT License.
+This project is licensed under the BSD 3-Clause License.
 
 ## Developers
 - James Tu | [GitHub](https://github.com/jmsjtu)
@@ -79,5 +78,3 @@ This project is licensed under the MIT License.
 
 ## Acknowledgments
 * Omar Patel and the UCLA staff
-
--------------
