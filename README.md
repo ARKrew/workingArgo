@@ -32,10 +32,11 @@ Download (insert link to app store to download)
 ## Built With
 
 * [React-Native](https://facebook.github.io/react-native/docs/getting-started.html) - Framework
-* [ViroMedia](https://viromedia.com/) - Augmented Reality
-* [Firebase](https://firebase.google.com/) - Database
-* [ReactNavigation](https://reactnavigation.org/) - Routing/Navigation
 * [Redux](https://redux.js.org/)
+* [ReactNavigation](https://reactnavigation.org/) - Routing/Navigation
+* [ViroMedia](https://viromedia.com/) - Augmented Reality
+* [React Native Maps] (https://github.com/react-community/react-native-maps)
+* [Firebase](https://firebase.google.com/) - Database
 
 ### Contributing
 
