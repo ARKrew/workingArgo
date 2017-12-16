@@ -34,7 +34,7 @@ TBD
 * [React-Native](https://facebook.github.io/react-native/docs/getting-started.html) - Framework
 * [Redux](https://redux.js.org/) - State Container
 * [ViroMedia](https://viromedia.com/) - Augmented Reality
-* [React Native Maps](https://github.com/react-community/react-native-maps)
+* [React Native Maps](https://github.com/react-community/react-native-maps) - Map
 * [Firebase](https://firebase.google.com/) - Database
 * [ReactNavigation](https://reactnavigation.org/) - Routing/Navigation
 
