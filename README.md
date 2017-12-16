@@ -32,10 +32,11 @@ TBD
 ## Built With
 
 * [React-Native](https://facebook.github.io/react-native/docs/getting-started.html) - Framework
+* [Redux](https://redux.js.org/)
 * [ViroMedia](https://viromedia.com/) - Augmented Reality
+* [React Native Maps](https://github.com/react-community/react-native-maps)
 * [Firebase](https://firebase.google.com/) - Database
 * [ReactNavigation](https://reactnavigation.org/) - Routing/Navigation
-* [Redux](https://redux.js.org/)
 
 ### Contributing
 
