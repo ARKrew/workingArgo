@@ -35,7 +35,7 @@ Download (insert link to app store to download)
 * [Redux](https://redux.js.org/)
 * [ReactNavigation](https://reactnavigation.org/) - Routing/Navigation
 * [ViroMedia](https://viromedia.com/) - Augmented Reality
-* [React Native Maps](https://github.com/react-community/react-native-maps)
+* [React Native Maps](https://github.com/react-community/react-native-maps) - Map
 * [Firebase](https://firebase.google.com/) - Database
 
 ### Contributing
