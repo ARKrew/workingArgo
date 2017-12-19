@@ -35,7 +35,7 @@ TBD
 * [Redux](https://redux.js.org/) - State Container
 * [ReactNavigation](https://reactnavigation.org/) - Routing/Navigation
 * [React Native Maps](https://github.com/react-community/react-native-maps) - Map
-* [ViroMedia](https://viromedia.com/) - Augmented Reality
+* [ViroMedia](https://viromedia.com/) - Augmented Reality w/ ARKit
 * [Firebase](https://firebase.google.com/) - Database
 
 ### Contributing
